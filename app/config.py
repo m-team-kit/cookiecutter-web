@@ -14,8 +14,6 @@ git_repo_download_url = os.getenv("CC_GIT_REPO_DOWNLOAD_URL",
 git_repo_url = os.getenv("CC_GIT_REPO_URL",
                          "https://github.com/deephdc/cookiecutter-deep/")
 branch_name = os.getenv("CC_GIT_BRANCH", "advanced")
-cookiecutter_template = "cookiecutter.json"
-cookiecutter_help = cookiecutter_template.split('.')[0] + "-help.json"
 
 download_url = os.path.join(git_repo_download_url,
                             branch_name)
@@ -23,11 +21,9 @@ download_url = os.path.join(git_repo_download_url,
 BASE_DIR = os.path.dirname(os.path.normpath(os.path.dirname(__file__)))
 
 cookie_json_dir = os.path.join(BASE_DIR,
-                               "app/files",
-                               cookiecutter_template)
+                               "app/files")
 
-help_json_dir = os.path.join(BASE_DIR,
-                             "app/files",
-                             cookiecutter_help)
+cookiecutter_template = "cookiecutter.json"
+cookiecutter_help = cookiecutter_template.split('.')[0] + "-help.json"
 
 zip_name = "deep_project"

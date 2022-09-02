@@ -13,20 +13,33 @@ logging.basicConfig(format='%(asctime)s [%(levelname)s]: %(message)s')
 logger.setLevel(cfg.log_level)
 
 def read_json():
-    if os.path.exists(cfg.cookie_json_dir):
-        os.remove(cfg.cookie_json_dir)
+    
+    cc_template_path = os.path.join(cfg.cookie_json_dir,
+                               cfg.cookiecutter_template)
 
-    download_cookiejson(cfg.cookiecutter_template)
-    download_cookiejson(cfg.cookiecutter_help)
-    f = open(cfg.cookie_json_dir, "r")
+    cc_help_path = os.path.join(cfg.cookie_json_dir,
+                               cfg.cookiecutter_help)
 
-    # Reading from file
+    # delete previously stored files
+    if os.path.exists(cc_template_path):
+        os.remove(cc_template_path)
+
+    if os.path.exists(cc_help_path):
+        os.remove(cc_help_path)
+
+    download_cookiejson(cfg.cookiecutter_template,
+                        cc_template_path)
+    download_cookiejson(cfg.cookiecutter_help,
+                        cc_help_path)
+    f = open(cc_template_path, "r")
+
+    # Reading from cookiecutter.json file
     cookie_data = json.loads(f.read())
     data = []
 
     # If cookiecutter-help.json exists then combine it with the cookiecutter placeholders
-    if os.path.exists(cfg.help_json_dir):
-        f = open(cfg.help_json_dir, "r")
+    if os.path.exists(cc_help_path):
+        f = open(cc_help_path, "r")
         help_data = json.loads(f.read())
         for key, dsc in help_data.items():
             data.append([key, dsc, cookie_data[key]])
@@ -38,18 +51,20 @@ def read_json():
 
     return data
 
-def download_cookiejson(cc_json):
+def download_cookiejson(cc_json, cc_path):
     response = requests.get(os.path.join(cfg.download_url,
                                          cc_json))
     logger.debug(F"url: {os.path.join(cfg.download_url, cc_json)}")
     logger.debug(F"code: {response.status_code}")
     if response.status_code == requests.codes.ok :
-        with open(cfg.cookie_json_dir, mode='wb') as file:
+        with open(cc_path, mode='wb') as file:
             file.write(response.content)
 
 
 def call_cookiecutter(form):
-    with open(cfg.cookie_json_dir, 'r') as file:
+    cookie_path = os.path.join(cfg.cookie_json_dir,
+                               cfg.cookiecutter_template)
+    with open(cookie_path, 'r') as file:
         json_data = json.load(file)
         for key, value in form.items():
             if value!= "" and key != "submit":
