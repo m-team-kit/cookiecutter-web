@@ -1,4 +1,4 @@
 requests
-Flask==1.1.2
+Flask~=2.1.0
 PyYAML==5.1.2
 cookiecutter==1.6.0

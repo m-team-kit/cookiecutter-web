@@ -1,15 +1,23 @@
 from cookiecutter.main import cookiecutter
 import app.config as cfg
-import os
-import shutil
 import json
+import logging
+import os
 import requests
+import shutil
+import tempfile
+
+# conigure python logger
+logger = logging.getLogger('__name__')
+logging.basicConfig(format='%(asctime)s [%(levelname)s]: %(message)s')
+logger.setLevel(cfg.log_level)
 
 def read_json():
     if os.path.exists(cfg.cookie_json_dir):
         os.remove(cfg.cookie_json_dir)
 
-    download_cookiejson()
+    download_cookiejson(cfg.cookiecutter_template)
+    download_cookiejson(cfg.cookiecutter_help)
     f = open(cfg.cookie_json_dir, "r")
 
     # Reading from file
@@ -30,10 +38,14 @@ def read_json():
 
     return data
 
-def download_cookiejson():
-    response = requests.get(cfg.download_url)
-    with open(cfg.cookie_json_dir, mode='wb') as file:
-        file.write(response.content)
+def download_cookiejson(cc_json):
+    response = requests.get(os.path.join(cfg.download_url,
+                                         cc_json))
+    logger.debug(F"url: {os.path.join(cfg.download_url, cc_json)}")
+    logger.debug(F"code: {response.status_code}")
+    if response.status_code == requests.codes.ok :
+        with open(cfg.cookie_json_dir, mode='wb') as file:
+            file.write(response.content)
 
 
 def call_cookiecutter(form):
@@ -43,20 +55,13 @@ def call_cookiecutter(form):
             if value!= "" and key != "submit":
                     json_data[key] = value
 
-    # create a temp directory
     owd_parent = os.getcwd()
-    os.mkdir('Deep_Project')
 
-    # switch to that temp directory
-    os.chdir('Deep_Project')
-    owd_child = os.getcwd()
-
-    # call cookiecutter
-    cookiecutter(cfg.git_repo_url, no_input=True, extra_context=json_data)
-    os.chdir(owd_parent)
-    shutil.make_archive(cfg.zip_name, 'zip', 'Deep_Project')
-    shutil.rmtree(owd_child)
-
-
-
-
+    with tempfile.TemporaryDirectory() as tmpdir:
+        # call cookiecutter
+        logger.debug(F"Current dir: {os.getcwd()}")
+        os.chdir(tmpdir)
+        logger.debug(F"Current (tmp) dir: {os.getcwd()}")
+        cookiecutter(cfg.git_repo_url, no_input=True, extra_context=json_data)
+        os.chdir(owd_parent)
+        shutil.make_archive(cfg.zip_name, 'zip', tmpdir)
