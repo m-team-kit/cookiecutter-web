@@ -11,7 +11,7 @@ log_level = getattr(logging, env_log_level.upper(), 20) # INFO = 20
 
 git_repo_download_url = os.getenv("CC_GIT_REPO_DOWNLOAD_URL",
                                   "https://raw.githubusercontent.com/deephdc/cookiecutter-deep/")
-git_repo_url = os.getenv("CC_GIT_REPO",
+git_repo_url = os.getenv("CC_GIT_REPO_URL",
                          "https://github.com/deephdc/cookiecutter-deep/")
 branch_name = os.getenv("CC_GIT_BRANCH", "advanced")
 cookiecutter_template = "cookiecutter.json"
