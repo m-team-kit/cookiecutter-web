@@ -45,7 +45,7 @@ This "help" file is expected in the same git repository as the `cookicutter_temp
 The application works as following:
 
 <p align="center">
-<img src="https://git.scc.kit.edu/m-team/ai/cookiecutter-to-webform/blob/master/img/cookieflowchart.png" width="400"/>
+<img src="https://git.scc.kit.edu/m-team/ai/cookiecutter-to-webform/-/raw/master/img/cookieflowchart.png?inline=false" width="400"/>
 </p>
 
 The functions showed in the flowchart are called in the [routes.py](https://git.scc.kit.edu/m-team/ai/cookiecutter-to-webform/blob/master/app/routes.py) file.
