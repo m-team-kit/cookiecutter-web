@@ -24,7 +24,7 @@ then go to `http://0.0.0.0` to find the webform.
 
 # Configuration
 
-To determine the cookiecutter template to be transformed as a webform, you either modify the following parameters in the  [config.py](https://github.com/vykozlov/cookiecutter-to-webform/blob/master/app/config.py) 
+To determine the cookiecutter template to be transformed as a webform, you either modify the following parameters in the  [config.py](https://git.scc.kit.edu/m-team/ai/cookiecutter-to-webform/blob/master/app/config.py) 
 or define corresponding Environment Variables:
 
 | Parameter name  | Description | Mandatory (Y/N) | Environment Variable |
@@ -45,10 +45,10 @@ This "help" file is expected in the same git repository as the `cookicutter_temp
 The application works as following:
 
 <p align="center">
-<img src="https://github.com/SilkeDH/cookiecutter-to-webform/blob/master/img/cookieflowchart.png" width="400"/>
+<img src="https://git.scc.kit.edu/m-team/ai/cookiecutter-to-webform/blob/master/img/cookieflowchart.png" width="400"/>
 </p>
 
-The functions showed in the flowchart are called in the [routes.py](https://github.com/SilkeDH/cookiecutter-to-webform/blob/master/app/routes.py) file.
+The functions showed in the flowchart are called in the [routes.py](https://git.scc.kit.edu/m-team/ai/cookiecutter-to-webform/blob/master/app/routes.py) file.
 
 # Notes
 
