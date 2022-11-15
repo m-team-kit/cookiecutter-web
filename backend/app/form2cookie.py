@@ -1,5 +1,5 @@
 from cookiecutter.main import cookiecutter
-import app.config as cfg
+import backend.app.config as cfg
 import json
 import logging
 import os
