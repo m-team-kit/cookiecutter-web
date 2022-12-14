@@ -7,6 +7,7 @@ const joinFields = (cookieCutterJson: any, helpJson: any = null): LegalField[] =
         return Object.keys(helpJson).map((key): LegalField => {
             return {
                 key,
+                description: helpJson[key],
                 default: cookieCutterJson[key],
             };
         });
@@ -14,7 +15,6 @@ const joinFields = (cookieCutterJson: any, helpJson: any = null): LegalField[] =
     return Object.keys(cookieCutterJson).map((key): LegalField => {
         return {
             key,
-            description: helpJson[key],
             default: cookieCutterJson[key],
         };
     });
