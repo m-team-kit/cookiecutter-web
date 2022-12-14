@@ -1,0 +1,89 @@
+version: "3.5"
+
+services:
+  frontend:
+    container_name: frontend
+    restart: unless-stopped
+    image: frontend
+    build:
+      context: frontend
+      network: host
+      target: development
+    depends_on:
+      - backend_v1
+    environment:
+      NEXT_PUBLIC_BACKEND_URL: /api/v1
+
+  backend_v1:
+    container_name: backend_v1
+    restart: unless-stopped
+    image: backend_v1
+    build:
+      context: backend
+      network: host
+      target: development
+      args:
+        INSTALL_PYTHON_VERSION: 3.8
+    env_file: .env
+    environment:
+      BACKEND_ROUTE: /api/v1
+      FLASK_ENV: development
+      SECRET_KEY_FILE: /run/secrets/cookie_secret
+    volumes:
+      - ./backend/:/app
+    secrets:
+      - cookie_secret
+
+  reverse_proxy:
+    container_name: reverse_proxy
+    restart: unless-stopped
+    image: reverse_proxy
+    build:
+      context: nginx
+      network: host
+      target: development
+    depends_on:
+      - backend_v1
+      - frontend
+    env_file: .env
+    environment:
+      DOMAINS: ${DOMAIN}
+      CERT_KEY_SIZE: ${CERT_KEY_SIZE}
+      BACKEND_ROUTE: /api
+    volumes:
+      - ssl:/etc/letsencrypt
+      - ssl:/var/www/certbot
+    secrets:
+      - nginx_api_credentials
+    ports:
+      - "80:80"
+      - "443:443"
+
+  certificate:
+    container_name: certificate
+    restart: unless-stopped
+    image: certificate
+    build:
+      context: certbot
+      network: host
+    env_file: .env
+    environment:
+      DOMAINS: ${DOMAIN}
+      NGINX_CREDENTIALS: /run/secrets/nginx_api_credentials
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+      LETSENCRYPT_STAGING: ${LETSENCRYPT_STAGING}
+      CERT_KEY_SIZE: ${CERT_KEY_SIZE}
+    volumes:
+      - ssl:/etc/letsencrypt
+      - ssl:/var/www/certbot
+    secrets:
+      - nginx_api_credentials
+
+volumes:
+  ssl: { }
+
+secrets:
+  cookie_secret:
+    file: cookie_secret.txt
+  nginx_api_credentials:
+    file: nginx_api_credentials.txt
