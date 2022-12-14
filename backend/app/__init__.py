@@ -1,10 +1,32 @@
-from flask import Flask
+from .app import create_app
+import flask.blueprints
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = "wer238aou43owu83e3rf674js4uo9cdb823r"
+__all__ = ["create_app"]
 
-from backend.app import routes
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+class MyBlueprintSetupState(flask.blueprints.BlueprintSetupState):
+    def add_url_rule(self, rule, endpoint=None, view_func=None, **options):
+        """Monkey patch to allow ':' in route for custom methods.
+        """
+        if self.url_prefix is not None:
+            if rule:
+                rule = self.url_prefix + rule
+            else:
+                rule = self.url_prefix
+        options.setdefault("subdomain", self.subdomain)
+        if endpoint is None:
+            raise RuntimeError("Undefined Endpoint")
+        defaults = self.url_defaults
+        if "defaults" in options:
+            defaults = dict(defaults, **options.pop("defaults"))
 
+        self.app.add_url_rule(
+            rule,
+            f"{self.name_prefix}.{self.name}.{endpoint}".lstrip("."),
+            view_func,
+            defaults=defaults,
+            **options,
+        )
+
+
+flask.blueprints.BlueprintSetupState = MyBlueprintSetupState
