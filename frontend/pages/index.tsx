@@ -11,38 +11,51 @@ import Form from '../components/Form';
 import { useState } from 'react';
 
 type Template = {
-    configUrl: string;
+    templateUrl: string;
+    helpUrl?: string;
     gitRepo: string;
     gitBranch: string;
     name: string;
 };
 
+const deepHdcMaster: Template = {
+    templateUrl:
+        'https://raw.githubusercontent.com/deephdc/cookiecutter-deep/master/cookiecutter.json',
+    gitRepo: GIT_REPO_URL,
+    gitBranch: 'master',
+    name: 'deephdc/cookiecutter-deep:master',
+};
+const deepHdcAdvanced: Template = {
+    templateUrl: COOKIECUTTER_TEMPLATE_URL,
+    helpUrl:
+        COOKIECUTTER_TEMPLATE_URL.substring(0, COOKIECUTTER_TEMPLATE_URL.lastIndexOf('.')) +
+        '-help.json',
+    gitRepo: GIT_REPO_URL,
+    gitBranch: GIT_BRANCH_NAME,
+    name: 'deephdc/cookiecutter-deep:advanced',
+};
+
 const Home: NextPage = () => {
-    const [templateUrl, setTemplateUrl] = useState(COOKIECUTTER_TEMPLATE_URL);
-    const [gitRepo, setGitRepo] = useState(GIT_REPO_URL);
-    const [gitBranch, setGitBranch] = useState(GIT_BRANCH_NAME);
+    const [templateUrl, setTemplateUrl] = useState(deepHdcMaster.templateUrl);
+    const [helpUrl, setHelpUrl] = useState<string | undefined>(undefined);
+    const [gitRepo, setGitRepo] = useState(deepHdcMaster.gitRepo);
+    const [gitBranch, setGitBranch] = useState(deepHdcMaster.gitBranch);
 
-    const templates: Template[] = [
-        {
-            configUrl: COOKIECUTTER_TEMPLATE_URL,
-            gitRepo: GIT_REPO_URL,
-            gitBranch: GIT_BRANCH_NAME,
-            name: 'deephdc/cookiecutter-deep:advanced',
-        },
-    ];
-
-    // TODO: url-safe appending
-    const helpUrl = templateUrl.substring(0, templateUrl.lastIndexOf('.')) + '-help.json';
+    const templates: Template[] = [deepHdcMaster, deepHdcAdvanced];
 
     const fields = useQuery(
         [templateUrl, gitRepo, gitBranch],
         async () => {
             const response = await fetch(
                 '/api/template?' +
-                    new URLSearchParams({
-                        url: templateUrl,
-                        helpUrl: helpUrl,
-                    })
+                    new URLSearchParams(
+                        helpUrl
+                            ? {
+                                  url: templateUrl,
+                                  helpUrl: helpUrl,
+                              }
+                            : { url: templateUrl }
+                    )
             );
             // TODO: less dirty approach?
             return (response.json as () => Promise<LegalField[]>)();
@@ -56,9 +69,10 @@ const Home: NextPage = () => {
                 <select
                     onChange={(e) => {
                         const template = templates[parseInt(e.target.value)];
-                        setTemplateUrl(template.configUrl);
+                        setTemplateUrl(template.templateUrl);
                         setGitRepo(template.gitRepo);
                         setGitBranch(template.gitBranch);
+                        setHelpUrl(template.helpUrl);
                     }}
                 >
                     {templates.map((t, i) => {
