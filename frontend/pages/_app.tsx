@@ -1,4 +1,7 @@
+import 'normalize.css/normalize.css';
+import 'styles/skeleton.css';
 import 'styles/style.css';
+
 import type { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';

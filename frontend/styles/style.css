@@ -2,64 +2,26 @@ body {
     background-color: #0a97b0;
 }
 
-html, body {
-    min-height: 100%;
-}
-
-body, div, form, input, select, p {
-    padding: 0;
-    margin: 0;
-    outline: none;
-    font-family: Roboto, Arial, sans-serif;
-    font-size: 18px;
-    color: #000;
-    line-height: 22px;
-}
-
-h1 {
-    margin: 15px 0;
-    font-weight: 400;
-}
-
-.testbox {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: inherit;
-    padding: 130px;
-}
-
-form {
-    width: 100%;
-    padding: 20px;
-    background: #fff;
-    box-shadow: 0 2px 5px #ccc;
+main {
+    margin-top: 4em;
+    margin-bottom: 4em;
+    border-radius: 0.5rem;
+    background-color: white;
+    padding: 2em;
+    box-shadow: 0 0 2rem #333;
 }
 
 input, select, textarea {
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+    border: 0.1rem solid #ccc;
+    border-radius: 0.25rem;
 }
 
 input:hover, select:hover, textarea:hover {
-    outline: none;
     border: 1px solid #095484;
 }
 
-input {
-    width: calc(100% - 20px);
-    padding: 7px;
-}
-
-select {
+input, select, textarea {
     width: 100%;
-    padding: 7px 0;
-    background: transparent;
-}
-
-textarea {
-    width: calc(100% - 6px);
 }
 
 .item {
@@ -67,6 +29,7 @@ textarea {
     margin: 10px 0;
 }
 
+/*
 input[type="date"]::-webkit-inner-spin-button {
     display: none;
 }
@@ -76,6 +39,7 @@ input[type="date"]::-webkit-inner-spin-button {
     font-size: 20px;
     color: #a9a9a9;
 }
+ */
 
 .item i {
     right: 2%;
@@ -90,6 +54,7 @@ input[type="date"]::-webkit-inner-spin-button {
     cursor: pointer;
 }
 
+/*
 .btn-block {
     margin-top: 20px;
     text-align: center;
@@ -107,7 +72,11 @@ input[type="date"]::-webkit-inner-spin-button {
     margin: 4px 2px;
     cursor: pointer;
 }
-
+*/
 .button:hover {
     background-color: #f6cd61;
+}
+
+pre, blockquote, dl, figure, table, p, ul, ol, form {
+    margin-bottom: 0;
 }

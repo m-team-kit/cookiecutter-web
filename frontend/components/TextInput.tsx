@@ -7,7 +7,13 @@ type TextInputProps = {
 const TextInput: FC<TextInputProps> = ({ field }) => {
     return (
         <>
-            <input className="input" type="text" name={field.key} placeholder={field.default} />
+            <input
+                className="input"
+                type="text"
+                name={field.key}
+                id={field.key}
+                placeholder={field.default}
+            />
         </>
     );
 };

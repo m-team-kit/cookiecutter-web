@@ -12,7 +12,7 @@ export const Form: FC<FormProps> = ({ fields }) => {
         <>
             {fields.map((field) => (
                 <div key={field.key}>
-                    {field.description ?? field.key}
+                    <label htmlFor="">{field.description ?? field.key}</label>
                     {field.default != BLANK_FIELD &&
                         (typeof field.default == 'string' ? (
                             <TextInput field={field as StringField} />
