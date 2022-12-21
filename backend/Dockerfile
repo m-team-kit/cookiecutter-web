@@ -18,14 +18,14 @@ WORKDIR /app
 ENV PATH="/home/sid/.local/bin:${PATH}"
 ENV FLASK_APP="autoapp.py"
 
-COPY app app
-COPY autoapp.py ./
 COPY requirements requirements
+RUN pip install --no-cache -r requirements/prod.txt
+COPY autoapp.py ./
+COPY app app
 
 # ================================= PRODUCTION =================================
 FROM backend AS production
 
-RUN pip install --no-cache -r requirements/prod.txt
 COPY supervisord.conf /etc/supervisor/supervisord.conf
 COPY supervisord_programs /etc/supervisor/conf.d
 

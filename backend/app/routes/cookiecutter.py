@@ -7,23 +7,31 @@ from flask import request, send_file
 from flask_smorest import Blueprint
 
 from ..lib.zip import zip_folder_to_buffer
-from ..settings import COOKIECUTTER_TEMPLATE_URL, GIT_REPO_URL, ZIP_NAME
+from ..settings import ZIP_NAME
 import os
 
+from ..schemas import args, schemas
 
 blp = Blueprint(
     'cookiecutter', __name__, description=''
 )
 
 
+# for schema, see https://swagger.io/docs/specification/data-models/data-types/#file
 @blp.route('/', methods=["POST"])
-def generate():
-    url = request.args["url"] if "url" in request.args else COOKIECUTTER_TEMPLATE_URL
+@blp.doc(operationId='renderTemplate')
+@blp.arguments(args.Template, location="query", as_kwargs=True)
+@blp.arguments(schemas.Json)
+@blp.response(200, {"format": "binary", "type": "string"}, content_type="application/zip")
+def generate(json, *, url, git_repo, git_branch):
     template = requests.get(url)
     json_data = template.json()
+    print(request.form)
     for key, value in request.form.items():
         if value != "" and key != "submit":
             json_data[key] = value
+    print(json_data)
+    print(url, git_repo, git_branch)
 
     with tempfile.TemporaryDirectory() as tmpdir:
         # create a subfolder so the folder in the zip is not garbled text
@@ -44,7 +52,8 @@ def generate():
 
         # call cookiecutter
         cookiecutter(
-            GIT_REPO_URL,
+            git_repo,
+            #checkout=git_branch,
             no_input=True,
             extra_context=json_data,
             output_dir=workdir,
