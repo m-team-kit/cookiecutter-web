@@ -53,7 +53,7 @@ def generate(json, *, url, git_repo, git_branch):
         # call cookiecutter
         cookiecutter(
             git_repo,
-            #checkout=git_branch,
+            checkout=git_branch,
             no_input=True,
             extra_context=json_data,
             output_dir=workdir,
