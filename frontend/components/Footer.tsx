@@ -15,6 +15,7 @@ const Footer: FC = () => {
                         </div>
                         <div className="four columns">
                             <ul className="">
+                                {/*
                                 <li>
                                     <a
                                         href="https://docs.deep-hybrid-datacloud.eu"
@@ -54,6 +55,7 @@ const Footer: FC = () => {
                                         ResearchGate
                                     </a>
                                 </li>
+                            */}
                             </ul>
                         </div>
                         <div className="one column">
