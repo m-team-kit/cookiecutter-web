@@ -11,7 +11,7 @@ const Navbar = () => {
                     <ul className="navbar-list" style={{ display: 'flex' }}>
                         <li className="navbar-item">
                             <Link className="navbar-link" href="/">
-                                DEEP Open Catalog
+                                Home
                             </Link>
                         </li>
                         <li className="navbar-item">
