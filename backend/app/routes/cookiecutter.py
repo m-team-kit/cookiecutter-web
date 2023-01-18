@@ -1,14 +1,14 @@
 import io
+import os
 import tempfile
 
 import requests
 from cookiecutter.main import cookiecutter
-from flask import request, send_file
+from flask import request, send_file, Response
 from flask_smorest import Blueprint
 
 from ..lib.zip import zip_folder_to_buffer
 from ..settings import ZIP_NAME
-import os
 
 from ..schemas import args, schemas
 
@@ -26,12 +26,12 @@ blp = Blueprint(
 def generate(json, *, url, git_repo, git_branch):
     template = requests.get(url)
     json_data = template.json()
-    print(request.form)
     for key, value in request.form.items():
         if value != "" and key != "submit":
             json_data[key] = value
     print(json_data)
     print(url, git_repo, git_branch)
+    print(json)
 
     with tempfile.TemporaryDirectory() as tmpdir:
         # create a subfolder so the folder in the zip is not garbled text
@@ -42,20 +42,24 @@ def generate(json, *, url, git_repo, git_branch):
         replay_dir = os.path.join(tmpdir, "cookiecutter-replay")
         cookie_config = os.path.join(tmpdir, "cookiecutter.yaml")
 
-        # manually escape backslashes for windows because apparently python can't do that
+        # manually escape backslashes for windows 
+        # because apparently python can't do that
         backslash = '\\'
 
         with open(cookie_config, 'w') as config:
-            print(f'cookiecutters_dir: "{os.path.abspath(cookie_dir).replace(backslash, backslash + backslash)}"',
-                  file=config)
-            print(f'replay_dir: "{os.path.abspath(replay_dir).replace(backslash, backslash + backslash)}"', file=config)
+            cookie_dir = os.path.abspath(cookie_dir).replace(backslash, 
+                                                             backslash + backslash)
+            print(f'cookiecutters_dir: "{cookie_dir}"', file=config)
+            replay_dir = os.path.abspath(replay_dir).replace(backslash, 
+                                                             backslash + backslash)
+            print(f'replay_dir: "{replay_dir}"', file=config)
 
         # call cookiecutter
         cookiecutter(
             git_repo,
             checkout=git_branch,
             no_input=True,
-            extra_context=json_data,
+            extra_context=json,
             output_dir=workdir,
             overwrite_if_exists=True,
             config_file=cookie_config
@@ -66,4 +70,10 @@ def generate(json, *, url, git_repo, git_branch):
         buffer = io.BytesIO()
         zip_folder_to_buffer(workdir, buffer)
         buffer.seek(0)
-        return send_file(buffer, mimetype="application/zip", download_name=ZIP_NAME + ".zip")
+        # the line below produces in Swagger:
+        # Unrecognized response type; displaying content as text.
+        #return send_file(buffer, mimetype="application/zip", download_name=ZIP_NAME + ".zip")
+        return Response(buffer,
+                        mimetype='application/zip',
+                        headers={'Content-Disposition': 
+                                 'attachment;filename=' + ZIP_NAME + '.zip'})

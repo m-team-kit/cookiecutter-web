@@ -27,7 +27,7 @@ services:
     env_file: .env
     environment:
       BACKEND_ROUTE: /api/v1
-      FLASK_ENV: development
+      FLASK_DEBUG: development
       SECRET_KEY_FILE: /run/secrets/cookie_secret
     volumes:
       - ./backend/:/app
