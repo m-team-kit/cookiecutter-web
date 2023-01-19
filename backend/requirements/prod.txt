@@ -13,3 +13,7 @@ gevent~=22.10.2
 
 # REST GUI
 flask-smorest~=0.40.0
+
+# Auth
+flaat~=1.1.1
+

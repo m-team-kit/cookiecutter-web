@@ -4,6 +4,7 @@ import sys
 from flask import Flask
 from . import routes
 from .extensions import api  # Api interface module
+from .extensions import flaat   # Flask authentication with tokens
 
 
 # Sourced from:
@@ -69,6 +70,7 @@ def create_app(config_base="app.settings", **settings_override):
 def register_extensions(app):
     """Register Flask extensions."""
     api.init_app(app)
+    flaat.init_app(app)
 
 
 def register_blueprints(app):

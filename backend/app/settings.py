@@ -115,6 +115,21 @@ ZIP_NAME = "deep_project"
 
 LOG_LEVEL = str('LOG_LEVEL', default='INFO')
 
+# Authorization configuration.
+TRUSTED_OP_LIST = list("TRUSTED_OP_LIST", default=[
+    'https://aai.egi.eu/auth/realms/egi',
+    'https://aai-demo.egi.eu/auth/realms/egi',
+    'https://aai-dev.egi.eu/auth/realms/egi'
+])
+"""| Trusted OIDC Providers, default value stands for:
+|  - 'https://aai.egi.eu/auth/realms/egi'
+|  - 'https://aai-demo.egi.eu/auth/realms/egi'
+|  - 'https://aai-dev.egi.eu/auth/realms/egi'
+
+:meta hide-value:
+"""
+
+
 # API specs configuration
 BACKEND_ROUTE = str("BACKEND_ROUTE", default="/")
 API_TITLE = 'CookieCutter API'
@@ -125,17 +140,25 @@ OPENAPI_URL_PREFIX = "/"
 OPENAPI_SWAGGER_UI_PATH = "/"
 OPENAPI_SWAGGER_UI_URL = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
 
-API_SPEC_OPTIONS = {
-    'security': [{"bearerAuth": []}],
-    'servers': [{"url": BACKEND_ROUTE}],
-    'components': {},
-    'info': {
-        "license": {
-            "name": "MIT",
-            # "url": "https://raw.githubusercontent.com/EOSC-synergy/eosc-perf/master/LICENSE",
+API_SPEC_OPTIONS = {}
+API_SPEC_OPTIONS['security'] = [{"bearerAuth": []}]
+API_SPEC_OPTIONS['servers'] = [{"url": BACKEND_ROUTE}]
+API_SPEC_OPTIONS['components'] = {
+    "securitySchemes": {
+        "bearerAuth": {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT"
         }
     }
 }
+API_SPEC_OPTIONS['info'] = {
+    "license": {
+        "name": "MIT",
+        "url": "https://git.scc.kit.edu/m-team/ai/cookiecutter-to-webform/-/raw/main/LICENSE",
+    }
+}
+
 
 # logging level accross various scripts
 # options: DEBUG(10), INFO(20), WARNING(30), ERROR(40), CRITICAL(50)
