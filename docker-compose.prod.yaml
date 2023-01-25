@@ -9,7 +9,7 @@ services:
     build:
       target: production
     environment:
-      FLASK_ENV: production
+      FLASK_DEBUG: "False"
       GUNICORN_WORKERS: 1
 
   reverse_proxy:

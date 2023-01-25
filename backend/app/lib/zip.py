@@ -11,7 +11,6 @@ def zip_folder_to_buffer(path: typing.Union[str, pathlib.Path], filename=ZIP_NAM
     for root, dirs, files in os.walk(path):
         for file in files:
             zip_handle.write(os.path.join(root, file),
-                             os.path.relpath(os.path.join(root, file),
-                                             os.path.join(path, '..')))
+                             os.path.relpath(os.path.join(root, file), path))
 
     return filename

@@ -9,6 +9,7 @@ from flask_smorest import Blueprint
 
 from ..lib.zip import zip_folder_to_buffer
 from ..settings import ZIP_NAME
+from ..extensions import flaat
 
 from ..schemas import args, schemas
 
@@ -20,18 +21,23 @@ blp = Blueprint(
 # for schema, see https://swagger.io/docs/specification/data-models/data-types/#file
 @blp.route('/', methods=["POST"])
 @blp.doc(operationId='renderTemplate')
+@flaat.is_authenticated()
 @blp.arguments(args.Template, location="query", as_kwargs=True)
 @blp.arguments(schemas.Json)
 @blp.response(200, {"format": "binary", "type": "string"}, content_type="application/zip")
-def generate(json, *, url, git_repo, git_branch):
-    template = requests.get(url)
-    json_data = template.json()
-    for key, value in request.form.items():
-        if value != "" and key != "submit":
-            json_data[key] = value
-    print(json_data)
-    print(url, git_repo, git_branch)
-    print(json)
+def generate(json_body, *, url, git_repo, git_branch):
+
+    print(F"Request.Form length: {len(request.form)}, {request.form}")    
+    # if called from the frontend, params are in the request:
+    if len(request.form) > 1:
+        json_template = requests.get(url).json()
+        json_body = json_template
+        for key, value in request.form.items():
+            if value != "" and key != "submit":
+                json_body[key] = value
+
+    print(F"Injected: {url}, {git_repo}, {git_branch}")
+    print(F"Json_body length: {len(json_body)}, {json_body}")
 
     with tempfile.TemporaryDirectory() as tmpdir:
         # create a subfolder so the folder in the zip is not garbled text
@@ -59,7 +65,7 @@ def generate(json, *, url, git_repo, git_branch):
             git_repo,
             checkout=git_branch,
             no_input=True,
-            extra_context=json,
+            extra_context=json_body,
             output_dir=workdir,
             overwrite_if_exists=True,
             config_file=cookie_config

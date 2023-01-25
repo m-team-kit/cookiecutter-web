@@ -27,7 +27,8 @@ services:
     env_file: .env
     environment:
       BACKEND_ROUTE: /api/v1
-      FLASK_DEBUG: development
+      FLASK_DEBUG: "True"
+      GUNICORN_WORKERS: 1
       SECRET_KEY_FILE: /run/secrets/cookie_secret
     volumes:
       - ./backend/:/app
