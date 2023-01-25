@@ -48,7 +48,8 @@ def generate(json_body, *, url, git_repo, git_branch):
         replay_dir = os.path.join(tmpdir, "cookiecutter-replay")
         cookie_config = os.path.join(tmpdir, "cookiecutter.yaml")
 
-        # manually escape backslashes for windows because apparently python can't do that
+        # manually escape backslashes for windows 
+        # because apparently python can't do that
         backslash = '\\'
 
         with open(cookie_config, 'w') as config:
