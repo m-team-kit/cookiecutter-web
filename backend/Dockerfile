@@ -18,6 +18,8 @@ WORKDIR /app
 ENV PATH="/home/sid/.local/bin:${PATH}"
 ENV FLASK_APP="autoapp.py"
 
+RUN  git config --global user.email "ccweb@lists.kit.edu" &&\
+     git config --global user.name "cookiecutter-web"
 COPY requirements requirements
 RUN pip install --no-cache -r requirements/prod.txt
 COPY autoapp.py ./
