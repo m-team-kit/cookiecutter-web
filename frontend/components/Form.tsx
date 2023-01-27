@@ -10,17 +10,20 @@ export const Form: FC<FormProps> = ({ fields }) => {
     // TODO: better handling of StringField and SelectField typing
     return (
         <>
-            {fields.map((field) => (
-                <div key={field.key}>
-                    <label htmlFor="">{field.description ?? field.key}</label>
-                    {field.default != BLANK_FIELD &&
-                        (typeof field.default == 'string' ? (
-                            <TextInput field={field as StringField} />
-                        ) : Array.isArray(field.default) ? (
-                            <SelectInput field={field as SelectField} />
-                        ) : undefined)}
-                </div>
-            ))}
+            {fields
+                // don't display fields starting with _ or __
+                .filter((f) => !f.key.startsWith('_'))
+                .map((field) => (
+                    <div key={field.key}>
+                        <label htmlFor="">{field.description ?? field.key}</label>
+                        {field.default != BLANK_FIELD &&
+                            (typeof field.default == 'string' ? (
+                                <TextInput field={field as StringField} />
+                            ) : Array.isArray(field.default) ? (
+                                <SelectInput field={field as SelectField} />
+                            ) : undefined)}
+                    </div>
+                ))}
         </>
     );
 };
