@@ -18,8 +18,6 @@ WORKDIR /app
 ENV PATH="/home/sid/.local/bin:${PATH}"
 ENV FLASK_APP="autoapp.py"
 
-RUN  git config --global user.email "ccweb@lists.kit.edu" &&\
-     git config --global user.name "cookiecutter-web"
 COPY requirements requirements
 RUN pip install --no-cache -r requirements/prod.txt
 COPY autoapp.py ./
@@ -35,12 +33,20 @@ RUN useradd -m sid
 RUN chown -R sid:sid /app
 USER sid
 
+# we change user => have to configure git for this user
+RUN  git config --global user.email "deep-support@lists.kit.edu" &&\
+     git config --global user.name "cookiecutter-web"
+
 ENV FLASK_ENV="production"
 EXPOSE 5000
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
 
 # ================================= DEVELOPMENT ================================
 FROM backend AS development
+
+# configure git user in development too
+RUN  git config --global user.email "deep-support@lists.kit.edu" &&\
+     git config --global user.name "cookiecutter-web"
 
 #COPY factories factories
 RUN pip install --no-cache -r requirements/dev.txt

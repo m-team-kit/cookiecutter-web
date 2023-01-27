@@ -13,7 +13,8 @@ services:
       - backend_v1
     environment:
       NEXT_PUBLIC_BACKEND_URL: /api/v1
-      NEXT_PUBLIC_OAUTH_AUTHORITY: "https://aai-dev.egi.eu/auth/realms/egi/"
+      NEXT_PUBLIC_OAUTH_AUTHORITY: "https://aai-demo.egi.eu/auth/realms/egi/"
+      NEXT_PUBLIC_OIDC_REDIRECT_HOST: "https://${DOMAIN}"
 
   backend_v1:
     container_name: backend_v1

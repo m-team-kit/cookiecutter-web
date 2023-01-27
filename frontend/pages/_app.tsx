@@ -17,10 +17,12 @@ const oidcConfig: AuthProviderProps = {
         (process.env.NODE_ENV === 'development'
             ? 'https://aai-dev.egi.eu/auth/realms/egi/'
             : 'https://aai.egi.eu/auth/realms/egi/'),
-    client_id: process.env.NEXT_PUBLIC_OIDC_CLIENT_ID ?? 'eosc-performance',
+    client_id: process.env.NEXT_PUBLIC_OIDC_CLIENT_ID ?? 'ccweb',
     redirect_uri:
         (process.env.NEXT_PUBLIC_OIDC_REDIRECT_HOST ?? 'https://localhost') + '/oidc-redirect',
-    scope: 'openid email profile eduperson_entitlement offline_access',
+    //scope: 'openid email profile eduperson_entitlement offline_access',
+    // reduce scope
+    scope: 'openid email eduperson_entitlement offline_access',
     response_type: 'code',
 };
 
