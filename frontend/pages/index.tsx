@@ -28,6 +28,13 @@ const deepHdcMaster: Template = {
     gitBranch: 'master',
     name: 'deephdc/cookiecutter-deep:master',
 };
+const deepHdcChildModule: Template = {
+    templateUrl:
+        'https://raw.githubusercontent.com/deephdc/cookiecutter-deep/master/cookiecutter.json',
+    gitRepo: GIT_REPO_URL,
+    gitBranch: 'child-module',
+    name: 'deephdc/cookiecutter-deep:child-module',
+};
 const deepHdcAdvanced: Template = {
     templateUrl: COOKIECUTTER_TEMPLATE_URL,
     helpUrl:
@@ -46,7 +53,7 @@ const TemplateForm = () => {
     const [gitRepo, setGitRepo] = useState(deepHdcMaster.gitRepo);
     const [gitBranch, setGitBranch] = useState(deepHdcMaster.gitBranch);
 
-    const templates: Template[] = [deepHdcMaster, deepHdcAdvanced];
+    const templates: Template[] = [deepHdcMaster, deepHdcChildModule, deepHdcAdvanced];
 
     const fields = useQuery(
         [templateUrl, gitRepo, gitBranch],
