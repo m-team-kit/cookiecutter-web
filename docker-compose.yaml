@@ -12,9 +12,15 @@ services:
     depends_on:
       - backend_v1
     environment:
-      NEXT_PUBLIC_BACKEND_URL: /api/v1
-      NEXT_PUBLIC_OAUTH_AUTHORITY: "https://aai-demo.egi.eu/auth/realms/egi/"
-      NEXT_PUBLIC_OIDC_REDIRECT_HOST: "https://${DOMAIN}"
+      # refer to configuration.ts and _app.tsx to see used vars
+      NEXT_PUBLIC_OAUTH_AUTHORITY: ${OAUTH_AUTHORITY}
+      NEXT_PUBLIC_OIDC_REDIRECT_HOST: ${FRONTEND_REDIRECT_HOST}
+      NEXT_PUBLIC_OIDC_CLIENT_ID: ${FRONTEND_OIDC_CLIENT_ID}
+      NEXT_PUBLIC_API_ROUTE: ${FRONTEND_API_ROUTE}
+      CC_GIT_REPO_DOWNLOAD_URL: ${GIT_REPO_DOWNLOAD_URL}
+      CC_GIT_REPO_URL: ${CC_GIT_REPO_URL}
+      CC_GIT_BRANCH: ${CC_GIT_BRANCH}
+      CC_TEMPLATE: ${CC_TEMPLATE}
 
   backend_v1:
     container_name: backend_v1
