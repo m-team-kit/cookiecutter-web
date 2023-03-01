@@ -30,7 +30,7 @@ const deepHdcMaster: Template = {
 };
 const deepHdcChildModule: Template = {
     templateUrl:
-        'https://raw.githubusercontent.com/deephdc/cookiecutter-deep/master/cookiecutter.json',
+        'https://raw.githubusercontent.com/deephdc/cookiecutter-deep/child-module/cookiecutter.json',
     gitRepo: GIT_REPO_URL,
     gitBranch: 'child-module',
     name: 'deephdc/cookiecutter-deep:child-module',
