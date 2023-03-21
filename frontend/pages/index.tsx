@@ -148,7 +148,7 @@ const TemplateForm = () => {
                     type="submit"
                     value="Generate"
                     ref={formSubmitButton}
-                    disabled={error}
+                    onClick={() => setError(false)}
                 />
                 {error && (
                     <span className="text-error" id="something-went-wrong">
