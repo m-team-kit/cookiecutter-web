@@ -1,128 +1,80 @@
 import { NextPage } from 'next';
 import { useQuery } from 'react-query';
-import {
-    BACKEND_ROUTE,
-    COOKIECUTTER_TEMPLATE_URL,
-    GIT_BRANCH_NAME,
-    GIT_REPO_URL,
-} from 'lib/configuration';
 import { LegalField } from 'lib/template';
 import Form from '../components/Form';
 import { FormEventHandler, useCallback, useState } from 'react';
 import Navbar from '../components/Navbar';
 import { useAuth } from 'react-oidc-context';
 import Footer from '../components/Footer';
+import { TEMPLATES } from '../lib/templates';
+import { buildTemplateUrl, postForm } from '../lib/api';
 
-type Template = {
-    templateUrl: string;
-    helpUrl?: string;
-    gitRepo: string;
-    gitBranch: string;
-    name: string;
+const unpackResponse = async (r: Response) => {
+    return {
+        // file contents
+        blob: await r.blob(),
+        // get filename from headers if possible
+        filename:
+            r.headers.get('Content-Disposition')?.replace('attachment;filename=', '') ??
+            'cookiecutter.zip',
+    };
 };
 
-const deepHdcMaster: Template = {
-    templateUrl:
-        'https://raw.githubusercontent.com/deephdc/cookiecutter-deep/master/cookiecutter.json',
-    gitRepo: GIT_REPO_URL,
-    gitBranch: 'master',
-    name: 'deephdc/cookiecutter-deep:master',
-};
-const deepHdcChildModule: Template = {
-    templateUrl:
-        'https://raw.githubusercontent.com/deephdc/cookiecutter-deep/child-module/cookiecutter.json',
-    gitRepo: GIT_REPO_URL,
-    gitBranch: 'child-module',
-    name: 'deephdc/cookiecutter-deep:child-module',
-};
-const deepHdcAdvanced: Template = {
-    templateUrl: COOKIECUTTER_TEMPLATE_URL,
-    helpUrl:
-        COOKIECUTTER_TEMPLATE_URL.substring(0, COOKIECUTTER_TEMPLATE_URL.lastIndexOf('.')) +
-        '-help.json',
-    gitRepo: GIT_REPO_URL,
-    gitBranch: GIT_BRANCH_NAME,
-    name: 'deephdc/cookiecutter-deep:advanced',
+const saveFile = ({ blob, filename }: Awaited<ReturnType<typeof unpackResponse>>) => {
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
 };
 
 const TemplateForm = () => {
     const auth = useAuth();
 
-    const [templateUrl, setTemplateUrl] = useState(deepHdcMaster.templateUrl);
+    const [templateUrl, setTemplateUrl] = useState(TEMPLATES[0].templateUrl);
     const [helpUrl, setHelpUrl] = useState<string | undefined>(undefined);
-    const [gitRepo, setGitRepo] = useState(deepHdcMaster.gitRepo);
-    const [gitBranch, setGitBranch] = useState(deepHdcMaster.gitBranch);
-
-    const templates: Template[] = [deepHdcMaster, deepHdcChildModule, deepHdcAdvanced];
+    const [gitRepo, setGitRepo] = useState(TEMPLATES[0].gitRepo);
+    const [gitBranch, setGitBranch] = useState(TEMPLATES[0].gitBranch);
 
     const fields = useQuery(
         [templateUrl, gitRepo, gitBranch],
         async () => {
-            const response = await fetch(
-                '/api/template?' +
-                    new URLSearchParams(
-                        helpUrl
-                            ? {
-                                  url: templateUrl,
-                                  helpUrl: helpUrl,
-                              }
-                            : { url: templateUrl }
-                    )
-            );
+            const response = await fetch(buildTemplateUrl(templateUrl, helpUrl));
             // TODO: less dirty approach?
             return (response.json as () => Promise<LegalField[]>)();
         },
         { refetchOnWindowFocus: false }
     );
 
-    const handleSubmit = useCallback<FormEventHandler<HTMLFormElement>>((e) => {
+    const handleSubmit = useCallback<FormEventHandler<HTMLFormElement>>(async (e) => {
         e.preventDefault();
-        fetch(
-            BACKEND_ROUTE +
-                '?' +
-                new URLSearchParams({
-                    url: templateUrl,
-                    git_repo: gitRepo,
-                    git_branch: gitBranch,
-                }),
+        if (auth.user?.access_token === undefined) {
+            return;
+        }
+        const response = await postForm(
+            auth.user.access_token,
             {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${auth.user?.access_token}`,
-                },
-                body: new FormData(e.currentTarget),
-            }
-        )
-            .then(async (r) => {
-                return {
-                    // file contents
-                    blob: await r.blob(),
-                    // get filename from headers if possible
-                    filename:
-                        r.headers.get('Content-Disposition')?.replace('attachment;filename=', '') ??
-                        'cookiecutter.zip',
-                };
-            })
-            .then(({ blob, filename }) => {
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = filename;
-                link.click();
-            });
+                url: templateUrl,
+                git_repo: gitRepo,
+                git_branch: gitBranch,
+            },
+            new FormData(e.currentTarget)
+        );
+        const file = await unpackResponse(response);
+        saveFile(file);
     }, []);
 
     return (
         <>
             <select
                 onChange={(e) => {
-                    const template = templates[parseInt(e.target.value)];
+                    const template = TEMPLATES[parseInt(e.target.value)];
                     setTemplateUrl(template.templateUrl);
                     setGitRepo(template.gitRepo);
                     setGitBranch(template.gitBranch);
                     setHelpUrl(template.helpUrl);
                 }}
             >
-                {templates.map((t, i) => {
+                {TEMPLATES.map((t, i) => {
                     return (
                         <option key={t.gitRepo + t.gitBranch} value={i}>
                             {t.name}
