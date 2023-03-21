@@ -15,3 +15,41 @@
     text-decoration: underline;
     color: #0FA0CE;
 }
+
+.modal {
+    border: 0;
+    box-shadow: 0 0 1em black;
+}
+
+.modal::backdrop {
+    background: rgb(0 0 0 / .3);
+}
+
+.button-warning {
+    background-color: #ffcc33;
+    color: #000000;
+}
+
+.flex {
+    display: flex;
+}
+.justify-end {
+    justify-content: flex-end;
+}
+.flex-gap {
+    gap: 1rem;
+}
+
+.border-warning {
+    border: 1px solid rgb(100% 80% 20%) !important;
+    background-color: rgb(255 242 204) !important;
+}
+
+.text-error {
+    color: rgb(149, 34, 34);
+}
+
+button:disabled, .button:disabled, .button-primary:disabled {
+    cursor: not-allowed;
+    background-color: rgb(129, 129, 129) !important;
+}
