@@ -69,7 +69,7 @@ const TemplateForm = () => {
                 .filter(([key, value]) => keysToCheck.includes(key) && value.length == 0)
                 .map(([key, _]) => key);
         },
-        [fields.isSuccess]
+        [fields.isSuccess, fields.data]
     );
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
@@ -158,8 +158,8 @@ const TemplateForm = () => {
             </form>
             <dialog id="missing-fields" ref={missingFieldsModal} className="modal">
                 <p>
-                    It looks like you haven't filled out all the fields. Are you sure you want to
-                    submit the form?{' '}
+                    It looks like you haven&apos;t filled out all the fields. Are you sure you want
+                    to submit the form?{' '}
                 </p>
                 <p>
                     Missing fields:
