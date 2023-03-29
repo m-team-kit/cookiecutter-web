@@ -180,16 +180,14 @@ const TemplateForm = () => {
                     It looks like you haven&apos;t filled out all the fields. Are you sure you want
                     to submit the form?{' '}
                 </p>
-                <p>
-                    Missing fields:
-                    <ul>
-                        {emptyFields.map((f) => (
-                            <li key={f} style={{ marginBlock: '.1rem' }}>
-                                {f}
-                            </li>
-                        ))}
-                    </ul>
-                </p>
+                <p>Missing fields:</p>
+                <ul>
+                    {emptyFields.map((f) => (
+                        <li key={f} style={{ marginBlock: '.1rem' }}>
+                            {f}
+                        </li>
+                    ))}
+                </ul>
                 <div className="flex justify-end flex-gap">
                     <button
                         onClick={() => {
