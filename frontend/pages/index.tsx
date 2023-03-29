@@ -9,6 +9,7 @@ import Footer from '../components/Footer';
 import { TEMPLATES } from '../lib/templates';
 import { buildTemplateUrl, postForm } from '../lib/api';
 import { hasDefaultValue, isUsefulKey } from '../lib/form-processing';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const unpackResponse = async (r: Response) => {
     return {
@@ -34,6 +35,8 @@ const TemplateForm = () => {
     const formSubmitButton = useRef<HTMLInputElement>(null);
     const missingFieldsModal = useRef<HTMLDialogElement>(null);
 
+    // TODO: replace these with react-query?
+    const [processing, setProcessing] = useState(false);
     const [error, setError] = useState(false);
 
     const [templateUrl, setTemplateUrl] = useState(TEMPLATES[0].templateUrl);
@@ -74,6 +77,7 @@ const TemplateForm = () => {
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
+        setProcessing(true);
         if (!fields.isSuccess || auth.user?.access_token === undefined) {
             return;
         }
@@ -86,6 +90,7 @@ const TemplateForm = () => {
                 missingFieldsModal.current?.showModal();
                 setOverrideMissingFieldsWarning(true);
                 console.warn('Missing fields:', emptyFields);
+                setProcessing(false);
                 return;
             }
         }
@@ -104,6 +109,7 @@ const TemplateForm = () => {
             return;
         }
         const file = await unpackResponse(response);
+        setProcessing(false);
         saveFile(file);
         setEmptyFields([]);
     };
@@ -143,12 +149,25 @@ const TemplateForm = () => {
                 <div>
                     {fields.isSuccess && <Form fields={fields.data} flaggedFields={emptyFields} />}
                 </div>
+                {processing && (
+                    <div
+                        style={{
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            marginBottom: '1rem',
+                        }}
+                    >
+                        <LoadingSpinner />
+                    </div>
+                )}
                 <input
                     className="button-primary"
                     type="submit"
                     value="Generate"
                     ref={formSubmitButton}
                     onClick={() => setError(false)}
+                    disabled={processing}
                 />
                 {error && (
                     <span className="text-error" id="something-went-wrong">
