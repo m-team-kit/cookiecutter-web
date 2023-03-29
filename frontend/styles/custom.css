@@ -53,3 +53,7 @@ button:disabled, .button:disabled, .button-primary:disabled {
     cursor: not-allowed;
     background-color: rgb(129, 129, 129) !important;
 }
+
+.mb-0 {
+    margin-bottom: 0!important;
+}
