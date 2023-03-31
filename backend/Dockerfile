@@ -7,7 +7,7 @@ FROM python:${INSTALL_PYTHON_VERSION}-${PYTHON_IMAGE_TAG} AS backend
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install system updates and tools
-        curl git && \
+        curl git patch && \
 # Clean up & back to dialog front end
     apt-get autoremove -y && \
     apt-get clean -y && \
@@ -20,6 +20,9 @@ ENV FLASK_APP="autoapp.py"
 
 COPY requirements requirements
 RUN pip install --no-cache -r requirements/prod.txt
+COPY apply_cc_patch.py ./
+COPY patches patches
+RUN python3 apply_cc_patch.py
 COPY autoapp.py ./
 COPY app app
 
