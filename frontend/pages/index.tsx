@@ -104,12 +104,12 @@ const TemplateForm = () => {
             },
             form
         );
+        setProcessing(false);
         if (!response.ok) {
             setError(true);
             return;
         }
         const file = await unpackResponse(response);
-        setProcessing(false);
         saveFile(file);
         setEmptyFields([]);
     };
