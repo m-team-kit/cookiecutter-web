@@ -37,7 +37,7 @@ const TemplateForm = () => {
 
     // TODO: replace these with react-query?
     const [processing, setProcessing] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState<boolean | string>(false);
 
     const [templateUrl, setTemplateUrl] = useState(TEMPLATES[0].templateUrl);
     const [helpUrl, setHelpUrl] = useState<string | undefined>(undefined);
@@ -106,7 +106,13 @@ const TemplateForm = () => {
         );
         setProcessing(false);
         if (!response.ok) {
-            setError(true);
+            try {
+                const body = await response.json();
+                console.error(body);
+                setError(JSON.stringify(body, null, 2));
+            } catch (e) {
+                setError(true);
+            }
             return;
         }
         const file = await unpackResponse(response);
@@ -172,6 +178,11 @@ const TemplateForm = () => {
                 {error && (
                     <span className="text-error" id="something-went-wrong">
                         Something went wrong, please try again later.
+                        {typeof error !== 'boolean' && (
+                            <pre>
+                                <code>{error}</code>
+                            </pre>
+                        )}
                     </span>
                 )}
             </form>
