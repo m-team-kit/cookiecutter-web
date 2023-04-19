@@ -63,7 +63,7 @@ button:disabled, .button:disabled, .button-primary:disabled {
     background-position: center;
     padding: 7rem;
     /* height of navbar, TODO: variable */
-    margin-top: 6.5rem;
+    margin-top: 6.45rem;
 }
 
 .footer {
