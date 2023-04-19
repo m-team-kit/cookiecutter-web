@@ -2,15 +2,13 @@ import { NextPage } from 'next';
 import { useQuery } from 'react-query';
 import { LegalField } from 'lib/template';
 import Form from '../components/Form';
-import { FC, FormEventHandler, useCallback, useLayoutEffect, useRef, useState } from 'react';
-import Navbar from '../components/Navbar';
+import { FormEventHandler, useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { useAuth } from 'react-oidc-context';
-import Footer from '../components/Footer';
 import { TEMPLATES } from '../lib/templates';
 import { buildTemplateUrl, postForm } from '../lib/api';
 import { hasDefaultValue, isUsefulKey } from '../lib/form-processing';
 import LoadingSpinner from '../components/LoadingSpinner';
-import Center from '../components/Center';
+import Layout from '../components/Layout';
 
 const unpackResponse = async (r: Response) => {
     return {
@@ -129,6 +127,7 @@ const TemplateForm = () => {
 
     return (
         <>
+            <h1 className="h5">Generate template</h1>
             {!fields.isSuccess || (auth.user?.access_token === undefined && '0')}
             <select
                 onChange={(e) => {
@@ -226,97 +225,20 @@ const TemplateForm = () => {
     );
 };
 
-const Header: FC = () => {
-    return (
-        <Center
-            as="section"
-            className="header"
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}
-        >
-            <div>
-                <h1>Create AI projects from templates</h1>
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'space-around',
-                        flexWrap: 'wrap',
-                    }}
-                >
-                    <Center>
-                        <a href="https://deep-hybrid-datacloud.eu/">
-                            <img
-                                src="/images/deephdc-logo.png"
-                                className="header-logo"
-                                alt="Deep Hybrid DataCloud logo"
-                                style={{
-                                    height: '4rem',
-                                }}
-                            />
-                        </a>
-                    </Center>
-                    <Center>
-                        <a href="https://ai4eosc.eu/">
-                            <img
-                                src="/images/ai4eosc-white-no-bg.svg"
-                                alt="AI4EOSC logo"
-                                className="header-logo"
-                            />
-                        </a>
-                    </Center>
-                    <Center>
-                        <a href="https://www.imagine-ai.eu/">
-                            <img
-                                src="/images/logo-imagine-horizontal-white.png"
-                                className="header-logo"
-                                alt="iMagine project logo"
-                                style={{
-                                    height: '3.75rem',
-                                }}
-                            />
-                        </a>
-                    </Center>
-                    <Center>
-                        <a href="https://eosc.eu/">
-                            <img
-                                src="/images/eosc-white-no-bg.svg"
-                                alt="EOSC logo"
-                                className="header-logo"
-                            />
-                        </a>
-                    </Center>
-                </div>
-            </div>
-        </Center>
-    );
-};
-
 const Home: NextPage = () => {
     const auth = useAuth();
 
     return (
-        <>
-            <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100svh' }}>
-                <Navbar />
-                <Header />
-                <div className="container" style={{ flexGrow: 1 }}>
-                    <main>
-                        {auth.isAuthenticated ? (
-                            <TemplateForm />
-                        ) : (
-                            <>
-                                <p>Please log in!</p>
-                                <button onClick={() => auth.signinRedirect()}>Login</button>
-                            </>
-                        )}
-                    </main>
-                </div>
-                <Footer />
-            </div>
-        </>
+        <Layout>
+            {auth.isAuthenticated ? (
+                <TemplateForm />
+            ) : (
+                <>
+                    <p>Please log in!</p>
+                    <button onClick={() => auth.signinRedirect()}>Login</button>
+                </>
+            )}
+        </Layout>
     );
 };
 
