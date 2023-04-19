@@ -57,3 +57,31 @@ button:disabled, .button:disabled, .button-primary:disabled {
 .mb-0 {
     margin-bottom: 0!important;
 }
+
+.header {
+    background-image: url("/images/back.png"); /* fallback */
+    background-position: center;
+    padding: 7rem;
+    /* height of navbar, TODO: variable */
+    margin-top: 6.5rem;
+}
+
+.footer {
+    margin-top: 0;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.logo {
+    padding: unset;
+}
+
+.navbar-list :first-child {
+    margin-left: 1rem;
+}
+
+.header-logo {
+    /* TODO: using max-height breaks svg? */
+    height: 7rem;
+    width: auto;
+}

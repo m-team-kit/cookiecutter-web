@@ -24,7 +24,7 @@ const Navbar = () => {
                                 className="navbar-link"
                                 href="https://docs.deep-hybrid-datacloud.eu/"
                             >
-                                Docs
+                                Help
                             </a>
                         </li>
 
