@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
 import styles from './Footer.module.scss';
+import Link from 'next/link';
 
 const Footer: FC = () => {
     return (
@@ -45,7 +46,7 @@ const Footer: FC = () => {
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/privacy-policy">Privacy Policy</a>
+                                    <Link href="/privacy-policy">Privacy Policy</Link>
                                 </li>
                             </ul>
                         </div>
@@ -60,6 +61,7 @@ const Footer: FC = () => {
                                 className="logo"
                                 //src="/images/logo-deep-solid-white.png"
                                 src="/images/ai4eosc-white-no-bg.svg"
+                                alt="ai4eosc logo"
                             />
                         </div>
                     </div>
