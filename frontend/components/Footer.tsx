@@ -48,6 +48,9 @@ const Footer: FC = () => {
                                 <li>
                                     <Link href="/privacy-policy">Privacy Policy</Link>
                                 </li>
+                                <li>
+                                    <Link href="/aupolicy">Acceptable Use Policy</Link>
+                                </li>
                             </ul>
                         </div>
                         <div
