@@ -1,5 +1,7 @@
+@import "constants";
+
 .navbar-button {
-    font-family: Arial;
+    font-family: Arial, serif;
     text-transform: uppercase;
     font-size: 14px;
     font-weight: bold;
@@ -88,4 +90,18 @@ button:disabled, .button:disabled, .button-primary:disabled {
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     margin-bottom: .5rem;
+}
+
+hr {
+    border-top: 1px solid #888;
+}
+
+.center-contents {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+a {
+    scroll-margin-top: $navbar-height + 1rem;
 }

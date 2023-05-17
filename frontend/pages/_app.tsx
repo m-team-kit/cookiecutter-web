@@ -1,8 +1,8 @@
 import 'normalize.css/normalize.css';
 import 'styles/skeleton.css';
 //import 'styles/style.css';
-import 'styles/screen.css';
-import 'styles/custom.css';
+import 'styles/screen.scss';
+import 'styles/custom.scss';
 
 import type { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from 'react-query';

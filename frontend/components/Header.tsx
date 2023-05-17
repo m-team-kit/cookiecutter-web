@@ -3,15 +3,7 @@ import Center from './Center';
 
 const Header: FC = () => {
     return (
-        <Center
-            as="section"
-            className="header"
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}
-        >
+        <section className="header center-contents">
             <div>
                 <span className="h1">Create AI projects from templates</span>
                 <div
@@ -65,7 +57,7 @@ const Header: FC = () => {
                     </Center>
                 </div>
             </div>
-        </Center>
+        </section>
     );
 };
 
