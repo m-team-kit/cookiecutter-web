@@ -39,7 +39,7 @@ services:
       - cookie_secret
     labels:
       traefik.http.routers.backend.rule: Host(`${DOMAIN}`) && PathPrefix(`/api/v1`)
-      traefik.http.middlewares.cors.headers.accesscontrolallowmethods: "GET,OPTIONS,PUT"
+      traefik.http.middlewares.cors.headers.accesscontrolallowmethods: "GET,OPTIONS,PUT,POST,PATCH,DELETE"
       traefik.http.middlewares.cors.headers.accesscontrolallowheaders: "*"
       traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist: "https://${DOMAIN},http://${DOMAIN}"
       traefik.http.middlewares.cors.headers.accesscontrolmaxage: "100"
