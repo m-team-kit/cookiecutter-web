@@ -1,4 +1,4 @@
 .idea/
 .env
 cookie_secret.txt
-nginx_api_credentials.txt
+traefik/

@@ -6,14 +6,16 @@ type FormParameters = {
     git_branch: string;
 };
 
-export const postForm = async (accessToken: string, parameters: FormParameters, body: BodyInit) =>
-    fetch(BACKEND_ROUTE + '?' + new URLSearchParams(parameters), {
+export const postForm = async (accessToken: string, parameters: FormParameters, body: BodyInit) => {
+    return fetch(`${BACKEND_ROUTE}/?${new URLSearchParams(parameters)}`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
         body,
+        mode: 'cors',
     });
+};
 
 export const buildTemplateUrl = (templateUrl: string, helpUrl?: string) =>
     '/api/template?' +
