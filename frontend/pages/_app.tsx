@@ -10,6 +10,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { FC, PropsWithChildren } from 'react';
 import { AuthProvider, AuthProviderProps } from 'react-oidc-context';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 const oidcConfig: AuthProviderProps = {
     authority:
@@ -40,16 +41,21 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
     const router = useRouter();
 
     return (
-        <QueryClientWrapper>
-            <AuthProvider
-                {...oidcConfig}
-                onSigninCallback={() => {
-                    router.push('/');
-                }}
-            >
-                <Component {...pageProps} />
-            </AuthProvider>
-        </QueryClientWrapper>
+        <>
+            <Head>
+                <title>Cookiecutter-Web</title>
+            </Head>
+            <QueryClientWrapper>
+                <AuthProvider
+                    {...oidcConfig}
+                    onSigninCallback={() => {
+                        router.push('/');
+                    }}
+                >
+                    <Component {...pageProps} />
+                </AuthProvider>
+            </QueryClientWrapper>
+        </>
     );
 };
 
