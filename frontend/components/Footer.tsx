@@ -25,8 +25,10 @@ const Footer: FC = () => {
                             <img src="images/ec-logo.png" alt="european commisison logo" />
                         </div>
                         <div className="four columns">
-                            This project has received funding from the European Union’s Horizon
-                            Research and Innovation programme under Grant agreement No. 101058593
+                            This Service is powered by the AI4OS software, provided by KIT,
+                            supported by the AI4EOSC project with funding from the European Union’s
+                            Horizon Europe research and innovation programme under grant agreement
+                            No. 101058593.
                         </div>
                         <div
                             className="four columns"
