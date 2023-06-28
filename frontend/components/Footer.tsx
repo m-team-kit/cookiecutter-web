@@ -26,9 +26,11 @@ const Footer: FC = () => {
                         </div>
                         <div className="four columns">
                             This Service is powered by the AI4OS software, provided by KIT,
-                            supported by the AI4EOSC project with funding from the European Union’s
-                            Horizon Europe research and innovation programme under grant agreement
-                            No. 101058593.
+                            co-funded by the{' '}
+                            <a href="https://ai4eosc.eu/" rel="noreferrer">
+                                AI4EOSC project
+                            </a>
+                            .
                         </div>
                         <div
                             className="four columns"
@@ -62,12 +64,14 @@ const Footer: FC = () => {
                                 alignItems: 'center',
                             }}
                         >
-                            <img
-                                className="logo"
-                                //src="/images/logo-deep-solid-white.png"
-                                src="/images/ai4eosc-white-no-bg.svg"
-                                alt="ai4eosc logo"
-                            />
+                            <a href="https://ai4eosc.eu/" rel="noreferrer">
+                                <img
+                                    className="logo"
+                                    //src="/images/logo-deep-solid-white.png"
+                                    src="/images/ai4eosc-white-no-bg.svg"
+                                    alt="ai4eosc logo"
+                                />
+                            </a>
                         </div>
                     </div>
                 </div>
