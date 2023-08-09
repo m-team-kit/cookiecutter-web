@@ -195,7 +195,7 @@ paths:
       - $ref: '#/components/parameters/GitDatabase'
 
   /db:update:
-    put:
+    post:
       tags:
         - database
       summary: (Admin) Updates local database
