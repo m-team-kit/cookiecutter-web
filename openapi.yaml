@@ -122,19 +122,18 @@ paths:
       summary: (User) Rates specific template
       description: Use this method to update the score/rating of the specific template
       operationId: rateTemplate
-      parameters:
-        - name: score
-          in: query
-          description: Score of the template, 1 (bad) .. 5 (excellent)
-          schema:
-            type: integer
-            default: 4
-            enum:
-              - 1
-              - 2
-              - 3
-              - 4
-              - 5
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: integer
+              default: 4
+              enum:
+                - 1
+                - 2
+                - 3
+                - 4
+                - 5
       security:
          - bearerAuth: []
       responses:
