@@ -115,7 +115,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/UUID'
 
-  /templates/{uuid}:score:
+  /templates/{uuid}/score:
     put:
       tags:
         - templates
@@ -183,25 +183,17 @@ paths:
       summary: (Admin) Generates local database
       description: Use this method to generate local copy of the database from YAML files in the git repository
       operationId: createDB
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Database'
       responses:
-        '201':
+        '204':
           description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Database'
         '400':
           description: Invalid status value
         'default':
           $ref: '#/components/responses/DEFAULT_ERROR' 
       security:
          - bearerAuth: []
+    parameters:
+      - $ref: '#/components/parameters/GitDatabase'
 
   /db:update:
     put:
@@ -210,25 +202,17 @@ paths:
       summary: (Admin) Updates local database
       description: Use this method to update local copy of the database from YAML files in the git repository
       operationId: updateDB
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Database'
       responses:
-        '200':
+        '204':
           description: Updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Database'
         '400':
           description: Invalid status value
         'default':
           $ref: '#/components/responses/DEFAULT_ERROR' 
       security:
          - bearerAuth: []
-
+    parameters:
+      - $ref: '#/components/parameters/GitDatabase'
 
 components:
   parameters:
@@ -249,6 +233,15 @@ components:
         type: string
         default: "+title"
         example: "+title,+language"
+    GitDatabase:
+      name: repo
+      in: query
+      description: URL of the public git repository where yaml files for the templates hub are hosted
+      example: https://github.com/m-team-kit/templates-hub
+      required: true
+      schema:
+        type: string
+        example: python
   schemas:
     Template:
       type: object
