@@ -13,7 +13,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 0.1.0
+  version: 0.2.0
 servers:
   - url: /api/v1
 
@@ -280,17 +280,6 @@ components:
         score:
           type: number
           description: User score for the template
-    Database:
-      type: object
-      properties:
-        repo:
-          type: string
-          description: URL of the public git repository where yaml files for the templates hub are hosted
-          example: https://github.com/m-team-kit/templates-hub
-        localdb:
-          type: string
-          description: Name of the local Database file (sqlite is expected)
-          example: templates-hub.sqlite
     PaginationMetedata:
       type: object
       properties:
