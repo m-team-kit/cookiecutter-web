@@ -13,7 +13,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 0.2.0
+  version: 0.1.0
 servers:
   - url: /api/v1
 
@@ -49,29 +49,6 @@ paths:
             type: array
             items:
               type: string
-        - $ref: '#/components/parameters/SortBy'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Template'
-        '400':
-          description: Invalid status value
-        'default':
-          $ref: '#/components/responses/DEFAULT_ERROR'
-
-  /templates:search:
-    get:
-      tags:
-        - templates
-      summary: (Public) Finds templates matching search query
-      description: Use this method to list templates matching the search query, i.e. list of keywords to be   looked for in the title and summary fields of the template's metadata
-      operationId: searchTemplates
-      parameters:
         - name: keywords
           in: query
           description: List of keywords (string subsets)
@@ -87,12 +64,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Template'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Template'
         '400':
           description: Invalid status value
         'default':
-          $ref: '#/components/responses/DEFAULT_ERROR'  
-
+          $ref: '#/components/responses/DEFAULT_ERROR'
+  
   /templates/{uuid}:
     get:
       tags:
@@ -150,14 +129,36 @@ paths:
     parameters:
       - $ref: '#/components/parameters/UUID'
 
-  /create/{uuid}:
+  /project/{uuid}:
+    get:
+      tags:
+        - project
+      summary: (Public) Fetches fields of the cookiecutter template
+      description: Use this method to fetch fields of the cookiecutter template to build the web form
+      operationId: fetchFields
+      parameters:
+      - $ref: '#/components/parameters/UUID'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateFields'
+  /project/{uuid}:generate:
     post:
       tags:
         - project
-      summary: (User) Creates software project from the template
+      summary: (User) Generate software project from the template
       description: Use this method to generate software project using the specific template. Generated project is returned as .zip file
-      operationId: createProject
+      operationId: generateProject
       parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemplateFields'
       responses:
         '201':
           description: Success
@@ -179,8 +180,8 @@ paths:
     post:
       tags:
         - database
-      summary: (Admin) Generates local database
-      description: Use this method to generate local copy of the database from YAML files in the git repository
+      summary: (Admin) Creates local database
+      description: Use this method to create local copy of the database from YAML files in the git repository
       operationId: createDB
       responses:
         '204':
@@ -191,8 +192,7 @@ paths:
           $ref: '#/components/responses/DEFAULT_ERROR' 
       security:
          - bearerAuth: []
-    parameters:
-      - $ref: '#/components/parameters/GitDatabase'
+    parameters: []
 
   /db:update:
     post:
@@ -210,8 +210,7 @@ paths:
           $ref: '#/components/responses/DEFAULT_ERROR' 
       security:
          - bearerAuth: []
-    parameters:
-      - $ref: '#/components/parameters/GitDatabase'
+    parameters: []
 
 components:
   parameters:
@@ -232,16 +231,10 @@ components:
         type: string
         default: "+title"
         example: "+title,+language"
-    GitDatabase:
-      name: repo
-      in: query
-      description: URL of the public git repository where yaml files for the templates hub are hosted
-      example: https://github.com/m-team-kit/templates-hub
-      required: true
-      schema:
-        type: string
-        example: python
   schemas:
+    TemplateFields:
+      type: object
+      additionalProperties: true
     Template:
       type: object
       properties:
