@@ -17,8 +17,9 @@ This "help" file is expected in the same git repository as the `cookicutter_temp
 
 # Running the application
 
-Run `docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml --build up` to deploy the application in production mode.
-Run `docker-compose -f docker-compose.yaml --build up` to deploy the application in development mode for testing.
+Run `docker-compose -f docker-compose.base.yaml -f docker-compose.prod.yaml --build up` to deploy the application in production mode.
+
+Run `docker-compose -f docker-compose.base.yaml -f docker-compose.dev.yaml --build up` to deploy the application in development mode for testing.
 
 
 
