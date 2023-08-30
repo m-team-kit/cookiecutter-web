@@ -8,13 +8,6 @@ The backend docker image uses [Gunicorn](https://gunicorn.org/) as WSGI HTTP ser
 
 # Configuration
 
-Create a nginx_api_credentials.txt as follows: 
-```
-<username here>
-<password here>
-```
-These will be used by the letsencrypt / certificate container to reload the reverse proxy in case of certificate changes.
-
 Copy `.env-example` to `.env` and refer to the comments to fill in desired configuration values.
 
 The initial configuration provided in the project reads the cookiecutter json file for the [Deep Hybrid Data Cloud Project](https://github.com/deephdc/cookiecutter-deep/).
