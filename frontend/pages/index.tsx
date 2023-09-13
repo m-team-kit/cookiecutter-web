@@ -9,6 +9,7 @@ import { buildTemplateUrl, postForm } from '../lib/api';
 import { hasDefaultValue, isUsefulKey } from '../lib/form-processing';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Layout from '../components/Layout';
+import Button from '../components/Button';
 
 const unpackResponse = async (r: Response) => {
     return {
@@ -31,7 +32,7 @@ const saveFile = ({ blob, filename }: Awaited<ReturnType<typeof unpackResponse>>
 const TemplateForm = () => {
     const auth = useAuth();
 
-    const formSubmitButton = useRef<HTMLInputElement>(null);
+    const formSubmitButton = useRef<HTMLButtonElement>(null);
     const missingFieldsModal = useRef<HTMLDialogElement>(null);
 
     // TODO: replace these with react-query?
@@ -138,13 +139,11 @@ const TemplateForm = () => {
                     setHelpUrl(template.helpUrl);
                 }}
             >
-                {TEMPLATES.map((t, i) => {
-                    return (
-                        <option key={t.gitRepo + t.gitBranch} value={i}>
-                            {t.name}
-                        </option>
-                    );
-                })}
+                {TEMPLATES.map((t, i) => (
+                    <option key={t.gitRepo + t.gitBranch} value={i}>
+                        {t.name}
+                    </option>
+                ))}
             </select>
             <form onSubmit={handleSubmit} className="mb-0">
                 <p>
@@ -156,25 +155,20 @@ const TemplateForm = () => {
                     {fields.isSuccess && <Form fields={fields.data} flaggedFields={emptyFields} />}
                 </div>
                 {processing && (
-                    <div
-                        style={{
-                            width: '100%',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            marginBottom: '1rem',
-                        }}
-                    >
+                    <div className="w-full flex justify-center mb-4">
                         <LoadingSpinner />
                     </div>
                 )}
-                <input
-                    className="button-primary"
-                    type="submit"
-                    value="Generate"
-                    ref={formSubmitButton}
-                    onClick={() => setError(false)}
-                    disabled={processing}
-                />
+                <div className="flex justify-center pt-2">
+                    <Button
+                        type="submit"
+                        ref={formSubmitButton}
+                        onClick={() => setError(false)}
+                        disabled={processing}
+                    >
+                        Generate
+                    </Button>
+                </div>
                 {error && (
                     <span className="text-error" id="something-went-wrong">
                         Something went wrong, please try again later.
@@ -186,7 +180,7 @@ const TemplateForm = () => {
                     </span>
                 )}
             </form>
-            <dialog id="missing-fields" ref={missingFieldsModal} className="modal">
+            <dialog id="missing-fields" ref={missingFieldsModal} className="modal p-3">
                 <p>
                     It looks like you haven&apos;t filled out all the fields. Are you sure you want
                     to submit the form?{' '}
@@ -194,22 +188,23 @@ const TemplateForm = () => {
                 <p>Missing fields:</p>
                 <ul>
                     {emptyFields.map((f) => (
-                        <li key={f} style={{ marginBlock: '.1rem' }}>
+                        <li key={f} style={{ marginBlock: '.1rem', listStyle: 'disc inside' }}>
                             {f}
                         </li>
                     ))}
                 </ul>
                 <div className="flex justify-end flex-gap">
-                    <button
+                    <Button
+                        variant="secondary"
                         onClick={() => {
                             missingFieldsModal.current?.close();
                             setOverrideMissingFieldsWarning(false);
                         }}
                     >
                         Cancel
-                    </button>
-                    <button
-                        className="button-warning"
+                    </Button>
+                    <Button
+                        variant="warning"
                         onClick={() => {
                             missingFieldsModal.current?.close();
                             // HACK: manually retrigger submission here, find a more proper way?
@@ -218,7 +213,7 @@ const TemplateForm = () => {
                         }}
                     >
                         Submit
-                    </button>
+                    </Button>
                 </div>
             </dialog>
         </>
@@ -233,10 +228,14 @@ const Home: NextPage = () => {
             {auth.isAuthenticated ? (
                 <TemplateForm />
             ) : (
-                <>
-                    <p>Please log in!</p>
-                    <button onClick={() => auth.signinRedirect()}>Login</button>
-                </>
+                <div className="flex justify-center">
+                    <div>
+                        <span>Please log in!</span>
+                        <Button onClick={() => auth.signinRedirect()} className="ml-2">
+                            Login
+                        </Button>
+                    </div>
+                </div>
             )}
         </Layout>
     );

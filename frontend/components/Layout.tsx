@@ -8,7 +8,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100svh' }}>
             <Navbar />
             <Header />
-            <div className="container" style={{ flexGrow: 1 }}>
+            <div className="container mx-auto" style={{ flexGrow: 1 }}>
                 <main>{children}</main>
             </div>
             <Footer />
