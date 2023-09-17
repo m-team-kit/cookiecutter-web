@@ -4,42 +4,7 @@ import clsx from 'clsx';
 import { Template as TemplateDto } from 'lib/client/models/template';
 import Link from 'next/link';
 import Badge from 'components/Badge';
-import { StarHalf } from 'lucide-react';
-
-type RatingProps = { score: number; className?: string };
-const Rating: FC<RatingProps> = ({ score, className }) => {
-    const doubleScore = score * 2;
-
-    return (
-        <span className={clsx(className)}>
-            {[...Array(10)].map((_, i) => (
-                <span
-                    key={i}
-                    className={clsx('text-yellow-500', 'text-xl', 'inline', 'align-text-bottom')}
-                >
-                    {i < doubleScore ? (
-                        <StarHalf
-                            fill="currentColor"
-                            className={clsx(
-                                'inline',
-                                styles['star'],
-                                i % 2 == 1 ? styles['flipped'] : false
-                            )}
-                        />
-                    ) : (
-                        <StarHalf
-                            className={clsx(
-                                'inline',
-                                styles['star'],
-                                i % 2 == 1 ? styles['flipped'] : false
-                            )}
-                        />
-                    )}
-                </span>
-            ))}
-        </span>
-    );
-};
+import { Rating } from 'components/Rating';
 
 type TemplateProps = {
     template: TemplateDto;

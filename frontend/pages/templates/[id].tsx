@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import Layout from 'components/Layout';
 import { useTemplateApi } from 'lib/useApi';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { useEffect } from 'react';
@@ -11,6 +11,7 @@ import { firstMatching } from 'lib/firstMatching';
 import Badge from 'components/Badge';
 import { CutterField } from 'lib/client';
 import TemplateForm from 'pages/components/TemplateForm';
+import { Rating } from 'components/Rating';
 
 export const hasDefaultValue = (field: CutterField) => {
     // TODO: type assertion because of api spec/generator issue
@@ -29,7 +30,16 @@ const Template: NextPage = () => {
     const api = useTemplateApi();
     const template = useQuery(['template', templateId], () => api.getTemplate(templateId ?? ''), {
         enabled: templateId !== undefined,
+        keepPreviousData: true,
     });
+
+    const rateTemplate = useMutation(
+        ['rate', templateId],
+        (score: number) => api.rateTemplate(templateId ?? '', score),
+        {
+            onSuccess: () => template.refetch(),
+        }
+    );
 
     useEffect(() => {
         if (router.isReady && templateId === undefined) {
@@ -61,6 +71,11 @@ const Template: NextPage = () => {
             <div className="flex flex-row w-100">
                 <div className="flex-grow">
                     <h1 className="inline">{template.data.data.title}</h1>
+                    <Rating
+                        score={template.data.data.score ?? 0}
+                        onChange={(score) => rateTemplate.mutate(score)}
+                        className="ml-2"
+                    />
                     <div className="ml-2 inline-flex gap-1 align-text-top">
                         {Array.from(template.data.data.tags).map((tag) => (
                             <Badge type="info" key={tag}>
