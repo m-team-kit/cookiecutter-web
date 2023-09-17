@@ -1,8 +1,8 @@
 import 'normalize.css/normalize.css';
 //import 'styles/style.css';
 import 'styles/screen.scss';
-import 'styles/custom.scss';
 import 'styles/tailwind.css';
+import 'styles/custom.scss';
 
 import type { AppProps } from 'next/app';
 import { FC, PropsWithChildren } from 'react';
