@@ -28,7 +28,13 @@ const oidcConfig: AuthProviderProps = {
     response_type: 'code',
 };
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+        },
+    },
+});
 
 const QueryClientWrapper: FC<PropsWithChildren> = ({ children }) => {
     return (
