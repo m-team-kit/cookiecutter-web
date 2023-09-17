@@ -4,6 +4,7 @@ import SelectInput from './SelectInput';
 import TextInput from './TextInput';
 import Badge from 'components/Badge';
 import { CutterField } from 'lib/client';
+import CheckboxInput from 'components/template/CheckboxInput';
 
 type FormFieldProps = { field: CutterField; flagged: boolean };
 const Formfield: FC<FormFieldProps> = ({ field, flagged }) => {
@@ -19,6 +20,7 @@ const Formfield: FC<FormFieldProps> = ({ field, flagged }) => {
                     {field.type === 'select' && (
                         <SelectInput field={field} flagged={flagged} className="mt-1" />
                     )}
+                    {field.type === 'checkbox' && <CheckboxInput field={field} className="mt-1" />}
                 </>
             )}
         </div>
