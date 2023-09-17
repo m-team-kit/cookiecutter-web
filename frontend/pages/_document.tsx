@@ -17,13 +17,13 @@ export default function Document() {
                     type="image/png"
                 />
                 <link
-                    href="images/ai4-white.png"
+                    href="/images/ai4-white.png"
                     rel="icon"
                     media="(prefers-color-scheme: dark)"
                     type="image/svg+xml"
                 />
                 <link
-                    href="images/ai4-white.png"
+                    href="/images/ai4-white.png"
                     rel="icon"
                     media="(prefers-color-scheme: dark)"
                     type="image/png"
