@@ -12,25 +12,16 @@ export const Rating: FC<RatingProps> = ({ score, className, onChange }) => {
 
     return (
         <span
-            className={clsx(className)}
+            className={clsx('flex', className)}
             onMouseEnter={onChange ? () => setHovering(true) : undefined}
             onMouseLeave={onChange ? () => setHovering(false) : undefined}
         >
             {[...Array(10)].map((_, i) => {
-                const classes = clsx(
-                    'inline',
-                    styles['star'],
-                    i % 2 == 1 ? styles['flipped'] : false
-                );
+                const classes = clsx(styles['star'], i % 2 == 1 ? styles['flipped'] : false);
                 return (
                     <span
                         key={i}
-                        className={clsx(
-                            'text-yellow-500',
-                            'text-xl',
-                            'inline',
-                            'align-text-bottom'
-                        )}
+                        className={clsx('text-yellow-500', 'text-xl', 'align-text-bottom')}
                         onMouseEnter={() => setHoverScore(i + (i % 2))}
                         onClick={() => onChange && onChange((i + (i % 2)) / 2)}
                     >

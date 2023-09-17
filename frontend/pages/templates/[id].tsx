@@ -70,18 +70,20 @@ const Template: NextPage = () => {
         <Layout className="mt-32">
             <div className="flex flex-row w-100">
                 <div className="flex-grow">
-                    <h1 className="inline">{template.data.data.title}</h1>
-                    <Rating
-                        score={template.data.data.score ?? 0}
-                        onChange={(score) => rateTemplate.mutate(score)}
-                        className="ml-2"
-                    />
-                    <div className="ml-2 inline-flex gap-1 align-text-top">
-                        {Array.from(template.data.data.tags).map((tag) => (
-                            <Badge type="info" key={tag}>
-                                {tag}
-                            </Badge>
-                        ))}
+                    <div className="flex items-center">
+                        <h1 className="">{template.data.data.title}</h1>
+                        <Rating
+                            score={template.data.data.score ?? 0}
+                            onChange={(score) => rateTemplate.mutate(score)}
+                            className="ml-2"
+                        />
+                        <div className="ml-2 flex gap-1 align-text-top">
+                            {Array.from(template.data.data.tags).map((tag) => (
+                                <Badge type="info" key={tag}>
+                                    {tag}
+                                </Badge>
+                            ))}
+                        </div>
                     </div>
                     <p>{template.data.data.summary}</p>
                     <p>
