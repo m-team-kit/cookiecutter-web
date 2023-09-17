@@ -1,4 +1,4 @@
-import { Template as TemplateDto } from 'lib/client';
+import { CutterField, Template as TemplateDto } from 'lib/client';
 import { FC, FormEventHandler, useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { useAuth } from 'react-oidc-context';
 import { useProjectApi } from 'lib/useApi';
@@ -7,7 +7,13 @@ import { AxiosRequestConfig } from 'axios';
 import Form from 'components/template/Form';
 import Button from 'components/Button';
 import LoadingSpinner from 'components/LoadingSpinner';
-import { hasDefaultValue } from 'pages/templates/[id]';
+
+const hasDefaultValue = (field: CutterField) => {
+    // TODO: type assertion because of api spec/generator issue
+    const defaultValue = field.default as string;
+
+    return defaultValue.length > 0;
+};
 
 type TemplateFormProps = {
     template: TemplateDto;

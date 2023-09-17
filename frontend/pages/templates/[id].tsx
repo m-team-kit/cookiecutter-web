@@ -9,16 +9,8 @@ import Button from 'components/Button';
 import { useAuth } from 'react-oidc-context';
 import { firstMatching } from 'lib/firstMatching';
 import Badge from 'components/Badge';
-import { CutterField } from 'lib/client';
 import TemplateForm from 'pages/components/TemplateForm';
 import { Rating } from 'components/Rating';
-
-export const hasDefaultValue = (field: CutterField) => {
-    // TODO: type assertion because of api spec/generator issue
-    const defaultValue = field.default as string;
-
-    return defaultValue.length > 0;
-};
 
 // TODO: SSR?
 const Template: NextPage = () => {
