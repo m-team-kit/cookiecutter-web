@@ -3,7 +3,7 @@ import Layout from '../components/Layout';
 
 const PrivacyPolicy: NextPage = () => {
     return (
-        <Layout>
+        <Layout header>
             <p>
                 <h1 className="h4">Privacy Policy</h1>
                 This privacy policy for AI4EOSC Templates service is effective from 2023-05-02

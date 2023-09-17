@@ -4,7 +4,7 @@ import Layout from '../components/Layout';
 
 const AUPolicy: NextPage = () => {
     return (
-        <Layout>
+        <Layout header>
             <h1 className="h4">Acceptable Use Policy and Conditions of Use</h1>
             <p>
                 This Acceptable Use Policy for AI4EOSC Templates service is effective from

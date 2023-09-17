@@ -224,7 +224,7 @@ const Home: NextPage = () => {
     const auth = useAuth();
 
     return (
-        <Layout>
+        <Layout header>
             {auth.isAuthenticated ? (
                 <TemplateForm />
             ) : (
