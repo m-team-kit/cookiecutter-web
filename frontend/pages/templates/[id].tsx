@@ -10,7 +10,7 @@ import { useAuth } from 'react-oidc-context';
 import { firstMatching } from 'lib/firstMatching';
 import Badge from 'components/Badge';
 import TemplateForm from 'pages/components/TemplateForm';
-import { Rating } from 'components/Rating';
+import Rating from 'components/Rating';
 
 // TODO: SSR?
 const Template: NextPage = () => {

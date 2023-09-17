@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { Template as TemplateDto } from 'lib/client/models/template';
 import Link from 'next/link';
 import Badge from 'components/Badge';
-import { Rating } from 'components/Rating';
+import Rating from 'components/Rating';
 
 type TemplateProps = {
     template: TemplateDto;

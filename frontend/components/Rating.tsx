@@ -4,7 +4,7 @@ import styles from 'components/templates/Template.module.scss';
 import { StarHalf } from 'lucide-react';
 
 type RatingProps = { score: number; className?: string; onChange?: (score: number) => void };
-export const Rating: FC<RatingProps> = ({ score, className, onChange }) => {
+const Rating: FC<RatingProps> = ({ score, className, onChange }) => {
     const doubleScore = score * 2;
 
     const [hoverScore, setHoverScore] = useState(doubleScore);
@@ -36,3 +36,5 @@ export const Rating: FC<RatingProps> = ({ score, className, onChange }) => {
         </span>
     );
 };
+
+export default Rating;
