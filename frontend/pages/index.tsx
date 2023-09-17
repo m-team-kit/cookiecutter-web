@@ -1,5 +1,4 @@
 import { NextPage } from 'next';
-import { useQuery } from 'react-query';
 import { LegalField } from 'lib/template';
 import Form from '../components/Form';
 import { FormEventHandler, useCallback, useLayoutEffect, useRef, useState } from 'react';
@@ -10,6 +9,7 @@ import { hasDefaultValue, isUsefulKey } from '../lib/form-processing';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Layout from '../components/Layout';
 import Button from '../components/Button';
+import { useQuery } from '@tanstack/react-query';
 
 const unpackResponse = async (r: Response) => {
     return {

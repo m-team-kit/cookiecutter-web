@@ -5,12 +5,13 @@ import 'styles/custom.scss';
 import 'styles/tailwind.css';
 
 import type { AppProps } from 'next/app';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { FC, PropsWithChildren } from 'react';
 import { AuthProvider, AuthProviderProps } from 'react-oidc-context';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { QueryClient } from '@tanstack/query-core';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const oidcConfig: AuthProviderProps = {
     authority:
@@ -27,9 +28,9 @@ const oidcConfig: AuthProviderProps = {
     response_type: 'code',
 };
 
-const QueryClientWrapper: FC<PropsWithChildren> = ({ children }) => {
-    const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
+const QueryClientWrapper: FC<PropsWithChildren> = ({ children }) => {
     return (
         <QueryClientProvider client={queryClient}>
             {children} <ReactQueryDevtools />
