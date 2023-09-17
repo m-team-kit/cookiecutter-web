@@ -104,4 +104,11 @@ hr {
 
 a {
     scroll-margin-top: $navbar-height + 1rem;
+
+    text-decoration: underline;
+    color: theme( "colors.blue.600" );
+}
+
+h1, .h1 {
+    font-size: 2rem;
 }
