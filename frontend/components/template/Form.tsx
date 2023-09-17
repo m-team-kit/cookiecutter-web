@@ -7,19 +7,20 @@ import { CutterField } from 'lib/client';
 
 type FormFieldProps = { field: CutterField; flagged: boolean };
 const Formfield: FC<FormFieldProps> = ({ field, flagged }) => {
-    // TODO: type assertion because API schema issues
-    const defaultValue = field.default as string | boolean;
-
     return (
         <div className={field.default === BLANK_FIELD ? '-mb-3' : ''}>
             <label htmlFor={field.name}>{field.prompt ?? field.name}</label>{' '}
             {flagged && <Badge type="warning">Missing</Badge>}
-            {field.default != BLANK_FIELD &&
-                (typeof defaultValue == 'string' ? (
-                    <TextInput field={field} flagged={flagged} className="mt-1" />
-                ) : Array.isArray(defaultValue) ? (
-                    <SelectInput field={field} flagged={flagged} className="mt-1" />
-                ) : undefined)}
+            {field.default != BLANK_FIELD && (
+                <>
+                    {field.type === 'text' && (
+                        <TextInput field={field} flagged={flagged} className="mt-1" />
+                    )}
+                    {field.type === 'select' && (
+                        <SelectInput field={field} flagged={flagged} className="mt-1" />
+                    )}
+                </>
+            )}
         </div>
     );
 };

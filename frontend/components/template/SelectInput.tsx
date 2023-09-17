@@ -12,7 +12,7 @@ const SelectInput: FC<SelectInputProps> = ({ field, flagged = false, className }
         <select
             name={field.name}
             id={field.name}
-            className={clsx('selectpicker form-control', flagged && 'border-warning', className)}
+            className={clsx('rounded', flagged && 'border-warning', className)}
         >
             {field.options?.map((option) => (
                 <option value={option.name} key={option.name}>

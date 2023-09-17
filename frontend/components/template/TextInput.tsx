@@ -10,7 +10,7 @@ type TextInputProps = {
 const TextInput: FC<TextInputProps> = ({ field, flagged = false, className }) => {
     return (
         <input
-            className={clsx('input', flagged && 'border-warning', className)}
+            className={clsx('rounded input', flagged && 'border-warning', className)}
             type="text"
             name={field.name}
             id={field.name}
