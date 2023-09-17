@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { faStarHalf } from '@fortawesome/free-solid-svg-icons';
 import { faStarHalf as faStarHalfBorder } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Badge from 'components/Badge';
 
 type RatingProps = { score: number; className?: string };
 const Rating: FC<RatingProps> = ({ score, className }) => {
@@ -39,6 +40,8 @@ type TemplateProps = {
     template: TemplateDto;
 };
 const Template: FC<TemplateProps> = ({ template }) => {
+    const tags = Array.from(template.tags);
+
     return (
         <Link
             className={clsx(
@@ -59,6 +62,15 @@ const Template: FC<TemplateProps> = ({ template }) => {
                     </div>
                 )}
             </div>
+            {tags.length > 0 && (
+                <span className="inline-flex gap-1">
+                    {tags.map((tag) => (
+                        <Badge type="info" key={tag}>
+                            {tag}
+                        </Badge>
+                    ))}
+                </span>
+            )}
         </Link>
     );
 };
