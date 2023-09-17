@@ -16,8 +16,17 @@ const Template: FC<TemplateProps> = ({ template }) => {
             )}
             href={`/templates/${template.id}`}
         >
-            <h2 className="h6">{template.title}</h2>
-            <p className={styles['summary']}>{template.summary}</p>
+            <div className="flex flex-row">
+                <div className="flex-grow">
+                    <h2 className="h6">{template.title}</h2>
+                    <p className={styles['summary']}>{template.summary}</p>
+                </div>
+                {template.picture && (
+                    <div className="flex-grow-0 flex justify-center items-center">
+                        <img src={template.picture} alt="" className="max-w-[100px]" />
+                    </div>
+                )}
+            </div>
         </Link>
     );
 };
