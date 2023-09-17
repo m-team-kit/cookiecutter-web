@@ -17,7 +17,7 @@ const Templates: NextPage = () => {
             {templates.isLoading && <LoadingSpinner />}
 
             {templates.isSuccess && (
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-3 gap-4 auto-rows-fr">
                     {templates.data.data.map((template) => (
                         <Template template={template} key={template.id} />
                     ))}
