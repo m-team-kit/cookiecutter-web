@@ -1,4 +1,5 @@
 import { CSSProperties, FC, PropsWithChildren } from 'react';
+import clsx from 'clsx';
 
 type CenterProps = {
     style?: CSSProperties;
@@ -8,15 +9,7 @@ type CenterProps = {
 const Center: FC<PropsWithChildren<CenterProps>> = ({ children, style, className, as }) => {
     const Component = as || 'div';
     return (
-        <Component
-            style={{
-                ...style,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}
-            {...(className && { className })}
-        >
+        <Component className={clsx(className, 'flex items-center justify-center')}>
             {children}
         </Component>
     );

@@ -4,15 +4,9 @@ import Center from './Center';
 const Header: FC = () => {
     return (
         <section className="header center-contents">
-            <div>
+            <div className="w-full">
                 <span className="h1">Create AI projects from templates</span>
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'space-around',
-                        flexWrap: 'wrap',
-                    }}
-                >
+                <div className="flex justify-around flex-wrap ">
                     <Center>
                         <a href="https://deep-hybrid-datacloud.eu/">
                             <img
