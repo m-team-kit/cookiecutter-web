@@ -22,8 +22,10 @@ const Template: FC<TemplateProps> = ({ template }) => {
         >
             <div className="flex flex-row">
                 <div className="flex-grow">
-                    <h2 className="h6 inline">{template.title}</h2>{' '}
-                    {template.score && <Rating score={template.score} className="ml-2" />}
+                    <div className="flex items-center mb-2">
+                        <h2 className="mb-0">{template.title}</h2>{' '}
+                        {template.score && <Rating score={template.score} className="ml-2" />}
+                    </div>
                     <p className={styles['summary']}>{template.summary}</p>
                 </div>
                 {template.picture && (
