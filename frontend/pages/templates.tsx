@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import Layout from 'components/Layout';
-import Template from 'components/Template';
+import Template from 'components/templates/Template';
 import { useQuery } from '@tanstack/react-query';
 import { useTemplateApi } from 'lib/useApi';
 import LoadingSpinner from '../components/LoadingSpinner';

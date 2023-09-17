@@ -12,3 +12,12 @@
   -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+.star {
+  --star-width: 1em;
+    width: var(--star-width);
+}
+.flipped {
+    transform: scaleX(-1);
+    margin-left: calc(-1 * var(--star-width) - 1px);
+}
