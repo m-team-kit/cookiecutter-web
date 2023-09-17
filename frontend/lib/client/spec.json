@@ -1,0 +1,935 @@
+{
+    "components": {
+        "schemas": {
+            "CutterField": {
+                "properties": {
+                    "default": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "boolean"
+                            }
+                        ],
+                        "title": "Default"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    },
+                    "options": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/CutterOption"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Options"
+                    },
+                    "prompt": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Prompt"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/FieldType"
+                    }
+                },
+                "required": [
+                    "type",
+                    "name",
+                    "default"
+                ],
+                "title": "CutterField",
+                "type": "object"
+            },
+            "CutterOption": {
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    },
+                    "prompt": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Prompt"
+                    }
+                },
+                "required": [
+                    "name"
+                ],
+                "title": "CutterOption",
+                "type": "object"
+            },
+            "ErrorDetails": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "title": "Loc",
+                        "type": "array"
+                    },
+                    "msg": {
+                        "title": "Msg",
+                        "type": "string"
+                    },
+                    "type": {
+                        "title": "Type",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ErrorDetails",
+                "type": "object"
+            },
+            "FieldType": {
+                "enum": [
+                    "text",
+                    "checkbox",
+                    "select"
+                ],
+                "title": "FieldType",
+                "type": "string"
+            },
+            "Forbidden": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ErrorDetails"
+                        },
+                        "title": "Detail",
+                        "type": "array"
+                    },
+                    "status_code": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Status403"
+                            }
+                        ],
+                        "default": 403
+                    }
+                },
+                "required": [
+                    "detail"
+                ],
+                "title": "Forbidden",
+                "type": "object"
+            },
+            "NotFound": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ErrorDetails"
+                        },
+                        "title": "Detail",
+                        "type": "array"
+                    },
+                    "status_code": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Status404"
+                            }
+                        ],
+                        "default": 404
+                    }
+                },
+                "required": [
+                    "detail"
+                ],
+                "title": "NotFound",
+                "type": "object"
+            },
+            "NotImplemented": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ErrorDetails"
+                        },
+                        "title": "Detail",
+                        "type": "array"
+                    },
+                    "status_code": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Status501"
+                            }
+                        ],
+                        "default": 501
+                    }
+                },
+                "required": [
+                    "detail"
+                ],
+                "title": "NotImplemented",
+                "type": "object"
+            },
+            "ServerError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ErrorDetails"
+                        },
+                        "title": "Detail",
+                        "type": "array"
+                    },
+                    "status_code": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Status500"
+                            }
+                        ],
+                        "default": 500
+                    }
+                },
+                "required": [
+                    "detail"
+                ],
+                "title": "ServerError",
+                "type": "object"
+            },
+            "SortBy": {
+                "type": "string"
+            },
+            "Status401": {
+                "enum": [ 401 ],
+                "title": "Status401",
+                "type": "integer"
+            },
+            "Status403": {
+                "enum": [ 403 ],
+                "title": "Status403",
+                "type": "integer"
+            },
+            "Status404": {
+                "enum": [ 404 ],
+                "title": "Status404",
+                "type": "integer"
+            },
+            "Status422": {
+                "enum": [ 422 ],
+                "title": "Status422",
+                "type": "integer"
+            },
+            "Status500": {
+                "enum": [ 500 ],
+                "title": "Status500",
+                "type": "integer"
+            },
+            "Status501": {
+                "enum": [ 501 ],
+                "title": "Status501",
+                "type": "integer"
+            },
+            "Template": {
+                "properties": {
+                    "gitCheckout": {
+                        "title": "Gitcheckout",
+                        "type": "string"
+                    },
+                    "gitLink": {
+                        "title": "Gitlink",
+                        "type": "string"
+                    },
+                    "id": {
+                        "format": "uuid",
+                        "title": "Id",
+                        "type": "string"
+                    },
+                    "language": {
+                        "title": "Language",
+                        "type": "string"
+                    },
+                    "picture": {
+                        "title": "Picture",
+                        "type": "string"
+                    },
+                    "repoFile": {
+                        "title": "Repofile",
+                        "type": "string"
+                    },
+                    "score": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Score"
+                    },
+                    "summary": {
+                        "title": "Summary",
+                        "type": "string"
+                    },
+                    "tags": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "title": "Tags",
+                        "type": "array",
+                        "uniqueItems": true
+                    },
+                    "title": {
+                        "title": "Title",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "repoFile",
+                    "title",
+                    "summary",
+                    "language",
+                    "tags",
+                    "picture",
+                    "gitLink",
+                    "gitCheckout",
+                    "score"
+                ],
+                "title": "Template",
+                "type": "object"
+            },
+            "Templates": {
+                "items": {
+                    "$ref": "#/components/schemas/Template"
+                },
+                "type": "array"
+            },
+            "Unauthorized": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ErrorDetails"
+                        },
+                        "title": "Detail",
+                        "type": "array"
+                    },
+                    "status_code": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Status401"
+                            }
+                        ],
+                        "default": 401
+                    }
+                },
+                "required": [
+                    "detail"
+                ],
+                "title": "Unauthorized",
+                "type": "object"
+            },
+            "Unprocessable": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ErrorDetails"
+                        },
+                        "title": "Detail",
+                        "type": "array"
+                    },
+                    "status_code": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Status422"
+                            }
+                        ],
+                        "default": 422
+                    }
+                },
+                "required": [
+                    "detail"
+                ],
+                "title": "Unprocessable",
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "HTTPBearer": {
+                "scheme": "bearer",
+                "type": "http"
+            }
+        }
+    },
+    "info": {
+        "description": "\nThe OpenAPI 3.0 specification for the REST API of the Software Templates Hub:\nCreate your project from cookiecutter templates via web interface:\n[https://templates.services.fedcloud.eu](https://templates.services.fedcloud.eu)\n\n- [Templates Hub](https://templates.services.fedcloud.eu)\n- [How to add your template to the Hub](https://github.com/m-team-kit/templates-hub/blob/main/README.md)\n",
+        "title": "FastAPI",
+        "version": "0.1.0"
+    },
+    "openapi": "3.0.0",
+    "paths": {
+        "/db:create": {
+            "post": {
+                "description": "Use this method to create local copy of the database from YAML files in\nthe git repository.",
+                "operationId": "createDB",
+                "responses": {
+                    "204": {
+                        "description": "Database Created Successfully"
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unauthorized"
+                                }
+                            }
+                        },
+                        "description": "Not Authenticated"
+                    },
+                    "403": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Forbidden"
+                                }
+                            }
+                        },
+                        "description": "Not Authorized"
+                    },
+                    "500": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServerError"
+                                }
+                            }
+                        },
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": [
+                        ]
+                    }
+                ],
+                "summary": "(Admin) Creates local database.",
+                "tags": [
+                    "database"
+                ]
+            }
+        },
+        "/db:update": {
+            "post": {
+                "description": "Use this method to update local copy of the database from YAML files in\nthe git repository.",
+                "operationId": "updateDB",
+                "responses": {
+                    "204": {
+                        "description": "Database Updated Successfully"
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unauthorized"
+                                }
+                            }
+                        },
+                        "description": "Not Authenticated"
+                    },
+                    "403": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Forbidden"
+                                }
+                            }
+                        },
+                        "description": "Not Authorized"
+                    },
+                    "500": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServerError"
+                                }
+                            }
+                        },
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": [
+                        ]
+                    }
+                ],
+                "summary": "(Admin) Updates local database.",
+                "tags": [
+                    "database"
+                ]
+            }
+        },
+        "/project/{uuid}": {
+            "get": {
+                "description": "Use this method to fetch fields of the cookiecutter template to build the\nweb form.",
+                "operationId": "fetchFields",
+                "parameters": [
+                    {
+                        "description": "UUID of the template to be used for generating a new software project.",
+                        "in": "path",
+                        "name": "uuid",
+                        "required": true,
+                        "schema": {
+                            "description": "UUID of the template to be used for generating a new software project.",
+                            "format": "uuid",
+                            "title": "Template UUID",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/CutterField"
+                                    },
+                                    "title": "Response 200 Fetchfields",
+                                    "type": "array"
+                                }
+                            }
+                        },
+                        "description": "Fields Fetched Successfully"
+                    },
+                    "404": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFound"
+                                }
+                            }
+                        },
+                        "description": "Template Not Found"
+                    },
+                    "422": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        },
+                        "description": "Unprocessable Content"
+                    },
+                    "500": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServerError"
+                                }
+                            }
+                        },
+                        "description": "Internal Server Error"
+                    },
+                    "501": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotImplemented"
+                                }
+                            }
+                        },
+                        "description": "Not Implemented Error"
+                    }
+                },
+                "summary": "(Public) Fetches fields of the cookiecutter template.",
+                "tags": [
+                    "project"
+                ]
+            }
+        },
+        "/project/{uuid}:generate": {
+            "post": {
+                "description": "Use this method to generate software project using the specific template.\nGenerated project is returned as `.zip` file.",
+                "operationId": "generateProject",
+                "parameters": [
+                    {
+                        "description": "UUID of the template to be used for generating a new software project.",
+                        "in": "path",
+                        "name": "uuid",
+                        "required": true,
+                        "schema": {
+                            "description": "UUID of the template to be used for generating a new software project.",
+                            "format": "uuid",
+                            "title": "Template UUID",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "title": "Options In",
+                                "type": "object"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/zip": {
+                                "schema": {
+                                    "format": "binary",
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "description": "Project Generated Successfully"
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unauthorized"
+                                }
+                            }
+                        },
+                        "description": "Not authenticated"
+                    },
+                    "404": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFound"
+                                }
+                            }
+                        },
+                        "description": "Template Not Found"
+                    },
+                    "422": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        },
+                        "description": "Unprocessable Content"
+                    },
+                    "500": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServerError"
+                                }
+                            }
+                        },
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": [
+                        ]
+                    }
+                ],
+                "summary": "(User) Generate software project from the template.",
+                "tags": [
+                    "project"
+                ]
+            }
+        },
+        "/templates/": {
+            "get": {
+                "description": "Use this method to get a list of available templates. The response\nreturns a pagination object with the templates.",
+                "operationId": "listTemplates",
+                "parameters": [
+                    {
+                        "description": "Programming language used in the project template (i.e. in the code generated by the template).",
+                        "in": "query",
+                        "name": "language",
+                        "required": false,
+                        "schema": {
+                            "description": "Programming language used in the project template (i.e. in the code generated by the template).",
+                            "example": "python",
+                            "title": "Language",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": " Tags to filter by, return templates should include all tags.",
+                        "in": "query",
+                        "name": "tags",
+                        "required": false,
+                        "schema": {
+                            "default": [
+                            ],
+                            "description": " Tags to filter by, return templates should include all tags.",
+                            "items": {
+                                "type": "string"
+                            },
+                            "title": "Tags",
+                            "type": "array"
+                        }
+                    },
+                    {
+                        "description": "List of keywords (string subsets).",
+                        "in": "query",
+                        "name": "keywords",
+                        "required": false,
+                        "schema": {
+                            "default": [
+                            ],
+                            "description": "List of keywords (string subsets).",
+                            "items": {
+                                "type": "string"
+                            },
+                            "title": "Keywords",
+                            "type": "array"
+                        }
+                    },
+                    {
+                        "description": "Order to return the results (comma separated). Generic fields are ['\u00b1id', '\u00b1score', '\u00b1title', '\u00b1language'].",
+                        "in": "query",
+                        "name": "sort_by",
+                        "required": false,
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/schemas/SortBy"
+                                }
+                            ],
+                            "default": "-score",
+                            "description": "Order to return the results (comma separated). Generic fields are ['\u00b1id', '\u00b1score', '\u00b1title', '\u00b1language'].",
+                            "example": "+title,-score",
+                            "title": "Sort by",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Templates"
+                                }
+                            }
+                        },
+                        "description": "Templates Retrieved Successfully"
+                    },
+                    "422": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        },
+                        "description": "Unprocessable Content"
+                    },
+                    "500": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServerError"
+                                }
+                            }
+                        },
+                        "description": "Internal Server Error"
+                    }
+                },
+                "summary": "(Public) Lists available templates.",
+                "tags": [
+                    "templates"
+                ]
+            }
+        },
+        "/templates/{uuid}": {
+            "get": {
+                "description": "Use this method to retrieve details about the specific template.",
+                "operationId": "getTemplate",
+                "parameters": [
+                    {
+                        "description": "UUID of the template to be used for generating a new software project.",
+                        "in": "path",
+                        "name": "uuid",
+                        "required": true,
+                        "schema": {
+                            "description": "UUID of the template to be used for generating a new software project.",
+                            "format": "uuid",
+                            "title": "Template UUID",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Template"
+                                }
+                            }
+                        },
+                        "description": "Template Retrieved Successfully"
+                    },
+                    "404": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFound"
+                                }
+                            }
+                        },
+                        "description": "Template Not Found"
+                    },
+                    "422": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        },
+                        "description": "Unprocessable Content"
+                    },
+                    "500": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServerError"
+                                }
+                            }
+                        },
+                        "description": "Internal Server Error"
+                    }
+                },
+                "summary": "(Public) Finds template by UUID and shows its details.",
+                "tags": [
+                    "templates"
+                ]
+            }
+        },
+        "/templates/{uuid}/score": {
+            "put": {
+                "description": "Use this method to update the score/rating of the specific template.",
+                "operationId": "rateTemplate",
+                "parameters": [
+                    {
+                        "description": "UUID of the template to be used for generating a new software project.",
+                        "in": "path",
+                        "name": "uuid",
+                        "required": true,
+                        "schema": {
+                            "description": "UUID of the template to be used for generating a new software project.",
+                            "format": "uuid",
+                            "title": "Template UUID",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "title": "Score",
+                                "type": "number"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Template"
+                                }
+                            }
+                        },
+                        "description": "Template Rated Successfully"
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unauthorized"
+                                }
+                            }
+                        },
+                        "description": "Not Authenticated"
+                    },
+                    "404": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFound"
+                                }
+                            }
+                        },
+                        "description": "Template Not Found"
+                    },
+                    "422": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unprocessable"
+                                }
+                            }
+                        },
+                        "description": "Unprocessable Content"
+                    },
+                    "500": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServerError"
+                                }
+                            }
+                        },
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "HTTPBearer": [
+                        ]
+                    }
+                ],
+                "summary": "(User) Rates specific template.",
+                "tags": [
+                    "templates"
+                ]
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "/api/latest"
+        }
+    ]
+}

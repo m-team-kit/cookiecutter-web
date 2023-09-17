@@ -8,7 +8,11 @@ const Footer: FC = () => {
         <footer className="footer flex items-center justify-center">
             <div className="container flex items-center justify-center flex-wrap">
                 <div className="flex items-center w-full xl:w-[33%]">
-                    <img src="images/ec-logo.png" alt="european commission logo" className="mr-3" />
+                    <img
+                        src="/images/ec-logo.png"
+                        alt="european commission logo"
+                        className="mr-3"
+                    />
                     <span>
                         This Service is powered by the AI4OS software, provided by KIT, co-funded by
                         the{' '}
