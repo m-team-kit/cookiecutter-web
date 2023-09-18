@@ -11,6 +11,7 @@ import { firstMatching } from 'lib/firstMatching';
 import Badge from 'components/Badge';
 import TemplateForm from 'pages/components/TemplateForm';
 import Rating from 'components/Rating';
+import { Code2 } from 'lucide-react';
 
 // TODO: SSR?
 const Template: NextPage = () => {
@@ -63,12 +64,19 @@ const Template: NextPage = () => {
             <div className="flex flex-row w-100">
                 <div className="flex-grow">
                     <div className="flex items-center">
-                        <h1 className="">{template.data.data.title}</h1>
+                        <h1>{template.data.data.title}</h1>
                         <Rating
                             score={template.data.data.score ?? 0}
                             onChange={(score) => rateTemplate.mutate(score)}
                             className="ml-2"
                         />
+                        <a
+                            href={`${template.data.data.gitLink}/tree/${template.data.data.gitCheckout}`}
+                            className="ml-2 grow flex items-center"
+                        >
+                            <Code2 className="text-blue-500 inline" />
+                            Source
+                        </a>
                         <div className="ml-2 flex gap-1 align-text-top">
                             {Array.from(template.data.data.tags).map((tag) => (
                                 <Badge type="info" key={tag}>
@@ -78,10 +86,6 @@ const Template: NextPage = () => {
                         </div>
                     </div>
                     <p>{template.data.data.summary}</p>
-                    <p>
-                        <a href={template.data.data.gitLink}>Repository</a> (
-                        <span>Commit/Branch/Tag: {template.data.data.gitCheckout}</span>)
-                    </p>
                 </div>
                 <div className="flex-grow-0">
                     {template.data.data.picture && (
