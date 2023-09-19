@@ -4,6 +4,10 @@ import Template from 'components/templates/Template';
 import { useQuery } from '@tanstack/react-query';
 import { useTemplateApi } from 'lib/useApi';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { isAxiosError } from 'axios';
+import Center from 'components/Center';
+import BasicErrorDisplay from 'components/ErrorBox/BasicErrorDisplay';
+import ErrorBox from 'components/ErrorBox';
 
 // TODO: SSR?
 const Templates: NextPage = () => {
@@ -22,6 +26,12 @@ const Templates: NextPage = () => {
                         <Template template={template} key={template.id} />
                     ))}
                 </div>
+            )}
+
+            {templates.isError && (
+                <ErrorBox error={templates.error}>
+                    <p>An error occurred while loading the templates:</p>{' '}
+                </ErrorBox>
             )}
         </Layout>
     );

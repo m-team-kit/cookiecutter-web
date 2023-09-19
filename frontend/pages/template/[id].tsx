@@ -12,6 +12,7 @@ import Badge from 'components/Badge';
 import TemplateForm from 'components/TemplateForm';
 import Rating from 'components/Rating';
 import { Code2 } from 'lucide-react';
+import ErrorBox from 'components/ErrorBox';
 
 // TODO: SSR?
 const Template: NextPage = () => {
@@ -51,10 +52,9 @@ const Template: NextPage = () => {
     if (template.isError) {
         return (
             <Layout className="mt-32">
-                <p>An error occured while loading the template:</p>
-                <code>
-                    <pre>{JSON.stringify(template.error, null, 2)}</pre>
-                </code>
+                <ErrorBox error={template.error}>
+                    <p>An error occurred while loading the template:</p>{' '}
+                </ErrorBox>
             </Layout>
         );
     }
