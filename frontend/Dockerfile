@@ -26,13 +26,32 @@ COPY lib lib
 
 #COPY --from=git-version /app/utils/generatedGitInfo.json utils/generatedGitInfo.json
 
-FROM base as production
+FROM base as prod-build
+# relative
+ARG BACKEND_URL
+ENV NEXT_PUBLIC_API_HOST=${BACKEND_URL}
+ARG OAUTH_AUTHORITY
+ENV NEXT_PUBLIC_OAUTH_AUTHORITY=${OAUTH_AUTHORITY}
+ARG OIDC_REDIRECT_HOST
+ENV FRONTEND_REDIRECT_HOST=${OIDC_REDIRECT_HOST}
+ARG OIDC_CLIENT_ID
+ENV FRONTEND_OIDC_CLIENT_ID=${OIDC_CLIENT_ID}
+
+RUN yarn build
+
+FROM node:18-alpine as production
 ENV NODE_ENV=production
 
+WORKDIR /app
+COPY --from=prod-build /app/package.json .
+COPY --from=prod-build /app/yarn.lock .
+COPY --from=prod-build /app/next.config.js .
+COPY --from=prod-build /app/public ./public
+COPY --from=prod-build /app/.next/static ./.next/static
+COPY --from=prod-build /app/.next/standalone ./
+
 EXPOSE 3000
-#RUN npm run build
-# move build command into CMD to take into account run-time env vars for static pages
-CMD ["/bin/sh", "-c", "yarn build && yarn start"]
+CMD ["node", "server.js"]
 
 FROM base as development
 ENV NODE_ENV=development
