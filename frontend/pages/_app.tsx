@@ -15,13 +15,13 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const oidcConfig: AuthProviderProps = {
     authority:
-        process.env.NEXT_PUBLIC_OAUTH_AUTHORITY ??
+        process.env['NEXT_PUBLIC_OAUTH_AUTHORITY'] ??
         (process.env.NODE_ENV === 'development'
             ? 'https://aai-dev.egi.eu/auth/realms/egi/'
             : 'https://aai.egi.eu/auth/realms/egi/'),
-    client_id: process.env.NEXT_PUBLIC_OIDC_CLIENT_ID ?? 'ccweb',
+    client_id: process.env['NEXT_PUBLIC_OIDC_CLIENT_ID'] ?? 'ccweb',
     redirect_uri:
-        (process.env.NEXT_PUBLIC_OIDC_REDIRECT_HOST ?? 'https://localhost') + '/oidc-redirect',
+        (process.env['NEXT_PUBLIC_OIDC_REDIRECT_HOST'] ?? 'https://localhost') + '/oidc-redirect',
     //scope: 'openid email profile eduperson_entitlement offline_access',
     // reduce scope
     scope: 'openid email eduperson_entitlement offline_access',
