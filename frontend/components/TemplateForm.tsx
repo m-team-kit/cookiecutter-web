@@ -1,4 +1,4 @@
-import { CutterField, Template as TemplateDto } from 'lib/client';
+import { CutterField, Template as TemplateDto } from 'lib/client/index';
 import { FC, FormEventHandler, useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { useAuth } from 'react-oidc-context';
 import { useProjectApi } from 'lib/useApi';
