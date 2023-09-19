@@ -18,7 +18,7 @@ const Template: FC<TemplateProps> = ({ template }) => {
                 styles['card'],
                 'hover:scale-105 shadow transition-transform duration-75 no-underline text-black'
             )}
-            href={`/templates/${template.id}`}
+            href={`/template/${template.id}`}
         >
             <div className="flex flex-row">
                 <div className="flex-grow">
