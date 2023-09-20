@@ -13,17 +13,6 @@ const Navbar = () => {
                             Home
                         </Link>
                     </li>
-                    <li className="navbar-item">
-                        <a className="navbar-link" href="https://deep-hybrid-datacloud.eu/">
-                            Project page
-                        </a>
-                    </li>
-                    <li className="navbar-item">
-                        <a className="navbar-link" href="https://docs.deep-hybrid-datacloud.eu/">
-                            Help
-                        </a>
-                    </li>
-
                     <li className="navbar-item ml-auto">
                         {auth.isAuthenticated ? (
                             <button
