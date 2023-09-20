@@ -43,7 +43,7 @@ const Template: NextPage = () => {
 
     if (!router.isReady || template.isLoading || (router.isReady && templateId === undefined)) {
         return (
-            <Layout className="mt-32">
+            <Layout>
                 <LoadingSpinner />
             </Layout>
         );
@@ -51,7 +51,7 @@ const Template: NextPage = () => {
 
     if (template.isError) {
         return (
-            <Layout className="mt-32">
+            <Layout>
                 <ErrorBox error={template.error}>
                     <p>An error occurred while loading the template:</p>{' '}
                 </ErrorBox>
@@ -60,7 +60,7 @@ const Template: NextPage = () => {
     }
 
     return (
-        <Layout className="mt-32">
+        <Layout>
             <div className="flex flex-row w-100">
                 <div className="flex-grow">
                     <div className="flex items-center">

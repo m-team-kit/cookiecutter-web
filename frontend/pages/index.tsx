@@ -15,7 +15,7 @@ const Templates: NextPage = () => {
     const templates = useQuery(['templates'], () => api.listTemplates());
 
     return (
-        <Layout className="mt-32">
+        <Layout>
             <h1 className="h5">Templates</h1>
 
             {templates.isLoading && <LoadingSpinner />}
