@@ -76,7 +76,7 @@ const Template: NextPage = () => {
             </div>
             <div className="flex flex-row w-100">
                 <div className="flex-grow mb-2">
-                    <div className="flex items-center flex-wrap">
+                    <div className="flex items-center flex-wrap mb-2">
                         <h1 className="flex-shrink-0 flex-wrap max-w-[95svw]">
                             {template.data.data.title}
                         </h1>
@@ -92,7 +92,7 @@ const Template: NextPage = () => {
                             <Code2 className="text-blue-500 inline" />
                             Source
                         </a>
-                        <div className="ml-2 mb-2 flex gap-1 align-text-top flex-wrap">
+                        <div className="ml-2 flex gap-1 align-text-top flex-wrap">
                             {Array.from(template.data.data.tags).map((tag) => (
                                 <Badge type="info" key={tag}>
                                     {tag}
