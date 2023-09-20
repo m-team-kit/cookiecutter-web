@@ -1,7 +1,6 @@
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { FC, PropsWithChildren } from 'react';
-import Header from './Header';
 import clsx from 'clsx';
 
 type LayoutProps = {
