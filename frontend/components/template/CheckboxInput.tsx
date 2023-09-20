@@ -6,21 +6,30 @@ type CheckboxInput = {
     field: CutterField;
     flagged?: boolean;
     className?: string;
+
+    truthy?: string | boolean;
+    falsy?: string | boolean;
 };
-const CheckboxInput: FC<CheckboxInput> = ({ field, flagged = false, className }) => {
+const CheckboxInput: FC<CheckboxInput> = ({
+    field,
+    flagged = false,
+    className,
+    truthy = true,
+    falsy = false,
+}) => {
+    const classes = clsx('rounded input mt-0 mb-1 mr-2', flagged && 'border-warning', className);
+
     return (
         <div>
+            <input type="hidden" name={field.name} value={falsy.toString()} />
             <input
-                className={clsx(
-                    'rounded input mt-0 mb-1 mr-2',
-                    flagged && 'border-warning',
-                    className
-                )}
+                className={classes}
                 type="checkbox"
                 name={field.name}
                 id={field.name}
-                // TODO: type assertion due to api typing not being good enough
-                defaultChecked={field.default as boolean}
+                // TODO: type assertion due to generator issues
+                defaultChecked={field.default === truthy}
+                value={truthy.toString()}
             />
             <label htmlFor={field.name}>{field.prompt ?? field.name}</label>
         </div>

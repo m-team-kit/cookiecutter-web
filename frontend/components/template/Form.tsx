@@ -1,8 +1,7 @@
-import { BLANK_FIELD, LegalField, SelectField, StringField } from 'lib/template';
+import { BLANK_FIELD } from 'lib/template';
 import React, { FC } from 'react';
 import SelectInput from './SelectInput';
 import TextInput from './TextInput';
-import Badge from 'components/Badge';
 import { CutterField } from 'lib/client';
 import CheckboxInput from 'components/template/CheckboxInput';
 import ErrorBox from 'components/ErrorBox';
@@ -14,8 +13,6 @@ const Formfield: FC<FormFieldProps> = ({ field, flagged }) => {
             {field.default === BLANK_FIELD && <div>{field.prompt ?? field.name}</div>}
             {field.default != BLANK_FIELD && (
                 <>
-                    <label htmlFor={field.name}>{field.prompt ?? field.name}</label>{' '}
-                    {flagged && <Badge type="warning">Missing</Badge>}
                     {field.type === 'text' ? (
                         <TextInput field={field} flagged={flagged} className="mt-1" />
                     ) : field.type === 'select' ? (
