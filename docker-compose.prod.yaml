@@ -7,6 +7,7 @@ services:
         OAUTH_AUTHORITY: ${OAUTH_AUTHORITY}
         OIDC_REDIRECT_HOST: ${FRONTEND_REDIRECT_HOST}
         OIDC_CLIENT_ID: ${FRONTEND_OIDC_CLIENT_ID}
+        REPOSITORY_URL: ${REPOSITORY_URL}
     labels:
       traefik.http.routers.webapp.tls: true
       traefik.http.routers.webapp.tls.certResolver: letsEncrypt

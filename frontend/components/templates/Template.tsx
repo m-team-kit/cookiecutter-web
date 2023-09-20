@@ -5,6 +5,7 @@ import { Template as TemplateDto } from 'lib/client/models/template';
 import Link from 'next/link';
 import Badge from 'components/Badge';
 import Rating from 'components/Rating';
+import resolveImage from 'lib/resolveImage';
 
 type TemplateProps = {
     template: TemplateDto;
@@ -30,7 +31,11 @@ const Template: FC<TemplateProps> = ({ template }) => {
                 </div>
                 {template.picture && (
                     <div className="flex-grow-0 flex justify-center items-center">
-                        <img src={template.picture} alt="" className="max-w-[100px]" />
+                        <img
+                            src={resolveImage(template.picture)}
+                            alt=""
+                            className="max-w-[100px]"
+                        />
                     </div>
                 )}
             </div>

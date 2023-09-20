@@ -13,6 +13,7 @@ import TemplateForm from 'components/TemplateForm';
 import Rating from 'components/Rating';
 import { Code2 } from 'lucide-react';
 import ErrorBox from 'components/ErrorBox';
+import resolveImage from 'lib/resolveImage';
 
 // TODO: SSR?
 const Template: NextPage = () => {
@@ -89,7 +90,10 @@ const Template: NextPage = () => {
                 </div>
                 <div className="flex-grow-0">
                     {template.data.data.picture && (
-                        <img src={template.data.data.picture} alt="template picture" />
+                        <img
+                            src={resolveImage(template.data.data.picture)}
+                            alt="template picture"
+                        />
                     )}
                 </div>
             </div>
