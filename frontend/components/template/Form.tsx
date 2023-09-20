@@ -5,22 +5,26 @@ import TextInput from './TextInput';
 import Badge from 'components/Badge';
 import { CutterField } from 'lib/client';
 import CheckboxInput from 'components/template/CheckboxInput';
+import ErrorBox from 'components/ErrorBox';
 
 type FormFieldProps = { field: CutterField; flagged: boolean };
 const Formfield: FC<FormFieldProps> = ({ field, flagged }) => {
     return (
         <div className={field.default === BLANK_FIELD ? '-mb-3' : ''}>
-            <label htmlFor={field.name}>{field.prompt ?? field.name}</label>{' '}
-            {flagged && <Badge type="warning">Missing</Badge>}
+            {field.default === BLANK_FIELD && <div>{field.prompt ?? field.name}</div>}
             {field.default != BLANK_FIELD && (
                 <>
-                    {field.type === 'text' && (
+                    <label htmlFor={field.name}>{field.prompt ?? field.name}</label>{' '}
+                    {flagged && <Badge type="warning">Missing</Badge>}
+                    {field.type === 'text' ? (
                         <TextInput field={field} flagged={flagged} className="mt-1" />
-                    )}
-                    {field.type === 'select' && (
+                    ) : field.type === 'select' ? (
                         <SelectInput field={field} flagged={flagged} className="mt-1" />
+                    ) : field.type === 'checkbox' ? (
+                        <CheckboxInput field={field} className="mt-1" />
+                    ) : (
+                        <ErrorBox error={`Unknown field type ${field.type}`} />
                     )}
-                    {field.type === 'checkbox' && <CheckboxInput field={field} className="mt-1" />}
                 </>
             )}
         </div>
