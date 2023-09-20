@@ -76,7 +76,7 @@ const Template: NextPage = () => {
             <div className="flex flex-row w-100 wrap">
                 <div className="flex-grow">
                     <div className="flex items-center">
-                        <h1>{template.data.data.title}</h1>
+                        <h1 className="flex-grow flex-shrink-0">{template.data.data.title}</h1>
                         <Rating
                             score={template.data.data.score ?? 0}
                             onChange={(score) => rateTemplate.mutate(score)}
