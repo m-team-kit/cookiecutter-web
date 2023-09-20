@@ -27,7 +27,6 @@ const CheckboxInput: FC<CheckboxInput> = ({
                 type="checkbox"
                 name={field.name}
                 id={field.name}
-                // TODO: type assertion due to generator issues
                 defaultChecked={field.default === truthy}
                 value={truthy.toString()}
             />
