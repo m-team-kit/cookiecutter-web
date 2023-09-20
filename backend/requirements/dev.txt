@@ -1,4 +1,0 @@
--r prod.txt
-
-debugpy~=1.6.4
-

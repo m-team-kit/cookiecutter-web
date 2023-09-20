@@ -1,5 +1,3 @@
-version: "3.5"
-
 services:
   frontend:
     container_name: frontend
@@ -8,7 +6,7 @@ services:
     build:
       context: frontend
     depends_on:
-      - backend_v1
+      - backend
     environment:
       # refer to configuration.ts and _app.tsx to see used vars
       NEXT_PUBLIC_API_HOST: ${FRONTEND_API}
@@ -18,29 +16,52 @@ services:
     labels:
       traefik.http.routers.webapp.rule: Host(`${DOMAIN}`)
 
-  backend_v1:
-    container_name: backend_v1
-    restart: unless-stopped
-    image: backend_v1
+  backend:
+    image: backend
+    depends_on:
+      database:
+        condition: service_healthy
+      smtp_server:
+        condition: service_healthy
     build:
       context: backend
-      network: host
-      args:
-        INSTALL_PYTHON_VERSION: 3.8
+      dockerfile: dockerfile
     environment:
-      BACKEND_ROUTE: /api/v1
-      GUNICORN_WORKERS: 1
-      SECRET_KEY_FILE: /run/secrets/cookie_secret
-    secrets:
-      - cookie_secret
+      PROJECT_NAME: ${PROJECT_NAME}
+      REPOSITORY_URL: ${REPOSITORY_URL}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      TRUSTED_OP: ${TRUSTED_OP}
+      ADMIN_SECRET: ${ADMIN_SECRET}
     labels:
-      traefik.http.routers.backend.rule: Host(`${DOMAIN}`) && PathPrefix(`/api/v1`)
+      traefik.http.routers.backend.rule: Host(`${DOMAIN}`) && PathPrefix(`/api/latest`)
       traefik.http.middlewares.cors.headers.accesscontrolallowmethods: "GET,OPTIONS,PUT,POST,PATCH,DELETE"
       traefik.http.middlewares.cors.headers.accesscontrolallowheaders: "*"
       traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist: "https://${DOMAIN},http://${DOMAIN}"
       traefik.http.middlewares.cors.headers.accesscontrolmaxage: "100"
       traefik.http.middlewares.cors.headers.addvaryheader: "true"
       traefik.http.routers.backend.middlewares: cors
+
+  database:
+    image: postgres:15
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-some_password}
+      POSTGRES_USER: ${POSTGRES_USER:-db_user}
+      POSTGRES_DB: ${POSTGRES_DB:-db_name}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+
+  smtp_server:
+    image: boky/postfix:v3.6.1-alpine
+    environment:
+      ALLOWED_SENDER_DOMAINS: templates.cloud.ai4eosc.eu
 
   reverse-proxy:
     container_name: traefik
@@ -50,13 +71,9 @@ services:
       - "--entrypoints.web.address=:80"
       - "--providers.docker"
     depends_on:
-      - backend_v1
+      - backend
       - frontend
     ports:
       - "80:80"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-
-secrets:
-  cookie_secret:
-    file: cookie_secret.txt
