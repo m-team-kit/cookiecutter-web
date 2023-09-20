@@ -72,7 +72,7 @@ const Template: NextPage = () => {
                         />
                         <a
                             href={`${template.data.data.gitLink}/tree/${template.data.data.gitCheckout}`}
-                            className="ml-2 grow flex items-center"
+                            className="ml-2 flex items-center"
                         >
                             <Code2 className="text-blue-500 inline" />
                             Source
