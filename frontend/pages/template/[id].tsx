@@ -14,6 +14,7 @@ import Rating from 'components/Rating';
 import { Code2 } from 'lucide-react';
 import ErrorBox from 'components/ErrorBox';
 import resolveImage from 'lib/resolveImage';
+import Center from 'components/Center';
 
 // TODO: SSR?
 const Template: NextPage = () => {
@@ -62,7 +63,17 @@ const Template: NextPage = () => {
 
     return (
         <Layout>
-            <div className="flex flex-row w-100">
+            <div className="block lg:hidden">
+                <Center>
+                    {template.data.data.picture && (
+                        <img
+                            src={resolveImage(template.data.data.picture)}
+                            alt="template picture"
+                        />
+                    )}
+                </Center>
+            </div>
+            <div className="flex flex-row w-100 wrap">
                 <div className="flex-grow">
                     <div className="flex items-center">
                         <h1>{template.data.data.title}</h1>
@@ -88,7 +99,7 @@ const Template: NextPage = () => {
                     </div>
                     <p>{template.data.data.summary}</p>
                 </div>
-                <div className="flex-grow-0">
+                <div className="flex-grow-0 hidden lg:block">
                     {template.data.data.picture && (
                         <img
                             src={resolveImage(template.data.data.picture)}
