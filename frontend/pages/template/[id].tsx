@@ -78,7 +78,7 @@ const Template: NextPage = () => {
                             <Code2 className="text-blue-500 inline" />
                             Source
                         </a>
-                        <div className="ml-2 flex gap-1 align-text-top">
+                        <div className="ml-2 flex gap-1 align-text-top flex-wrap">
                             {Array.from(template.data.data.tags).map((tag) => (
                                 <Badge type="info" key={tag}>
                                     {tag}

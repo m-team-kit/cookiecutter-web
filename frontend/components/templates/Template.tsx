@@ -40,7 +40,7 @@ const Template: FC<TemplateProps> = ({ template }) => {
                 )}
             </div>
             {tags.length > 0 && (
-                <span className="inline-flex gap-1">
+                <span className="inline-flex gap-1 flex-wrap">
                     {tags.map((tag) => (
                         <Badge type="info" key={tag}>
                             {tag}
