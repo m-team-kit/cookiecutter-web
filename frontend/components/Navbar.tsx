@@ -13,6 +13,14 @@ const Navbar = () => {
                             Home
                         </Link>
                     </li>
+                    <li className="navbar-item">
+                        <a
+                            className="navbar-link"
+                            href="https://github.com/m-team-kit/templates-hub"
+                        >
+                            Add Template
+                        </a>
+                    </li>
                     <li className="navbar-item ml-auto">
                         {auth.isAuthenticated ? (
                             <button
