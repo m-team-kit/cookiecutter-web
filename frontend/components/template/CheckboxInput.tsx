@@ -17,7 +17,7 @@ const CheckboxInput: FC<CheckboxInput> = ({
     truthy = true,
     falsy = false,
 }) => {
-    const classes = clsx('rounded input mt-0 mb-1 mr-2', flagged && 'border-warning', className);
+    const classes = clsx('rounded input mt-0 mb-2 mr-2', flagged && 'border-warning', className);
 
     return (
         <div>
