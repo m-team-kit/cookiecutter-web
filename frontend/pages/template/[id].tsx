@@ -107,6 +107,7 @@ const Template: NextPage = () => {
                         <img
                             src={resolveImage(template.data.data.picture)}
                             alt="template picture"
+                            className="max-w-[300px]"
                         />
                     )}
                 </div>
