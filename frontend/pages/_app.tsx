@@ -51,7 +51,7 @@ const NextApp = ({ Component, pageProps }: AppProps) => {
     return (
         <>
             <Head>
-                <title>Cookiecutter-Web</title>
+                <title>Templates Hub</title>
             </Head>
             <QueryClientWrapper>
                 <AuthProvider
