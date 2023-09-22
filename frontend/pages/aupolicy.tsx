@@ -5,7 +5,7 @@ import Layout from '../components/Layout';
 const AUPolicy: NextPage = () => {
     return (
         <Layout>
-            <h1 className="h4">Acceptable Use Policy and Conditions of Use</h1>
+            <h1>Acceptable Use Policy and Conditions of Use</h1>
             <p>
                 This Acceptable Use Policy for AI4EOSC Templates service is effective from
                 2023-05-16
@@ -75,7 +75,7 @@ const AUPolicy: NextPage = () => {
                 </li>
             </ol>
 
-            <h2 className="h5">Contact information</h2>
+            <h2>Contact information</h2>
             <p>
                 The administrative contact for this AUP is:{' '}
                 <a href="mailto:m-ops@listas.csic.es">m-ops@listas.csic.es</a>
