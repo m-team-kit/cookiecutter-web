@@ -30,7 +30,10 @@ const AUPolicy: NextPage = () => {
                 &quot;Provider&quot;) for the purpose of generating AI software projects based on
                 the predefined templates.
             </p>
-            <ol>
+            <ol
+                // TODO: make it so I don't need margin-left
+                className="list-decimal ml-6"
+            >
                 <li>
                     You shall only use the Services in a manner consistent with the purposes and
                     limitations described above; you shall show consideration towards other users
@@ -75,7 +78,7 @@ const AUPolicy: NextPage = () => {
             <h2 className="h5">Contact information</h2>
             <p>
                 The administrative contact for this AUP is:{' '}
-                <a href="mailto:ai4eosc-support@listas.csic.es">ai4eosc-support@listas.csic.es</a>
+                <a href="mailto:m-ops@listas.csic.es">m-ops@listas.csic.es</a>
             </p>
             <p>
                 The security contact for this AUP is:{' '}
