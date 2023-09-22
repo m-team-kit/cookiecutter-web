@@ -95,9 +95,9 @@ const PrivacyPolicy: NextPage = () => {
                     Code of Conduct for Service Providers
                 </a>
                 , a common standard for the research and higher education sector to protect the
-                user's privacy. Personal data will be protected according to the Code of Conduct for
-                Service Providers, a common standard for the research and higher education sector to
-                protect the user&apos;s privacy.
+                user&apos;s privacy. Personal data will be protected according to the Code of
+                Conduct for Service Providers, a common standard for the research and higher
+                education sector to protect the user&apos;s privacy.
             </p>
             <h2>CONTACT INFORMATION</h2>
             <p>
