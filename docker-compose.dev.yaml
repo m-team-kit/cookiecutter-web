@@ -31,11 +31,11 @@ services:
     ports:
       - 5432:5432
 
-  smtp_server:
-    image: boky/postfix:latest
-    env_file: [.env]
-    ports:
-      - 587:587
+  #smtp_server:
+  #  image: boky/postfix:latest
+  #  env_file: [.env]
+  #  ports:
+  #    - 587:587
 
   pgadmin:
     image: dpage/pgadmin4

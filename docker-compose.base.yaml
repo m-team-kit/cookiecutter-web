@@ -22,8 +22,8 @@ services:
     depends_on:
       database:
         condition: service_healthy
-      smtp_server:
-        condition: service_healthy
+      #smtp_server:
+      #  condition: service_healthy
     build:
       context: backend
       dockerfile: dockerfile
@@ -59,10 +59,10 @@ services:
       timeout: 5s
       retries: 10
 
-  smtp_server:
-    image: boky/postfix:v3.6.1-alpine
-    environment:
-      ALLOWED_SENDER_DOMAINS: templates.cloud.ai4eosc.eu
+  #smtp_server:
+  #  image: boky/postfix:v3.6.1-alpine
+  #  environment:
+  #    ALLOWED_SENDER_DOMAINS: templates.cloud.ai4eosc.eu
 
   reverse-proxy:
     container_name: traefik

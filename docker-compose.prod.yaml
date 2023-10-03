@@ -29,9 +29,9 @@ services:
       - ./backend/scripts/setup_migration.sql:/docker-entrypoint-initdb.d/setup_migration.sql
       - app-db-data:/var/lib/postgresql/data/pgdata
 
-  smtp_server:
-    image: boky/postfix:v3.6.1-alpine
-    restart: always
+  #smtp_server:
+  #  image: boky/postfix:v3.6.1-alpine
+  #  restart: always
 
   reverse-proxy:
     command:
