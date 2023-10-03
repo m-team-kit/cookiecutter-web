@@ -77,14 +77,20 @@ const Templates: NextPage = () => {
                                     {difference(availableTags, selectedTags)
                                         .sort()
                                         .map((tag) => (
-                                            <option value={tag}>{tag}</option>
+                                            <option key={tag} value={tag}>
+                                                {tag}
+                                            </option>
                                         ))}
                                 </>
                             )}
                         </select>
                         <div className="ml-2 flex flex-row flex-wrap gap-1">
                             {selectedTags.map((tag) => (
-                                <SelectedTag tag={tag} onDelete={(tag) => unselect(tag)} />
+                                <SelectedTag
+                                    key={tag}
+                                    tag={tag}
+                                    onDelete={(tag) => unselect(tag)}
+                                />
                             ))}
                         </div>
                     </div>
