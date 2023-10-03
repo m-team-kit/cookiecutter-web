@@ -30,7 +30,7 @@ services:
     environment:
       PROJECT_NAME: ${PROJECT_NAME}
       REPOSITORY_URL: ${REPOSITORY_URL}
-      CORS_ORIGINS: ${CORS_ORIGINS}
+      #CORS_ORIGINS: ${CORS_ORIGINS}
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -41,7 +41,7 @@ services:
       traefik.http.routers.backend.rule: Host(`${DOMAIN}`) && PathPrefix(`/api/latest`)
       traefik.http.middlewares.cors.headers.accesscontrolallowmethods: "GET,OPTIONS,PUT,POST,PATCH,DELETE"
       traefik.http.middlewares.cors.headers.accesscontrolallowheaders: "*"
-      traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist: "https://${DOMAIN},http://${DOMAIN}"
+      traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist: ${CORS_ORIGINS}
       traefik.http.middlewares.cors.headers.accesscontrolmaxage: "100"
       traefik.http.middlewares.cors.headers.addvaryheader: "true"
       traefik.http.routers.backend.middlewares: cors
