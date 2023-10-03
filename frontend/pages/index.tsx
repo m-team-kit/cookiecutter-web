@@ -14,8 +14,12 @@ const Templates: NextPage = () => {
     const api = useTemplateApi();
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-    const templates = useQuery(['templates', selectedTags], () =>
-        api.listTemplates(undefined, selectedTags)
+    const templates = useQuery(
+        ['templates', selectedTags],
+        () => api.listTemplates(undefined, selectedTags),
+        {
+            keepPreviousData: true,
+        }
     );
 
     const availableTags = useMemo<string[]>(
@@ -52,7 +56,7 @@ const Templates: NextPage = () => {
 
             {templates.isLoading && <LoadingSpinner />}
 
-            {templates.isSuccess && (
+            {templates.data && (
                 <>
                     <div className="flex flex-row items-center mb-2">
                         <label htmlFor="tag-select" className="mr-2 text-lg">
@@ -70,9 +74,11 @@ const Templates: NextPage = () => {
                             ) : (
                                 <>
                                     <option selected></option>
-                                    {difference(availableTags, selectedTags).map((tag) => (
-                                        <option value={tag}>{tag}</option>
-                                    ))}
+                                    {difference(availableTags, selectedTags)
+                                        .sort()
+                                        .map((tag) => (
+                                            <option value={tag}>{tag}</option>
+                                        ))}
                                 </>
                             )}
                         </select>
