@@ -4,6 +4,7 @@ import { type CutterField } from 'lib/client';
 import CheckboxInput from 'components/template/CheckboxInput';
 import { attemptDetermineYesNoOptions } from 'components/template/yesOrNo';
 import Badge from 'components/Badge';
+import ClickableLinks from 'components/ClickableLinks';
 
 type SelectInputProps = {
     field: CutterField;
@@ -26,7 +27,9 @@ const SelectInput: FC<SelectInputProps> = ({ field, flagged = false, className }
 
     return (
         <>
-            <label htmlFor={field.name}>{field.prompt ?? field.name}</label>{' '}
+            <label htmlFor={field.name}>
+                <ClickableLinks text={field.prompt ?? field.name} />
+            </label>{' '}
             {flagged && <Badge type="warning">Missing</Badge>}
             <select
                 name={field.name}

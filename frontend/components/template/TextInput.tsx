@@ -1,7 +1,8 @@
-import { type FC } from 'react';
+import React, { type FC } from 'react';
 import clsx from 'clsx';
 import { type CutterField } from 'lib/client';
 import Badge from 'components/Badge';
+import ClickableLinks from 'components/ClickableLinks';
 
 type TextInputProps = {
     field: CutterField;
@@ -10,7 +11,9 @@ type TextInputProps = {
 };
 const TextInput: FC<TextInputProps> = ({ field, flagged = false, className }) => (
     <>
-        <label htmlFor={field.name}>{field.prompt ?? field.name}</label>{' '}
+        <label htmlFor={field.name}>
+            <ClickableLinks text={field.prompt ?? field.name} />
+        </label>{' '}
         {flagged && <Badge type="warning">Missing</Badge>}
         <input
             className={clsx('input rounded', flagged && 'border-warning', className)}

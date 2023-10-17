@@ -1,15 +1,16 @@
 import { BLANK_FIELD } from 'lib/template';
-import React, { type FC } from 'react';
+import { type FC } from 'react';
 import SelectInput from './SelectInput';
 import TextInput from './TextInput';
 import { type CutterField } from 'lib/client';
 import CheckboxInput from 'components/template/CheckboxInput';
 import ErrorBox from 'components/ErrorBox';
+import ClickableLinks from 'components/ClickableLinks';
 
 type FormFieldProps = { field: CutterField; flagged: boolean };
 const Formfield: FC<FormFieldProps> = ({ field, flagged }) => (
     <div className={field.default === BLANK_FIELD ? '-mb-3' : ''}>
-        {field.default === BLANK_FIELD && <div>{field.prompt ?? field.name}</div>}
+        {field.default === BLANK_FIELD && <ClickableLinks text={field.prompt ?? field.name} />}
         {field.default !== BLANK_FIELD &&
             (field.type === 'text' ? (
                 <TextInput field={field} flagged={flagged} className="mt-1" />
