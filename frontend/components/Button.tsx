@@ -1,4 +1,4 @@
-import { ComponentProps, FC, forwardRef } from 'react';
+import { type ComponentProps, FC, forwardRef } from 'react';
 import clsx from 'clsx';
 
 type ButtonProps = {
@@ -27,7 +27,7 @@ const Button = forwardRef<HTMLButtonElement, ComponentProps<'button'> & ButtonPr
             <button
                 className={clsx(
                     color,
-                    'bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded',
+                    'rounded bg-blue-600 px-4 py-2 font-bold text-white hover:bg-blue-800',
                     className
                 )}
                 {...props}

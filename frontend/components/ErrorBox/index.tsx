@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from 'react';
+import { type FC, type PropsWithChildren } from 'react';
 import Center from 'components/Center';
 import BasicErrorDisplay from './BasicErrorDisplay';
 
@@ -8,7 +8,7 @@ type ErrorBoxProps = {
 const ErrorBox: FC<PropsWithChildren<ErrorBoxProps>> = ({ children, error }) => {
     return (
         <Center>
-            <div className="border border-red-500 p-2 rounded-md">
+            <div className="rounded-md border border-red-500 p-2">
                 {children}
                 <BasicErrorDisplay error={error} />
             </div>

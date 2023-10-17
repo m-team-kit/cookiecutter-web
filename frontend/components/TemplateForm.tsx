@@ -1,9 +1,16 @@
-import { CutterField, Template as TemplateDto } from 'lib/client/index';
-import { FC, FormEventHandler, useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { type CutterField, type Template as TemplateDto } from 'lib/client/index';
+import {
+    type FC,
+    type FormEventHandler,
+    useCallback,
+    useLayoutEffect,
+    useRef,
+    useState,
+} from 'react';
 import { useAuth } from 'react-oidc-context';
 import { useProjectApi } from 'lib/useApi';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosRequestConfig } from 'axios';
+import { type AxiosRequestConfig } from 'axios';
 import Form from 'components/template/Form';
 import Button from 'components/Button';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -63,7 +70,7 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
             // all fields that are empty
             return Array.from(form.entries())
                 .filter(([key, value]) => keysToCheck.includes(key) && value.length == 0)
-                .map(([key, _]) => key);
+                .map(([key]) => key);
         },
         [fields.isSuccess, fields.data]
     );
@@ -77,12 +84,12 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
         const form = new FormData(e.currentTarget);
 
         if (!overrideMissingFieldsWarning) {
-            const emptyFields = findMissingFields(form);
-            if (emptyFields.length !== 0) {
-                setEmptyFields(emptyFields);
+            const _emptyFields = findMissingFields(form);
+            if (_emptyFields.length !== 0) {
+                setEmptyFields(_emptyFields);
                 missingFieldsModal.current?.showModal();
                 setOverrideMissingFieldsWarning(true);
-                console.warn('Missing fields:', emptyFields);
+                console.warn('Missing fields:', _emptyFields);
                 return;
             }
         }
@@ -97,7 +104,7 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
         if (generate.isError && generate.error) {
             document.getElementById('something-went-wrong')?.scrollIntoView({ behavior: 'smooth' });
         }
-    }, [generate.error]);
+    }, [generate.error, generate.isError]);
 
     return (
         <div>
@@ -139,7 +146,7 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
                     </ErrorBox>
                 )}
                 {(fields.isLoading || generate.isLoading) && (
-                    <div className="w-full flex justify-center mb-4">
+                    <div className="mb-4 flex w-full justify-center">
                         <LoadingSpinner />
                     </div>
                 )}
@@ -162,7 +169,7 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
                         </li>
                     ))}
                 </ul>
-                <div className="flex justify-end flex-gap">
+                <div className="flex-gap flex justify-end">
                     <Button
                         variant="secondary"
                         onClick={() => {

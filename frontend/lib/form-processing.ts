@@ -1,9 +1,5 @@
-import { LegalField } from './template';
+import { type LegalField } from './template';
 
-export const isUsefulKey = (key: string) => {
-    return !key.startsWith('_');
-};
+export const isUsefulKey = (key: string) => !key.startsWith('_');
 
-export const hasDefaultValue = (field: LegalField) => {
-    return field.default.length > 0;
-};
+export const hasDefaultValue = (field: LegalField) => field.default.length > 0;

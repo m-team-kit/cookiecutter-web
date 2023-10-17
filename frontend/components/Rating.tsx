@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { type FC, useState } from 'react';
 import clsx from 'clsx';
 import styles from 'components/templates/Template.module.scss';
 import { StarHalf } from 'lucide-react';

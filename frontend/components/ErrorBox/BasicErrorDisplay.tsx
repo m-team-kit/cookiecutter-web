@@ -1,5 +1,5 @@
 import { isAxiosError } from 'axios';
-import { FC } from 'react';
+import { type FC } from 'react';
 
 type BasicErrorDisplayProps = {
     error: unknown;
@@ -11,7 +11,7 @@ const BasicErrorDisplay: FC<BasicErrorDisplayProps> = ({ error }) => {
                 <>
                     <p>The server did not respond as expected:</p>
                     {error.response && (
-                        <pre className="bg-amber-200 rounded-md p-2">
+                        <pre className="rounded-md bg-amber-200 p-2">
                             {JSON.stringify(error.response?.data, null, 2)}
                         </pre>
                     )}
@@ -21,9 +21,7 @@ const BasicErrorDisplay: FC<BasicErrorDisplayProps> = ({ error }) => {
             {error.code === undefined && <p>Could not reach the server.</p>}
         </>
     ) : (
-        <>
-            <p>An unknown error occured.</p>
-        </>
+        <p>An unknown error occured.</p>
     );
 };
 

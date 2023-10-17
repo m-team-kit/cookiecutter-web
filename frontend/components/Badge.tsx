@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from 'react';
+import { type FC, type PropsWithChildren } from 'react';
 import clsx from 'clsx';
 
 type BadgeProps = {
@@ -21,7 +21,7 @@ const Badge: FC<PropsWithChildren<BadgeProps>> = ({ children, type }) => {
     return (
         <span
             className={clsx(
-                'inline-flex items-center px-2.5 py-0.5 rounded-sm text-xs font-medium',
+                'inline-flex items-center rounded-sm px-2.5 py-0.5 text-xs font-medium',
                 colors
             )}
         >

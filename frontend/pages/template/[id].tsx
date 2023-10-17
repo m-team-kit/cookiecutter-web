@@ -1,4 +1,4 @@
-import { NextPage } from 'next';
+import { type NextPage } from 'next';
 import Layout from 'components/Layout';
 import { useTemplateApi } from 'lib/useApi';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -74,10 +74,10 @@ const Template: NextPage = () => {
                     )}
                 </Center>
             </div>
-            <div className="flex flex-row w-100">
-                <div className="flex-grow mb-2">
-                    <div className="flex items-center flex-wrap mb-2">
-                        <h1 className="flex-shrink-0 flex-wrap max-w-[95svw]">
+            <div className="w-100 flex flex-row">
+                <div className="mb-2 grow">
+                    <div className="mb-2 flex flex-wrap items-center">
+                        <h1 className="max-w-[95svw] shrink-0 flex-wrap">
                             {template.data.data.title}
                         </h1>
                         <Rating
@@ -89,10 +89,10 @@ const Template: NextPage = () => {
                             href={`${template.data.data.gitLink}/tree/${template.data.data.gitCheckout}`}
                             className="ml-2 flex items-center"
                         >
-                            <Code2 className="text-blue-500 inline" />
+                            <Code2 className="inline text-blue-500" />
                             Source
                         </a>
-                        <div className="ml-2 flex gap-1 align-text-top flex-wrap">
+                        <div className="ml-2 flex flex-wrap gap-1 align-text-top">
                             {Array.from(template.data.data.tags).map((tag) => (
                                 <Badge type="info" key={tag}>
                                     {tag}
@@ -102,7 +102,7 @@ const Template: NextPage = () => {
                     </div>
                     <p>{template.data.data.summary}</p>
                 </div>
-                <div className="flex-grow-0 hidden lg:block">
+                <div className="hidden grow-0 lg:block">
                     {template.data.data.picture && (
                         <img
                             src={resolveImage(template.data.data.picture)}
@@ -116,8 +116,8 @@ const Template: NextPage = () => {
             <div className="mt-2" />
 
             {!auth.isAuthenticated && (
-                <div className="flex justify-center my-2">
-                    <div className="p-2 bg-neutral-100 rounded border-amber-300 border-4 text-center">
+                <div className="my-2 flex justify-center">
+                    <div className="rounded border-4 border-amber-300 bg-neutral-100 p-2 text-center">
                         <span className="mr-4">To generate projects, please authenticate!</span>
                         <Button onClick={() => auth.signinRedirect()}>Login</Button>
                     </div>

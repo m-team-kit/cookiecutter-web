@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import { type FC } from 'react';
 import clsx from 'clsx';
-import { CutterField } from 'lib/client';
+import { type CutterField } from 'lib/client';
 
 type CheckboxInput = {
     field: CutterField;
@@ -16,23 +16,19 @@ const CheckboxInput: FC<CheckboxInput> = ({
     className,
     truthy = true,
     falsy = false,
-}) => {
-    const classes = clsx('rounded input mt-0 mb-2 mr-2', flagged && 'border-warning', className);
-
-    return (
-        <div>
-            <input type="hidden" name={field.name} value={falsy.toString()} />
-            <input
-                className={classes}
-                type="checkbox"
-                name={field.name}
-                id={field.name}
-                defaultChecked={field.default === truthy}
-                value={truthy.toString()}
-            />
-            <label htmlFor={field.name}>{field.prompt ?? field.name}</label>
-        </div>
-    );
-};
+}) => (
+    <div>
+        <input type="hidden" name={field.name} value={falsy.toString()} />
+        <input
+            className={clsx('input mb-2 mr-2 mt-0 rounded', flagged && 'border-warning', className)}
+            type="checkbox"
+            name={field.name}
+            id={field.name}
+            defaultChecked={field.default === truthy}
+            value={truthy.toString()}
+        />
+        <label htmlFor={field.name}>{field.prompt ?? field.name}</label>
+    </div>
+);
 
 export default CheckboxInput;

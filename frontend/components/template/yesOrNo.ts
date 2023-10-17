@@ -1,5 +1,5 @@
 // referencing defaults in https://cookiecutter.readthedocs.io/en/2.3.0/cookiecutter.html#cookiecutter.prompt.YesNoPrompt
-import { CutterOption } from 'lib/client';
+import { type CutterOption } from 'lib/client';
 
 export const TRUTHY_DEFAULTS = ['1', 'true', 't', 'yes', 'y', 'on'];
 export const FALSY_DEFAULTS = ['0', 'false', 'f', 'no', 'n', 'off'];

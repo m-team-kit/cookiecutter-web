@@ -5,8 +5,8 @@ import 'styles/tailwind.css';
 import 'styles/custom.scss';
 
 import type { AppProps } from 'next/app';
-import { FC, PropsWithChildren } from 'react';
-import { AuthProvider, AuthProviderProps } from 'react-oidc-context';
+import { type FC, type PropsWithChildren } from 'react';
+import { AuthProvider, type AuthProviderProps } from 'react-oidc-context';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { QueryClient } from '@tanstack/query-core';
@@ -20,8 +20,9 @@ const oidcConfig: AuthProviderProps = {
             ? 'https://aai-dev.egi.eu/auth/realms/egi/'
             : 'https://aai.egi.eu/auth/realms/egi/'),
     client_id: process.env['NEXT_PUBLIC_OIDC_CLIENT_ID'] ?? 'ccweb',
-    redirect_uri:
-        (process.env['NEXT_PUBLIC_OIDC_REDIRECT_HOST'] ?? 'https://localhost') + '/oidc-redirect',
+    redirect_uri: `${
+        process.env['NEXT_PUBLIC_OIDC_REDIRECT_HOST'] ?? 'https://localhost'
+    }/oidc-redirect`,
     //scope: 'openid email profile eduperson_entitlement offline_access',
     // reduce scope
     scope: 'openid email eduperson_entitlement offline_access',

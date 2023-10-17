@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import { type FC } from 'react';
 import clsx from 'clsx';
-import { CutterField } from 'lib/client';
+import { type CutterField } from 'lib/client';
 import CheckboxInput from 'components/template/CheckboxInput';
 import { attemptDetermineYesNoOptions } from 'components/template/yesOrNo';
 import Badge from 'components/Badge';

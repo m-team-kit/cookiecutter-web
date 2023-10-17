@@ -18,12 +18,11 @@ export const postForm = async (accessToken: string, parameters: FormParameters, 
 };
 
 export const buildTemplateUrl = (templateUrl: string, helpUrl?: string) =>
-    '/api/template?' +
-    new URLSearchParams(
+    `/api/template?${new URLSearchParams(
         helpUrl
             ? {
                   url: templateUrl,
                   helpUrl: helpUrl,
               }
             : { url: templateUrl }
-    );
+    )}`;

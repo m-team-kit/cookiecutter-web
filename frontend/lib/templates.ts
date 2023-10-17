@@ -24,9 +24,10 @@ const DEEPHDC_CHILD_MODULE: Template = {
 };
 const DEEPHDC_ADVANCED: Template = {
     templateUrl: COOKIECUTTER_TEMPLATE_URL,
-    helpUrl:
-        COOKIECUTTER_TEMPLATE_URL.substring(0, COOKIECUTTER_TEMPLATE_URL.lastIndexOf('.')) +
-        '-help.json',
+    helpUrl: `${COOKIECUTTER_TEMPLATE_URL.substring(
+        0,
+        COOKIECUTTER_TEMPLATE_URL.lastIndexOf('.')
+    )}-help.json`,
     gitRepo: GIT_REPO_URL,
     gitBranch: GIT_BRANCH_NAME,
     name: 'deephdc/cookiecutter-deep:advanced',

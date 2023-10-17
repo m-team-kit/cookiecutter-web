@@ -1,4 +1,4 @@
-import { CSSProperties, FC, PropsWithChildren } from 'react';
+import { type CSSProperties, type FC, type PropsWithChildren } from 'react';
 import clsx from 'clsx';
 
 type CenterProps = {

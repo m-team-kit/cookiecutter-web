@@ -22,7 +22,7 @@
     "axios": "^1.5.0",
     "clsx": "^1.2.1",
     "eslint": "8.27.0",
-    "eslint-config-next": "13.0.3",
+    "eslint-config-next": "^13.5.5",
     "lodash": "^4.17.21",
     "lucide-react": "^0.279.0",
     "next": "13.0.3",
@@ -36,7 +36,12 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.199",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
     "autoprefixer": "^10.4.15",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-github": "^4.10.1",
+    "eslint-plugin-tailwindcss": "^3.13.0",
     "postcss": "^8.4.29",
     "prettier": "^2.8.1",
     "tailwindcss": "^3.3.3"

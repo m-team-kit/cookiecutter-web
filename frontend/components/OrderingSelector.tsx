@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FC } from 'react';
+import { type ChangeEventHandler, type FC } from 'react';
 import Ordering from 'lib/Ordering';
 
 type OrderingSelectorProps = {
@@ -14,12 +14,12 @@ const OrderingSelector: FC<OrderingSelectorProps> = ({ onChange }) => {
     };
 
     return (
-        <div>
+        <div className="xs:w-full mb-2 flex flex-row items-center sm:w-auto">
             <label htmlFor="ordering" className="mr-2 text-lg">
                 Ordering:
             </label>
             <select
-                className="rounded-md w-60 disabled:opacity-50"
+                className="w-60 rounded-md disabled:opacity-50"
                 id="ordering"
                 onChange={_onChange}
             >

@@ -1,7 +1,7 @@
-import { FC } from 'react';
+import { type FC } from 'react';
 import styles from './Template.module.scss';
 import clsx from 'clsx';
-import { Template as TemplateDto } from 'lib/client/models/template';
+import { type Template as TemplateDto } from 'lib/client/models/template';
 import Link from 'next/link';
 import Badge from 'components/Badge';
 import Rating from 'components/Rating';
@@ -17,20 +17,20 @@ const Template: FC<TemplateProps> = ({ template }) => {
         <Link
             className={clsx(
                 styles['card'],
-                'hover:scale-105 shadow transition-transform duration-75 no-underline text-black'
+                'text-black no-underline shadow transition-transform duration-75 hover:scale-105'
             )}
             href={`/template/${template.id}`}
         >
             <div className="flex flex-row">
-                <div className="flex-grow">
-                    <div className="flex items-center mb-2">
+                <div className="grow">
+                    <div className="mb-2 flex items-center">
                         <h2 className="mb-0">{template.title}</h2>{' '}
                         {template.score && <Rating score={template.score} className="ml-2" />}
                     </div>
                     <p className={styles['summary']}>{template.summary}</p>
                 </div>
                 {template.picture && (
-                    <div className="flex-grow-0 flex justify-center items-center">
+                    <div className="flex grow-0 items-center justify-center">
                         <img
                             src={resolveImage(template.picture)}
                             alt=""
@@ -40,7 +40,7 @@ const Template: FC<TemplateProps> = ({ template }) => {
                 )}
             </div>
             {tags.length > 0 && (
-                <span className="inline-flex gap-1 flex-wrap">
+                <span className="inline-flex flex-wrap gap-1">
                     {tags.map((tag) => (
                         <Badge type="info" key={tag}>
                             {tag}
