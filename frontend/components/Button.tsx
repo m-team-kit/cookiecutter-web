@@ -1,4 +1,4 @@
-import { type ComponentProps, FC, forwardRef } from 'react';
+import { type ComponentProps, forwardRef } from 'react';
 import clsx from 'clsx';
 
 type ButtonProps = {

@@ -69,7 +69,7 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
                 .map((f) => f.name);
             // all fields that are empty
             return Array.from(form.entries())
-                .filter(([key, value]) => keysToCheck.includes(key) && value.length == 0)
+                .filter(([key, value]) => keysToCheck.includes(key) && value.length === 0)
                 .map(([key]) => key);
         },
         [fields.isSuccess, fields.data]

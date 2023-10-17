@@ -17,7 +17,7 @@ const Rating: FC<RatingProps> = ({ score, className, onChange }) => {
             onMouseLeave={onChange ? () => setHovering(false) : undefined}
         >
             {[...Array(10)].map((_, i) => {
-                const classes = clsx(styles['star'], i % 2 == 1 ? styles['flipped'] : false);
+                const classes = clsx(styles['star'], i % 2 === 1 ? styles['flipped'] : false);
                 return (
                     <span
                         key={i}
