@@ -1,9 +1,0 @@
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Apple stuff:
-.DS_Store
-
-# Others:
-__pycache__
