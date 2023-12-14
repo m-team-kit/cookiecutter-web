@@ -4,7 +4,7 @@ This application provides a 'marketplace' for commonly used cookiecutter templat
 
 The frontend is built in [next.js](https://nextjs.org/) and can be found in `/frontend`.
 
-The backend source is hosted on the [backend repository](https://git.scc.kit.edu/m-team/ai/cookiecutter-web-backend).
+The backend source is hosted on the [backend repository](https://codebase.helmholtz.cloud/m-team/ai/cookiecutter-web-backend).
 
 # Configuration
 
