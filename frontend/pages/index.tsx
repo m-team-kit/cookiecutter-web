@@ -11,7 +11,8 @@ import OrderingSelector from 'components/OrderingSelector';
 import TagSelector from 'components/TagSelector';
 import SelectedTags from 'components/SelectedTags';
 
-const FORCED_TAGS = process.env['NEXT_PUBLIC_FORCED_TAGS']?.split(',') ?? [];
+const FORCED_TAGS =
+    process.env['NEXT_PUBLIC_FORCED_TAGS']?.split(',').filter((t) => t.length > 0) ?? [];
 
 // TODO: SSR?
 const Templates: NextPage = () => {
