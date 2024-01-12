@@ -11,6 +11,8 @@ import OrderingSelector from 'components/OrderingSelector';
 import TagSelector from 'components/TagSelector';
 import SelectedTags from 'components/SelectedTags';
 
+const FORCED_TAGS = process.env['NEXT_PUBLIC_FORCED_TAGS']?.split(',') ?? [];
+
 // TODO: SSR?
 const Templates: NextPage = () => {
     const api = useTemplateApi();
@@ -18,8 +20,8 @@ const Templates: NextPage = () => {
     const [ordering, setOrdering] = useState<Ordering | undefined>(undefined);
 
     const templates = useQuery(
-        ['templates', selectedTags, ordering],
-        () => api.listTemplates(undefined, selectedTags, undefined, ordering),
+        ['templates', selectedTags, FORCED_TAGS, ordering],
+        () => api.listTemplates(undefined, [...FORCED_TAGS, ...selectedTags], undefined, ordering),
         {
             keepPreviousData: true,
         }
