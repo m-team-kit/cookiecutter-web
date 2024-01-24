@@ -59,7 +59,9 @@ const Templates: NextPage = () => {
 
     return (
         <Layout>
-            <h1 className="h5">Templates</h1>
+            <h1 className="h5">Templates Hub</h1>
+            <p style={{ color: '#878787' }}>Create Software Projects easily from the templates below.{' '}
+            You are also welcome to <a href="https://github.com/m-team-kit/templates-hub">contribute</a> with more templates</p><br />
 
             {templates.isLoading && <LoadingSpinner />}
 
