@@ -5,7 +5,8 @@ import Layout from '../components/Layout';
 const AUPolicy: NextPage = () => (
     <Layout>
         <h1>Acceptable Use Policy and Conditions of Use</h1>
-        <p>This Acceptable Use Policy for AI4EOSC Templates service is effective from 2023-05-16</p>
+        <p>This Acceptable Use Policy for Templates Hub service is effective from 2023-09-21</p>
+        <br />
         <p>
             This Acceptable Use Policy and Conditions of Use (&quot;AUP&quot;)
             <a id="footnote-1" href="#footnote-aup-ref">
@@ -17,13 +18,14 @@ const AUPolicy: NextPage = () => (
             <a href="https://www.scc.kit.edu/en/aboutus/d3a.php">
                 Data Analytics, Access and Applications
             </a>{' '}
-            (D3A) from the <a href="https://www.scc.kit.edu/en/">Steinbuch Centre for Computing</a>{' '}
-            (SCC) of{' '}
+            (D3A) from the <a href="https://www.scc.kit.edu/en/">Scientific Computing Center</a>{' '}
+            (SCC) of the {' '}
             <a href="https://www.kit.edu/english/index.php">Karlsruhe Institute of Technology</a>{' '}
             (KIT), located at Hermann-von-Helmholtz-Platz 1, 76344 Eggenstein-Leopoldshafen (the
-            &quot;Provider&quot;) for the purpose of generating AI software projects based on the
+            &quot;Provider&quot;) for the purpose of generating software projects based on the
             predefined templates.
         </p>
+        <br />
         <ol
             // TODO: make it so I don't need margin-left
             className="ml-6 list-decimal"
@@ -69,10 +71,11 @@ const AUPolicy: NextPage = () => (
             </li>
         </ol>
 
-        <h2>Contact information</h2>
+        <br />
+        <h2>Contact Information</h2>
         <p>
             The administrative contact for this AUP is:{' '}
-            <a href="mailto:m-ops@listas.csic.es">m-ops@listas.csic.es</a>
+            <a href="mailto:m-contact@lists.kit.edu">m-contact@lists.kit.edu</a>
         </p>
         <p>
             The security contact for this AUP is:{' '}
