@@ -9,7 +9,7 @@ const Footer: FC = () => (
             <div className="flex w-full items-center xl:w-[33%]">
                 <img src="/images/ec-logo.png" alt="european commission logo" className="mr-3" />
                 <span>
-                    This Service is powered by the AI4OS software, provided by KIT, co-funded by the{' '}
+                    This Service is provided by KIT, co-funded by the{' '}
                     <a href="https://ai4eosc.eu/" rel="noreferrer">
                         AI4EOSC project
                     </a>
