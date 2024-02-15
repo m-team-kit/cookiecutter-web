@@ -1,0 +1,51 @@
+{
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+    "@type": "SoftwareSourceCode",
+    "license": "https://spdx.org/licenses/Apache-2.0",
+    "codeRepository": "git+https://codebase.helmholtz.cloud/m-team/ai/cookiecutter-web/",
+    "issueTracker": "https://github.com/m-team-kit/cookiecutter-web/issues",
+    "name": "cookiecutter-web",
+    "description": "This application provides a 'marketplace' for commonly used [cookiecutter](https://cookiecutter.readthedocs.io/) templates, allowing the user to fill in the configuration online and download the generated project as a .zip file.",
+    "applicationCategory": "Software templates",
+    "keywords": [
+        "templates",
+        "cookiecutter",
+        "web service"
+    ],
+    "programmingLanguage": [
+        "Javascript",
+        "Python"
+    ],
+    "relatedLink": [
+        "https://templates.services.fedcloud.eu/"
+    ],
+    "author": [
+        {
+            "@type": "Person",
+            "givenName": "Christophe",
+            "familyName": "Laures",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "KIT"
+            }
+        },
+        {
+            "@type": "Person",
+            "givenName": "Borja",
+            "familyName": "Esteban",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "KIT"
+            }
+        },
+        {
+            "@type": "Person",
+            "givenName": "Valentin",
+            "familyName": "Kozlov",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "KIT"
+            }
+        }
+    ]
+}
