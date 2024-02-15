@@ -1,0 +1,32 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: cookiecutter-web
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Christophe
+    family-names: Laures
+    affiliation: KIT
+  - given-names: Borja
+    family-names: Esteban
+    affiliation: KIT
+  - given-names: Valentin
+    family-names: Kozlov
+    affiliation: KIT
+repository-code: >-
+  https://codebase.helmholtz.cloud/m-team/ai/cookiecutter-web/
+url: 'https://templates.services.fedcloud.eu/'
+abstract: >-
+  This application provides a 'marketplace' for commonly
+  used [cookiecutter](https://cookiecutter.readthedocs.io/)
+  templates, allowing the user to fill in the configuration
+  online and download the generated project as a .zip file.
+keywords:
+  - templates
+  - web service
+  - cookiecutter
+license: Apache-2.0
