@@ -24,7 +24,9 @@ COPY pages pages
 COPY components components
 COPY lib lib
 
-#COPY --from=git-version /app/utils/generatedGitInfo.json utils/generatedGitInfo.json
+WORKDIR /app/lib/client
+RUN npm run build
+WORKDIR /app
 
 FROM base as prod-build
 # relative
