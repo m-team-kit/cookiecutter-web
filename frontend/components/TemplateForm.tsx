@@ -69,7 +69,11 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
                 .map((f) => f.name);
             // all fields that are empty
             return Array.from(form.entries())
-                .filter(([key, value]) => keysToCheck.includes(key) && value.length === 0)
+                .filter(
+                    ([key, value]) =>
+                        keysToCheck.includes(key) &&
+                        (typeof value !== 'string' || value.length === 0)
+                )
                 .map(([key]) => key);
         },
         [fields.isSuccess, fields.data]
@@ -94,8 +98,10 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
             }
         }
 
+        const entries = Array.from(form.entries()).filter(
+            ([, value]) => typeof value === 'string' && value.length > 0
+        );
         // TODO: get rid of type assertion, asserting because we have no files
-        const entries = Array.from(form.entries()).filter((entry) => entry[1].length > 0);
         const json = Object.fromEntries(entries) as Record<string, string>;
         generate.mutate(json);
     };
