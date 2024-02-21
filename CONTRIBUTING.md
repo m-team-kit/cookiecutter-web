@@ -6,6 +6,9 @@ email, or any other method with the owners of this repository before making a ch
 
 Please note we have a [code of conduct](CODE_OF_CONDUCT.md), please follow it in all your interactions with the project.
 
+## Backend
+For the backend, please, also see [backend/CODE OF CONDUCT](backend/CODE_OF_CONDUCT.md) and [backend/CONTRIBUTING](backend/CONTRIBUTING.md).
+
 
 ## Reporting bugs
 Report bugs at https://github.com/m-team-kit/cookiecutter-web/issues
