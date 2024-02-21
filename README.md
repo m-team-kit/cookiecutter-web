@@ -15,6 +15,8 @@ Copy `.env-example` to `.env` and refer to the comments to fill in desired confi
 
 Run `docker compose -f docker-compose.base.yaml -f docker-compose.prod.yaml up --build -d` to deploy the application in production mode.
 
+Run `docker compose -f docker-compose.base.yaml -f docker-compose.prod.yaml -f docker-compose.frontend-only.yaml up --build -d` to deploy the application with the frontend only (e.g. to have different frontends with still the same backend hosted on another instance).
+
 Run `docker compose -f docker-compose.base.yaml -f docker-compose.dev.yaml up --build` to deploy the application in development mode for testing.
 
 # Deployed service
