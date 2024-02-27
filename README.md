@@ -1,3 +1,5 @@
+[![SQAaaS badge](https://github.com/EOSC-synergy/SQAaaS/raw/master/badges/badges_150x116/badge_software_silver.png)](https://api.eu.badgr.io/public/assertions/9Vx6Dxt5T3yNiUdU6FN62g "SQAaaS silver badge achieved")
+
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-1.4-4baaaa.svg)](CODE_OF_CONDUCT.md)
 # Cookiecutter-Web or Templates Hub
 
