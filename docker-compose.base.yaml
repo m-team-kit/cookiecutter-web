@@ -28,6 +28,9 @@ services:
     build:
       context: backend
       dockerfile: dockerfile
+      args:
+        GIT_USERNAME: ${PROJECT_NAME?Undefined PROJECT_NAME for git config}
+        GIT_EMAIL: ${BACKEND_GIT_EMAIL?Undefined BACKEND_GIT_EMAIL for git config}
     environment:
       PROJECT_NAME: ${PROJECT_NAME}
       REPOSITORY_URL: ${REPOSITORY_URL}
