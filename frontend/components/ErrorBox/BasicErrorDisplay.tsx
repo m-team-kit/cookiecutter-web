@@ -11,7 +11,7 @@ const BasicErrorDisplay: FC<BasicErrorDisplayProps> = ({ error }) => {
                 <>
                     <p>The server did not respond as expected:</p>
                     {error.response && (
-                        <pre className="rounded-md bg-amber-200 p-2">
+                        <pre className="max-w-[80ch] overflow-x-scroll rounded-md bg-amber-200 p-2">
                             {JSON.stringify(error.response?.data, null, 2)}
                         </pre>
                     )}
