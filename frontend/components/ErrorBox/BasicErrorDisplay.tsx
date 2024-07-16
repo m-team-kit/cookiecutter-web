@@ -1,18 +1,43 @@
-import { isAxiosError } from 'axios';
-import { type FC } from 'react';
+import { type AxiosResponse, isAxiosError } from 'axios';
+import { type FC, type ReactNode, useEffect, useState } from 'react';
+import LoadingSpinner from '../LoadingSpinner';
+
+type ResponseContentsProps = {
+    response: AxiosResponse<unknown>;
+};
+const ResponseContents: FC<ResponseContentsProps> = ({ response }) => {
+    const [message, setMessage] = useState<ReactNode>();
+
+    useEffect(() => {
+        if (typeof response.data === 'string') {
+            setMessage(response.data);
+        } else if (response.data instanceof Blob) {
+            response.data
+                .text()
+                .then((text) => setMessage(text))
+                .catch((error) =>
+                    setMessage(`(Failed to process server error blob text: "${error.toString()}")`)
+                );
+        } else {
+            setMessage('(Failed to read server error message)');
+        }
+    }, [response]);
+
+    return message ?? <LoadingSpinner />;
+};
 
 type BasicErrorDisplayProps = {
     error: unknown;
 };
-const BasicErrorDisplay: FC<BasicErrorDisplayProps> = ({ error }) => {
-    return isAxiosError(error) ? (
+const BasicErrorDisplay = ({ error }: BasicErrorDisplayProps) =>
+    isAxiosError(error) ? (
         <>
             {error.code !== undefined && (
                 <>
                     <p>The server did not respond as expected:</p>
                     {error.response && (
-                        <pre className="rounded-md bg-amber-200 p-2">
-                            {JSON.stringify(error.response?.data, null, 2)}
+                        <pre className="max-w-[80ch] overflow-x-scroll rounded-md bg-amber-200 p-2">
+                            <ResponseContents response={error.response} />
                         </pre>
                     )}
                     {!error.response && <p>No server response.</p>}
@@ -23,6 +48,5 @@ const BasicErrorDisplay: FC<BasicErrorDisplayProps> = ({ error }) => {
     ) : (
         <p>An unknown error occured.</p>
     );
-};
 
 export default BasicErrorDisplay;
