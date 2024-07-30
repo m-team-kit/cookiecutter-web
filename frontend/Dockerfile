@@ -1,4 +1,4 @@
-FROM node:18 as git-version
+FROM node:18 AS git-version
 
 WORKDIR /app
 COPY lib lib
@@ -8,7 +8,7 @@ COPY ["package.json", "yarn.lock", "next.config.js", "tsconfig.json", ".eslintrc
 #COPY .git/ ./.git/
 #RUN yarn git-info
 
-FROM node:18 as base
+FROM node:18 AS base
 # new base because we don't want .git
 
 WORKDIR /app
@@ -28,7 +28,7 @@ WORKDIR /app/lib/client
 RUN npm run build
 WORKDIR /app
 
-FROM base as prod-build
+FROM base AS prod-build
 # relative
 ARG BACKEND_URL
 ENV NEXT_PUBLIC_API_HOST=${BACKEND_URL}
@@ -45,7 +45,7 @@ ENV NEXT_PUBLIC_FORCED_TAGS=${FORCED_TAGS}
 
 RUN yarn build
 
-FROM node:18-alpine as production
+FROM node:18-alpine AS production
 ENV NODE_ENV=production
 
 WORKDIR /app
@@ -59,7 +59,7 @@ COPY --from=prod-build /app/.next/standalone ./
 EXPOSE 3000
 CMD ["node", "server.js"]
 
-FROM base as development
+FROM base AS development
 ENV NODE_ENV=development
 
 EXPOSE 3000
