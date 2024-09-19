@@ -7,7 +7,7 @@ const Footer: FC = () => (
     <footer className="footer flex items-center justify-center">
         <div className="container flex flex-wrap items-center justify-center">
             <div className="flex w-full items-center xl:w-[33%]">
-                <img src="/images/ec-logo.png" alt="european commission logo" className="mr-3" />
+                <img src="/images/EN_Co-fundedbytheEU_RGB_NEG.png" alt="european commission logo" className="mr-3" />
                 <span>
                     This Service is provided by KIT, co-funded by the{' '}
                     <a href="https://ai4eosc.eu/" rel="noreferrer">
