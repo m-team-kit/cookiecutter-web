@@ -6,15 +6,19 @@ import Link from 'next/link';
 const Footer: FC = () => (
     <footer className="footer flex items-center justify-center">
         <div className="container flex flex-wrap items-center justify-center">
-            <div className="flex w-full items-center xl:w-[33%]">
-                <img src="/images/EN_Co-fundedbytheEU_RGB_NEG.png" alt="european commission logo" className="mr-3" />
-                <span>
-                    This Service is provided by KIT, co-funded by the{' '}
-                    <a href="https://ai4eosc.eu/" rel="noreferrer">
-                        AI4EOSC project
-                    </a>
-                    .
-                </span>
+            <div className="flex w-full items-center content-center justify-center">
+                <img
+                    src="/images/funded_by_eu.png"
+                    alt="european commission logo"
+                    className="mr-3"
+                />
+            </div>
+            <div className="text-center">
+                This Service is provided by KIT, co-funded by the{' '}
+                <a href="https://ai4eosc.eu/" rel="noreferrer">
+                    AI4EOSC project
+                </a>
+                .
             </div>
             <div className="flex h-full w-full items-center xl:w-[33%]">
                 <ul className={styles['legals']}>
