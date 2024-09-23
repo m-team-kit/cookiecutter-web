@@ -1,10 +1,12 @@
 import { type ChangeEventHandler, type FC } from 'react';
 import Ordering from 'lib/Ordering';
+import clsx from 'clsx';
 
 type OrderingSelectorProps = {
     onChange: (ordering: Ordering | undefined) => void;
+    className?: string;
 };
-const OrderingSelector: FC<OrderingSelectorProps> = ({ onChange }) => {
+const OrderingSelector: FC<OrderingSelectorProps> = ({ onChange, className }) => {
     const _onChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
         if (e.target.value.trim().length === 0) {
             onChange(undefined);
@@ -14,12 +16,12 @@ const OrderingSelector: FC<OrderingSelectorProps> = ({ onChange }) => {
     };
 
     return (
-        <div className="xs:w-full mb-2 flex flex-row items-center sm:w-auto">
-            <label htmlFor="ordering" className="mr-2 text-lg">
+        <div className={clsx('mb-2 flex w-full flex-row items-center sm:w-auto', className)}>
+            <label htmlFor="ordering" className="mr-2 min-w-[12ch] text-lg md:ms-auto md:min-w-fit">
                 Ordering:
             </label>
             <select
-                className="w-60 rounded-md disabled:opacity-50"
+                className="max-w-xs rounded-md disabled:opacity-50"
                 id="ordering"
                 onChange={_onChange}
             >

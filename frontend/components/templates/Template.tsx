@@ -17,15 +17,15 @@ const Template: FC<TemplateProps> = ({ template }) => {
         <Link
             className={clsx(
                 styles['card'],
-                'text-black no-underline shadow transition-transform duration-75 hover:scale-105'
+                ' text-black no-underline shadow transition-transform duration-75 hover:scale-105'
             )}
             href={`/template/${template.id}`}
         >
-            <div className="flex flex-row">
+            <div className="flex flex-row flex-wrap">
                 <div className="grow">
-                    <div className="mb-2 flex items-center">
-                        <h2 className="mb-0">{template.title}</h2>{' '}
-                        {template.score && <Rating score={template.score} className="ml-2" />}
+                    <div className="mb-2 flex flex-wrap items-center justify-center">
+                        <h2 className="mb-0 mr-2">{template.title}</h2>{' '}
+                        {template.score && <Rating score={template.score} />}
                     </div>
                     <p className={styles['summary']}>{template.summary}</p>
                 </div>

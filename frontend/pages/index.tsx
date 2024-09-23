@@ -60,21 +60,26 @@ const Templates: NextPage = () => {
     return (
         <Layout>
             <h1 className="h5">Templates Hub</h1>
-            <p style={{ color: '#878787' }}>Create Software Projects easily from the templates below.{' '}
-            You are also welcome to <a href="https://github.com/m-team-kit/templates-hub">contribute</a> with more templates</p><br />
+            <p style={{ color: '#878787' }}>
+                Create Software Projects easily from the templates below. You are also welcome to{' '}
+                <a href="https://github.com/m-team-kit/templates-hub">contribute</a> with more
+                templates
+            </p>
+            <br />
 
             {templates.isLoading && <LoadingSpinner />}
 
             {templates.data && (
                 <>
-                    <div className="flex flex-row flex-wrap">
+                    <div className="justify-between md:flex md:flex-row md:flex-wrap">
                         <TagSelector
                             allTags={allTags}
                             selectedTags={selectedTags}
                             addTag={select}
+                            className="flex-1"
                         />
-                        <SelectedTags tags={selectedTags} onDelete={unselect} className="grow" />
-                        <OrderingSelector onChange={setOrdering} />
+                        <SelectedTags tags={selectedTags} onDelete={unselect} className="flex-1" />
+                        <OrderingSelector onChange={setOrdering} className="flex-1" />
                     </div>
                     <div className="grid auto-rows-fr grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
                         {templates.data.data.map((template) => (
