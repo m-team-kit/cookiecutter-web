@@ -2,3 +2,4 @@
 .env
 cookie_secret.txt
 traefik/
+data/

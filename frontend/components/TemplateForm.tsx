@@ -129,6 +129,7 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
                                         type="submit"
                                         ref={formSubmitButton}
                                         disabled={generate.isLoading}
+                                        variant={generate.isError ? 'warning' : undefined}
                                     >
                                         Generate
                                     </Button>
@@ -157,7 +158,7 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
                     </div>
                 )}
                 {generate.isError && (
-                    <ErrorBox error={generate.error}>
+                    <ErrorBox error={generate.error} className="mt-2">
                         <p id="something-went-wrong">Failed to generate the project:</p>{' '}
                     </ErrorBox>
                 )}

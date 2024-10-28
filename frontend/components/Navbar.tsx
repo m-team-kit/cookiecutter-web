@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useAuth } from 'react-oidc-context';
+import { ISSUES_URL, REPOSITORY_URL } from '../lib/links';
 
 const Navbar = () => {
     const auth = useAuth();
@@ -14,18 +15,12 @@ const Navbar = () => {
                         </Link>
                     </li>
                     <li className="navbar-item">
-                        <a
-                            className="navbar-link"
-                            href="https://github.com/m-team-kit/templates-hub"
-                        >
+                        <a className="navbar-link" href={REPOSITORY_URL}>
                             Add Template
                         </a>
                     </li>
                     <li className="navbar-item">
-                        <a
-                            className="navbar-link"
-                            href="https://github.com/m-team-kit/templates-hub/issues"
-                        >
+                        <a className="navbar-link" href={ISSUES_URL}>
                             Support
                         </a>
                     </li>
