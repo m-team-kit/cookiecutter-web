@@ -12,7 +12,7 @@ import Badge from 'components/Badge';
 import TemplateForm from 'components/TemplateForm';
 import Rating from 'components/Rating';
 import { Code2 } from 'lucide-react';
-import ErrorBox from 'components/ErrorBox';
+import TemplateGenerationError from 'components/TemplateGenerationError';
 import resolveImage from 'lib/resolveImage';
 import Center from 'components/Center';
 
@@ -54,9 +54,9 @@ const Template: NextPage = () => {
     if (template.isError) {
         return (
             <Layout>
-                <ErrorBox error={template.error}>
+                <TemplateGenerationError error={template.error}>
                     <p>An error occurred while loading the template:</p>{' '}
-                </ErrorBox>
+                </TemplateGenerationError>
             </Layout>
         );
     }

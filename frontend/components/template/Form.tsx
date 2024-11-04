@@ -4,7 +4,7 @@ import SelectInput from './SelectInput';
 import TextInput from './TextInput';
 import { type CutterField } from 'lib/client';
 import CheckboxInput from 'components/template/CheckboxInput';
-import ErrorBox from 'components/ErrorBox';
+import TemplateGenerationError from 'components/TemplateGenerationError';
 import ClickableLinks from 'components/ClickableLinks';
 
 type FormFieldProps = { field: CutterField; flagged: boolean };
@@ -19,7 +19,7 @@ const Formfield: FC<FormFieldProps> = ({ field, flagged }) => (
             ) : field.type === 'checkbox' ? (
                 <CheckboxInput field={field} className="mt-1" />
             ) : (
-                <ErrorBox error={`Unknown field type ${field.type}`} />
+                <TemplateGenerationError error={`Unknown field type ${field.type}`} />
             ))}
     </div>
 );

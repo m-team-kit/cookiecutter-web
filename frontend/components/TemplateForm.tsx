@@ -14,7 +14,7 @@ import { type AxiosRequestConfig } from 'axios';
 import Form from 'components/template/Form';
 import Button from 'components/Button';
 import LoadingSpinner from 'components/LoadingSpinner';
-import ErrorBox from 'components/ErrorBox';
+import TemplateGenerationError from 'components/TemplateGenerationError';
 
 const hasDefaultValue = (field: CutterField) => {
     // TODO: type assertion because of api spec/generator issue
@@ -148,9 +148,9 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
                     )}
                 </div>
                 {fields.isError && (
-                    <ErrorBox error={fields.error}>
+                    <TemplateGenerationError error={fields.error}>
                         <p>Failed to load template fields:</p>
-                    </ErrorBox>
+                    </TemplateGenerationError>
                 )}
                 {(fields.isLoading || generate.isLoading) && (
                     <div className="mb-4 flex w-full justify-center">
@@ -158,9 +158,13 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
                     </div>
                 )}
                 {generate.isError && (
-                    <ErrorBox error={generate.error} className="mt-2">
-                        <p id="something-went-wrong">Failed to generate the project:</p>{' '}
-                    </ErrorBox>
+                    <TemplateGenerationError
+                        error={generate.error}
+                        template={template}
+                        className="mt-2"
+                    >
+                        <p id="something-went-wrong">Failed to generate the project:</p>
+                    </TemplateGenerationError>
                 )}
             </form>
             <dialog id="missing-fields" ref={missingFieldsModal} className="modal p-3">
