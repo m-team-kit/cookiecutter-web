@@ -88,13 +88,17 @@ const ResponseDisplay: FC<ResponseDisplayProps> = ({ response, template }) => {
                     {ISSUES_URL.startsWith('https://github.com') ? (
                         <a
                             href={`${ISSUES_URL}/new?${new URLSearchParams({
-                                title: `[${template.title.replace(' ', '+')}]`,
-                                body: ('json' in report
-                                    ? report.json
-                                    : 'content' in report
-                                    ? report.content
-                                    : report.parseError
-                                ).replace(' ', '+'),
+                                title: `[${template.title}] Generation issue`,
+                                body:
+                                    'json' in report
+                                        ? `\`\`\`json\n${JSON.stringify(
+                                              JSON.parse(report.json),
+                                              null,
+                                              2
+                                          )}\n\`\`\``
+                                        : 'content' in report
+                                        ? `\`\`\`\n${report.content}\n\`\`\``
+                                        : `\`\`\`\n${report.parseError}\n\`\`\``,
                             })}`}
                         >
                             the issues page
