@@ -1,4 +1,4 @@
-import { type NextPage } from 'next';
+import { type GetServerSideProps, type NextPage } from 'next';
 import Layout from 'components/Layout';
 import { useTemplateApi } from 'lib/useApi';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -15,6 +15,8 @@ import { Code2 } from 'lucide-react';
 import TemplateGenerationError from 'components/TemplateGenerationError';
 import resolveImage from 'lib/resolveImage';
 import Center from 'components/Center';
+import fs from 'node:fs';
+import { IssueTemplateContextProvider } from '../../components/IssueTemplateContext';
 
 // TODO: SSR?
 const Template: NextPage = () => {
@@ -129,4 +131,19 @@ const Template: NextPage = () => {
     );
 };
 
-export default Template;
+type TemplatePageProps = {
+    issueTemplate: string;
+};
+const TemplateOuter: NextPage<TemplatePageProps> = ({ issueTemplate }) => (
+    <IssueTemplateContextProvider issueTemplate={issueTemplate}>
+        <Template />
+    </IssueTemplateContextProvider>
+);
+
+export const getServerSideProps: GetServerSideProps = async () => ({
+    props: {
+        issueTemplate: fs.readFileSync('issue_templates/generation_error.md', 'utf-8'),
+    },
+});
+
+export default TemplateOuter;

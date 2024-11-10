@@ -4,6 +4,14 @@ import { type AxiosResponse, isAxiosError } from 'axios';
 import LoadingSpinner from './LoadingSpinner';
 import { ISSUES_URL } from '../lib/links';
 import { type Template as TemplateDto } from '../lib/client';
+import mustache from 'mustache';
+import { useIssueTemplate } from './IssueTemplateContext';
+
+type ErrorMetadata = {
+    template?: TemplateDto;
+    userInput?: Record<string, unknown>;
+    emptyFields?: string[];
+};
 
 type ErrorReport =
     | {
@@ -27,11 +35,10 @@ const analyzeError = async (response: AxiosResponse<unknown>): Promise<ErrorRepo
                 return {
                     parseError: `Failed to process server error blob text: "${e.toString()}")`,
                 };
-            } else {
-                return {
-                    parseError: 'Failed to process server error blob text',
-                };
             }
+            return {
+                parseError: 'Failed to process server error blob text',
+            };
         }
     }
 
@@ -63,15 +70,20 @@ const ResponseDisplayError: FC<ResponseDisplayErrorProps> = ({ report }) => {
     return report.parseError;
 };
 
+const wrapCodeBlock = (content: string, lang: string = ''): string =>
+    `\`\`\`${lang}\n${content}\n\`\`\``;
+
 type ResponseDisplayProps = {
     response: AxiosResponse<unknown>;
-    template?: TemplateDto;
+    metadata?: ErrorMetadata;
 };
-const ResponseDisplay: FC<ResponseDisplayProps> = ({ response, template }) => {
+const ResponseDisplay: FC<ResponseDisplayProps> = ({ response, metadata }) => {
     const [report, setReport] = useState<ErrorReport>();
     useEffect(() => {
         analyzeError(response).then(setReport);
     }, [response]);
+
+    const { issueTemplate } = useIssueTemplate();
 
     if (report === undefined) {
         return <LoadingSpinner />;
@@ -82,26 +94,44 @@ const ResponseDisplay: FC<ResponseDisplayProps> = ({ response, template }) => {
             <pre className="max-w-[80ch] overflow-x-scroll rounded-md bg-amber-200 p-2">
                 <ResponseDisplayError report={report} />
             </pre>
-            {template && (
+            {metadata?.template && (
                 <p className="mt-3">
                     If you believe this is a problem with the template, please report it under{' '}
                     {ISSUES_URL.startsWith('https://github.com') ? (
                         <a
                             href={`${ISSUES_URL}/new?${new URLSearchParams({
-                                title: `[${template.title}] Generation issue`,
-                                body:
-                                    'json' in report
-                                        ? `\`\`\`json\n${JSON.stringify(
-                                              JSON.parse(report.json),
-                                              null,
-                                              2
-                                          )}\n\`\`\``
-                                        : 'content' in report
-                                        ? `\`\`\`\n${report.content}\n\`\`\``
-                                        : `\`\`\`\n${report.parseError}\n\`\`\``,
+                                title: `[${metadata?.template.title}] Generation issue`,
+                                body: mustache.render(issueTemplate, {
+                                    templateName: metadata?.template.title,
+                                    templateUrl: window.location.href,
+                                    report:
+                                        'json' in report
+                                            ? wrapCodeBlock(
+                                                  JSON.stringify(JSON.parse(report.json), null, 2),
+                                                  'json'
+                                              )
+                                            : 'content' in report
+                                            ? wrapCodeBlock(report.content)
+                                            : wrapCodeBlock(report.parseError),
+                                    userInput:
+                                        metadata?.userInput != null
+                                            ? wrapCodeBlock(
+                                                  JSON.stringify(metadata.userInput, null, 2),
+                                                  'json'
+                                              )
+                                            : 'unknown',
+                                    emptyFields:
+                                        metadata?.emptyFields != null
+                                            ? wrapCodeBlock(
+                                                  JSON.stringify(metadata?.emptyFields, null, 2),
+                                                  'json'
+                                              )
+                                            : 'N/A',
+                                }),
+                                labels: 'template issue',
                             })}`}
                         >
-                            the issues page
+                            the issues page.
                         </a>
                     ) : (
                         <a href={ISSUES_URL}>the issues page and include the template name.</a>
@@ -114,9 +144,9 @@ const ResponseDisplay: FC<ResponseDisplayProps> = ({ response, template }) => {
 
 type ErrorDisplayInnerProps = {
     error: unknown;
-    template?: TemplateDto;
+    metadata?: ErrorMetadata;
 };
-const ErrorDisplayInner: FC<ErrorDisplayInnerProps> = ({ template, error }) => {
+const ErrorDisplayInner: FC<ErrorDisplayInnerProps> = ({ metadata, error }) => {
     if (!isAxiosError(error)) {
         return <p>An unknown error occured.</p>;
     }
@@ -129,7 +159,7 @@ const ErrorDisplayInner: FC<ErrorDisplayInnerProps> = ({ template, error }) => {
         <>
             <p>The server did not respond as expected:</p>
             {error.response ? (
-                <ResponseDisplay response={error.response} template={template} />
+                <ResponseDisplay response={error.response} metadata={metadata} />
             ) : (
                 <p>No server response.</p>
             )}
@@ -140,18 +170,18 @@ const ErrorDisplayInner: FC<ErrorDisplayInnerProps> = ({ template, error }) => {
 type ErrorBoxProps = {
     className?: string;
     error: unknown;
-    template?: TemplateDto;
+    metadata?: ErrorMetadata;
 };
 const TemplateGenerationError: FC<PropsWithChildren<ErrorBoxProps>> = ({
     children,
     className,
     error,
-    template,
+    metadata,
 }) => (
     <Center className={className}>
         <div className="rounded-md border border-red-500 p-2">
             {children}
-            <ErrorDisplayInner error={error} template={template} />
+            <ErrorDisplayInner error={error} metadata={metadata} />
         </div>
     </Center>
 );

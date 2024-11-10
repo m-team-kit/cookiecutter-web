@@ -10,7 +10,6 @@ import {
 import { useAuth } from 'react-oidc-context';
 import { useProjectApi } from 'lib/useApi';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { type AxiosRequestConfig } from 'axios';
 import Form from 'components/template/Form';
 import Button from 'components/Button';
 import LoadingSpinner from 'components/LoadingSpinner';
@@ -21,6 +20,14 @@ const hasDefaultValue = (field: CutterField) => {
     const defaultValue = field.default as string;
 
     return defaultValue.length > 0;
+};
+
+const formToJson = (form: FormData) => {
+    const entries = Array.from(form.entries()).filter(
+        ([, value]) => typeof value === 'string' && value.length > 0
+    );
+    // TODO: get rid of type assertion, asserting because we have no files
+    return Object.fromEntries(entries) as Record<string, string>;
 };
 
 type TemplateFormProps = {
@@ -37,7 +44,7 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
         (data: Record<string, string>) =>
             api.generateProject(template.id, data, {
                 responseType: 'blob',
-            } as AxiosRequestConfig),
+            }),
         {
             onSuccess: (data) => {
                 const link = document.createElement('a');
@@ -79,6 +86,8 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
         [fields.isSuccess, fields.data]
     );
 
+    const [lastSubmission, setLastSubmission] = useState<Record<string, string> | null>(null);
+
     const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
         if (!fields.isSuccess || auth.user?.access_token === undefined) {
@@ -98,11 +107,8 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
             }
         }
 
-        const entries = Array.from(form.entries()).filter(
-            ([, value]) => typeof value === 'string' && value.length > 0
-        );
-        // TODO: get rid of type assertion, asserting because we have no files
-        const json = Object.fromEntries(entries) as Record<string, string>;
+        const json = formToJson(form);
+        setLastSubmission(json);
         generate.mutate(json);
     };
 
@@ -160,7 +166,11 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
                 {generate.isError && (
                     <TemplateGenerationError
                         error={generate.error}
-                        template={template}
+                        metadata={{
+                            template,
+                            userInput: lastSubmission ?? undefined,
+                            emptyFields: emptyFields,
+                        }}
                         className="mt-2"
                     >
                         <p id="something-went-wrong">Failed to generate the project:</p>

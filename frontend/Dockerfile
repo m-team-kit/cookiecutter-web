@@ -23,6 +23,7 @@ COPY styles styles
 COPY pages pages
 COPY components components
 COPY lib lib
+COPY issue_templates issue_templates
 
 WORKDIR /app/lib/client
 RUN npm run build
@@ -55,6 +56,7 @@ COPY --from=prod-build /app/next.config.js .
 COPY --from=prod-build /app/public ./public
 COPY --from=prod-build /app/.next/static ./.next/static
 COPY --from=prod-build /app/.next/standalone ./
+COPY issue_templates issue_templates
 
 EXPOSE 3000
 CMD ["node", "server.js"]
