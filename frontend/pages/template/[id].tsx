@@ -71,7 +71,7 @@ const Template: NextPage = () => {
                         <img
                             src={resolveImage(template.data.data.picture)}
                             className="max-w-[min(300px,90svw)]"
-                            alt="template picture"
+                            alt=""
                         />
                     )}
                 </Center>
@@ -108,7 +108,7 @@ const Template: NextPage = () => {
                     {template.data.data.picture && (
                         <img
                             src={resolveImage(template.data.data.picture)}
-                            alt="template picture"
+                            alt=""
                             className="max-w-[300px]"
                         />
                     )}

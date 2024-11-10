@@ -1,0 +1,265 @@
+/* ==========================================================================
+ * General
+ * ==========================================================================*/
+
+@import url(https://fonts.googleapis.com/css?family=Thasadith);
+@import "styles/constants.scss";
+
+body {
+    background-color: $background-color;
+}
+
+code {
+    font-size: 0.7em;
+}
+
+.section {
+    padding-top: 100px;
+}
+
+.footer {
+    background-color: rgb(38, 39, 39);
+    color: #FFFFFF;
+    padding-top: 50px;
+    margin-top: 50px;
+}
+
+.footer li {
+    list-style: none;
+    position: relative;
+    margin-bottom: 0; 
+    padding: 0.2em;
+}
+
+.footer span {
+    margin-right: 5px;
+}
+
+.footer a {
+    text-decoration: none;
+}
+
+
+/* Navbar logo */
+
+.logo {
+    text-align: right;
+    padding-top: 0.25rem;
+}
+
+.logo img,
+.footer .logo {
+    height: 5.5rem;
+}
+
+/* Header */
+
+.header {
+    background: #212651;
+    //background-image: url("/images/network.png"); /* fallback */
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: cover;
+    color: #ffffff;
+    padding-bottom:250px;
+    font-weight: bold;
+}
+
+.deep-picture {
+    position: relative;
+    width: 80%;
+}
+
+.entry-title {
+    width: 100%;
+    font-size: 2em;
+}
+
+/* Navbar */
+.navbar {
+    display: block;
+    border-top-width: 0;
+}
+.navbar > .container {
+    padding-inline: $container-padding;
+}
+.navbar, 
+.navbar-spacer {
+    width: 100%;
+    height: $navbar-height;
+    background-color: $background-color;
+    left: 0;
+    top: 0;
+}
+.navbar-spacer {
+    display: none; 
+}
+.navbar > .container {
+    width: 100%; 
+}
+.navbar-list {
+    list-style: none;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    gap: 2rem;
+}
+.navbar-link {
+    font-family: Arial, serif;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #ffffff; 
+}
+.navbar-link.active {
+    color: #33C3F0; 
+}
+.has-docked-nav .navbar {
+    position: fixed;
+    top: 0;
+    left: 0; 
+}
+.has-docked-nav .navbar-spacer {
+    display: block; 
+}
+/* Re-overiding the width 100% declaration to match size of % based container */
+.has-docked-nav .navbar > .container {
+    width: 80%; 
+}
+
+/* Images */
+main {
+    margin-block: 1.5rem;
+    border-radius: 0.5rem;
+    padding: $container-padding;
+}
+
+input, select, textarea {
+    width: 100%;
+}
+
+.button, button {
+    background-color: white;
+}
+
+.navbar-button {
+    font-family: Arial, serif;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 35px;
+    text-decoration: none;
+    color: #ffffff;
+    padding: 0;
+    border: none;
+    background: none;
+}
+.navbar-button:hover {
+    text-decoration: underline;
+    color: #0FA0CE;
+}
+
+.modal {
+    border: 0;
+    box-shadow: 0 0 1em black;
+
+    max-width: 60ch;
+}
+
+.modal::backdrop {
+    background: rgb(0 0 0 / .3);
+}
+
+.modal > .buttons {
+    gap: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.button-warning {
+    background-color: #ffcc33;
+    color: #000000;
+}
+
+.flex {
+    display: flex;
+}
+.justify-end {
+    justify-content: flex-end;
+}
+.flex-gap {
+    gap: 1rem;
+}
+
+.border-warning {
+    border: 1px solid rgb(100% 80% 20%) !important;
+    background-color: rgb(255 242 204) !important;
+}
+
+.text-error {
+    color: rgb(149, 34, 34);
+}
+
+button:disabled, .button:disabled, .button-primary:disabled {
+    cursor: not-allowed;
+    background-color: rgb(129, 129, 129) !important;
+}
+
+.mb-0 {
+    margin-bottom: 0!important;
+}
+
+.header {
+    background-image: url("/images/back.png"); /* fallback */
+    background-position: center;
+    padding: 7rem;
+    /* height of navbar, TODO: variable */
+    margin-top: 6.45rem;
+}
+
+.footer {
+    margin-top: 0;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.logo {
+    padding: unset;
+}
+
+.header-logo {
+    /* TODO: using max-height breaks svg? */
+    height: 7rem;
+    width: auto;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    margin-bottom: .5rem;
+}
+
+hr {
+    border-top: 1px solid #888;
+}
+
+.center-contents {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+a {
+    scroll-margin-top: $navbar-height + 1rem;
+
+    text-decoration: underline;
+    color: theme( "colors.blue.600" );
+}
+
+h1, .h1 {
+    font-size: 2rem;
+}
+
+h2, .h2 {
+    font-size: 1.33rem;
+}

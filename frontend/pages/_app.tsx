@@ -1,8 +1,6 @@
 import 'normalize.css/normalize.css';
-//import 'styles/style.css';
-import 'styles/screen.scss';
+import 'styles/style.scss';
 import 'styles/tailwind.css';
-import 'styles/custom.scss';
 
 import type { AppProps } from 'next/app';
 import { type FC, type PropsWithChildren } from 'react';
@@ -37,13 +35,11 @@ const queryClient = new QueryClient({
     },
 });
 
-const QueryClientWrapper: FC<PropsWithChildren> = ({ children }) => {
-    return (
-        <QueryClientProvider client={queryClient}>
-            {children} <ReactQueryDevtools />
-        </QueryClientProvider>
-    );
-};
+const QueryClientWrapper: FC<PropsWithChildren> = ({ children }) => (
+    <QueryClientProvider client={queryClient}>
+        {children} <ReactQueryDevtools />
+    </QueryClientProvider>
+);
 
 const NextApp = ({ Component, pageProps }: AppProps) => {
     const router = useRouter();

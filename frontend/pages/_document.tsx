@@ -28,6 +28,7 @@ export default function Document() {
                     media="(prefers-color-scheme: dark)"
                     type="image/png"
                 />
+                <meta name="theme-color" content="#262727" />
             </Head>
             <body>
                 <Main />
