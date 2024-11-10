@@ -1,4 +1,4 @@
-import { type FC, type PropsWithChildren, useEffect, useState } from 'react';
+import { type FC, type PropsWithChildren, useEffect, useRef, useState } from 'react';
 import Center from 'components/Center';
 import { type AxiosResponse, isAxiosError } from 'axios';
 import LoadingSpinner from './LoadingSpinner';
@@ -6,6 +6,7 @@ import { ISSUES_URL } from '../lib/links';
 import { type Template as TemplateDto } from '../lib/client';
 import mustache from 'mustache';
 import { useIssueTemplate } from './IssueTemplateContext';
+import Button, { ButtonLink } from './Button';
 
 type ErrorMetadata = {
     template?: TemplateDto;
@@ -85,20 +86,32 @@ const ResponseDisplay: FC<ResponseDisplayProps> = ({ response, metadata }) => {
 
     const { issueTemplate } = useIssueTemplate();
 
+    const reportErrorModal = useRef<HTMLDialogElement>(null);
+
     if (report === undefined) {
         return <LoadingSpinner />;
     }
 
     return (
         <>
-            <pre className="max-w-[80ch] overflow-x-scroll rounded-md bg-amber-200 p-2">
-                <ResponseDisplayError report={report} />
-            </pre>
             {metadata?.template && (
-                <p className="mt-3">
-                    If you believe this is a problem with the template, please report it under{' '}
-                    {ISSUES_URL.startsWith('https://github.com') ? (
-                        <a
+                <dialog id="report" ref={reportErrorModal} className="modal p-3">
+                    <h2>Submit report</h2>
+                    <p>
+                        You will be brought to a Github issue creation page. For reproducibility
+                        reasons, your form input is included. If it contains personally identifiable
+                        information, or you&apos;d wish to remove it, please redact it in the next
+                        page.
+                    </p>
+                    <div className="buttons">
+                        <Button
+                            variant="secondary"
+                            onClick={() => reportErrorModal.current?.close()}
+                        >
+                            Cancel
+                        </Button>
+                        <ButtonLink
+                            variant="primary"
                             href={`${ISSUES_URL}/new?${new URLSearchParams({
                                 title: `[${metadata?.template.title}] Generation issue`,
                                 body: mustache.render(issueTemplate, {
@@ -131,13 +144,31 @@ const ResponseDisplay: FC<ResponseDisplayProps> = ({ response, metadata }) => {
                                 labels: 'template issue',
                             })}`}
                         >
-                            the issues page.
-                        </a>
-                    ) : (
-                        <a href={ISSUES_URL}>the issues page and include the template name.</a>
-                    )}
-                </p>
+                            Continue
+                        </ButtonLink>
+                    </div>
+                </dialog>
             )}
+
+            <pre className="max-w-[80ch] overflow-x-scroll rounded-md bg-amber-200 p-2">
+                <ResponseDisplayError report={report} />
+            </pre>
+            <p className="mt-3">
+                If you believe this is a problem with the template, please report it under{' '}
+                {metadata?.template && ISSUES_URL.startsWith('https://github.com') ? (
+                    <a
+                        href={ISSUES_URL}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            reportErrorModal.current?.showModal();
+                        }}
+                    >
+                        the issues page.
+                    </a>
+                ) : (
+                    <a href={ISSUES_URL}>the issues page and include the template name.</a>
+                )}
+            </p>
         </>
     );
 };

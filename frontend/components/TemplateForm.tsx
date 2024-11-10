@@ -159,7 +159,7 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
                     </TemplateGenerationError>
                 )}
                 {(fields.isLoading || generate.isLoading) && (
-                    <div className="mb-4 flex w-full justify-center">
+                    <div className="my-2 flex w-full justify-center">
                         <LoadingSpinner />
                     </div>
                 )}
@@ -178,11 +178,11 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
                 )}
             </form>
             <dialog id="missing-fields" ref={missingFieldsModal} className="modal p-3">
+                <h2>Missing fields</h2>
                 <p>
                     It looks like you haven&apos;t filled out all the fields. Are you sure you want
                     to submit the form?{' '}
                 </p>
-                <p>Missing fields:</p>
                 <ul>
                     {emptyFields.map((f) => (
                         <li key={f} style={{ marginBlock: '.1rem', listStyle: 'disc inside' }}>
@@ -190,7 +190,7 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
                         </li>
                     ))}
                 </ul>
-                <div className="flex-gap flex justify-end">
+                <div className="buttons">
                     <Button
                         variant="secondary"
                         onClick={() => {

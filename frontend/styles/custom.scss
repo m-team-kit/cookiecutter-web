@@ -21,10 +21,19 @@
 .modal {
     border: 0;
     box-shadow: 0 0 1em black;
+
+    max-width: 60ch;
 }
 
 .modal::backdrop {
     background: rgb(0 0 0 / .3);
+}
+
+.modal > .buttons {
+    gap: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
 }
 
 .button-warning {
