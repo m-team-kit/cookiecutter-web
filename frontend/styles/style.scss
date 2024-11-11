@@ -13,6 +13,23 @@ code {
     font-size: 0.7em;
 }
 
+a {
+    scroll-margin-top: $navbar-height + 1rem;
+    text-decoration: underline;
+    color: theme( "colors.blue.600" );
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    margin-bottom: .5rem;
+}
+h1, .h1 {
+    font-size: 2rem;
+}
+
+h2, .h2 {
+    font-size: 1.33rem;
+}
+
 .section {
     padding-top: 100px;
 }
@@ -65,16 +82,6 @@ code {
     font-weight: bold;
 }
 
-.deep-picture {
-    position: relative;
-    width: 80%;
-}
-
-.entry-title {
-    width: 100%;
-    font-size: 2em;
-}
-
 /* Navbar */
 .navbar {
     display: block;
@@ -115,33 +122,6 @@ code {
 .navbar-link.active {
     color: #33C3F0; 
 }
-.has-docked-nav .navbar {
-    position: fixed;
-    top: 0;
-    left: 0; 
-}
-.has-docked-nav .navbar-spacer {
-    display: block; 
-}
-/* Re-overiding the width 100% declaration to match size of % based container */
-.has-docked-nav .navbar > .container {
-    width: 80%; 
-}
-
-/* Images */
-main {
-    margin-block: 1.5rem;
-    border-radius: 0.5rem;
-    padding: $container-padding;
-}
-
-input, select, textarea {
-    width: 100%;
-}
-
-.button, button {
-    background-color: white;
-}
 
 .navbar-button {
     font-family: Arial, serif;
@@ -158,6 +138,21 @@ input, select, textarea {
 .navbar-button:hover {
     text-decoration: underline;
     color: #0FA0CE;
+}
+
+/* Images */
+main {
+    margin-block: 1.5rem;
+    border-radius: 0.5rem;
+    padding: $container-padding;
+}
+
+input, select, textarea {
+    width: 100%;
+}
+
+.button, button {
+    background-color: white;
 }
 
 .modal {
@@ -181,16 +176,6 @@ input, select, textarea {
 .button-warning {
     background-color: #ffcc33;
     color: #000000;
-}
-
-.flex {
-    display: flex;
-}
-.justify-end {
-    justify-content: flex-end;
-}
-.flex-gap {
-    gap: 1rem;
 }
 
 .border-warning {
@@ -235,10 +220,6 @@ button:disabled, .button:disabled, .button-primary:disabled {
     width: auto;
 }
 
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    margin-bottom: .5rem;
-}
-
 hr {
     border-top: 1px solid #888;
 }
@@ -247,19 +228,4 @@ hr {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-a {
-    scroll-margin-top: $navbar-height + 1rem;
-
-    text-decoration: underline;
-    color: theme( "colors.blue.600" );
-}
-
-h1, .h1 {
-    font-size: 2rem;
-}
-
-h2, .h2 {
-    font-size: 1.33rem;
 }
