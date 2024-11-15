@@ -3,7 +3,7 @@
  * ==========================================================================*/
 
 @import url(https://fonts.googleapis.com/css?family=Thasadith);
-@import "styles/constants.scss";
+@import "./constants.scss";
 
 body {
     background-color: $background-color;
@@ -56,6 +56,10 @@ h2, .h2 {
     text-decoration: none;
 }
 
+input[disabled], select[disabled] {
+    filter: brightness(80%);
+    cursor: not-allowed;
+}
 
 /* Navbar logo */
 
@@ -102,7 +106,7 @@ h2, .h2 {
     display: none; 
 }
 .navbar > .container {
-    width: 100%; 
+    width: 100%;
 }
 .navbar-list {
     list-style: none;
