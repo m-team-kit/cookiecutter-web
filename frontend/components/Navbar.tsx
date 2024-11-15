@@ -7,7 +7,7 @@ const Navbar = () => {
 
     return (
         <nav className="navbar flex justify-center">
-            <div className="container">
+            <div className="container h-full">
                 <ul className="navbar-list flex">
                     <li className="navbar-item">
                         <Link className="navbar-link" href="/">

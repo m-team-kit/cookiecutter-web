@@ -115,8 +115,9 @@ const ResponseDisplay: FC<ResponseDisplayProps> = ({ response, metadata }) => {
                             href={`${ISSUES_URL}/new?${new URLSearchParams({
                                 title: `[${metadata?.template.title}] Generation issue`,
                                 body: mustache.render(issueTemplate, {
-                                    templateName: metadata?.template.title,
-                                    templateUrl: window.location.href,
+                                    templateName: metadata.template.title,
+                                    templateUrl: metadata.template.gitLink,
+                                    gitRef: metadata.template.gitCheckout,
                                     report:
                                         'json' in report
                                             ? wrapCodeBlock(
@@ -127,14 +128,14 @@ const ResponseDisplay: FC<ResponseDisplayProps> = ({ response, metadata }) => {
                                             ? wrapCodeBlock(report.content)
                                             : wrapCodeBlock(report.parseError),
                                     userInput:
-                                        metadata?.userInput != null
+                                        metadata.userInput != null
                                             ? wrapCodeBlock(
                                                   JSON.stringify(metadata.userInput, null, 2),
                                                   'json'
                                               )
                                             : 'unknown',
                                     emptyFields:
-                                        metadata?.emptyFields != null
+                                        metadata.emptyFields != null
                                             ? wrapCodeBlock(
                                                   JSON.stringify(metadata?.emptyFields, null, 2),
                                                   'json'
