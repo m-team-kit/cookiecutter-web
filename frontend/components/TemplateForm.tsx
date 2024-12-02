@@ -10,17 +10,24 @@ import {
 import { useAuth } from 'react-oidc-context';
 import { useProjectApi } from 'lib/useApi';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { type AxiosRequestConfig } from 'axios';
 import Form from 'components/template/Form';
 import Button from 'components/Button';
 import LoadingSpinner from 'components/LoadingSpinner';
-import ErrorBox from 'components/ErrorBox';
+import TemplateGenerationError from 'components/TemplateGenerationError';
 
 const hasDefaultValue = (field: CutterField) => {
     // TODO: type assertion because of api spec/generator issue
     const defaultValue = field.default as string;
 
     return defaultValue.length > 0;
+};
+
+const formToJson = (form: FormData) => {
+    const entries = Array.from(form.entries()).filter(
+        ([, value]) => typeof value === 'string' && value.length > 0
+    );
+    // TODO: get rid of type assertion, asserting because we have no files
+    return Object.fromEntries(entries) as Record<string, string>;
 };
 
 type TemplateFormProps = {
@@ -37,7 +44,7 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
         (data: Record<string, string>) =>
             api.generateProject(template.id, data, {
                 responseType: 'blob',
-            } as AxiosRequestConfig),
+            }),
         {
             onSuccess: (data) => {
                 const link = document.createElement('a');
@@ -79,6 +86,8 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
         [fields.isSuccess, fields.data]
     );
 
+    const [lastSubmission, setLastSubmission] = useState<Record<string, string> | null>(null);
+
     const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
         if (!fields.isSuccess || auth.user?.access_token === undefined) {
@@ -98,11 +107,8 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
             }
         }
 
-        const entries = Array.from(form.entries()).filter(
-            ([, value]) => typeof value === 'string' && value.length > 0
-        );
-        // TODO: get rid of type assertion, asserting because we have no files
-        const json = Object.fromEntries(entries) as Record<string, string>;
+        const json = formToJson(form);
+        setLastSubmission(json);
         generate.mutate(json);
     };
 
@@ -129,6 +135,7 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
                                         type="submit"
                                         ref={formSubmitButton}
                                         disabled={generate.isLoading}
+                                        variant={generate.isError ? 'warning' : undefined}
                                     >
                                         Generate
                                     </Button>
@@ -147,27 +154,35 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
                     )}
                 </div>
                 {fields.isError && (
-                    <ErrorBox error={fields.error}>
+                    <TemplateGenerationError error={fields.error}>
                         <p>Failed to load template fields:</p>
-                    </ErrorBox>
+                    </TemplateGenerationError>
                 )}
                 {(fields.isLoading || generate.isLoading) && (
-                    <div className="mb-4 flex w-full justify-center">
+                    <div className="my-2 flex w-full justify-center">
                         <LoadingSpinner />
                     </div>
                 )}
                 {generate.isError && (
-                    <ErrorBox error={generate.error}>
-                        <p id="something-went-wrong">Failed to generate the project:</p>{' '}
-                    </ErrorBox>
+                    <TemplateGenerationError
+                        error={generate.error}
+                        metadata={{
+                            template,
+                            userInput: lastSubmission ?? undefined,
+                            emptyFields: emptyFields,
+                        }}
+                        className="mt-2"
+                    >
+                        <p id="something-went-wrong">Failed to generate the project:</p>
+                    </TemplateGenerationError>
                 )}
             </form>
             <dialog id="missing-fields" ref={missingFieldsModal} className="modal p-3">
+                <h2>Missing fields</h2>
                 <p>
                     It looks like you haven&apos;t filled out all the fields. Are you sure you want
                     to submit the form?{' '}
                 </p>
-                <p>Missing fields:</p>
                 <ul>
                     {emptyFields.map((f) => (
                         <li key={f} style={{ marginBlock: '.1rem', listStyle: 'disc inside' }}>
@@ -175,7 +190,7 @@ const TemplateForm: FC<TemplateFormProps> = ({ template }) => {
                         </li>
                     ))}
                 </ul>
-                <div className="flex-gap flex justify-end">
+                <div className="buttons">
                     <Button
                         variant="secondary"
                         onClick={() => {

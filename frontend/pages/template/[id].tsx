@@ -1,4 +1,4 @@
-import { type NextPage } from 'next';
+import { type GetServerSideProps, type NextPage } from 'next';
 import Layout from 'components/Layout';
 import { useTemplateApi } from 'lib/useApi';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -12,9 +12,11 @@ import Badge from 'components/Badge';
 import TemplateForm from 'components/TemplateForm';
 import Rating from 'components/Rating';
 import { Code2 } from 'lucide-react';
-import ErrorBox from 'components/ErrorBox';
+import TemplateGenerationError from 'components/TemplateGenerationError';
 import resolveImage from 'lib/resolveImage';
 import Center from 'components/Center';
+import fs from 'node:fs';
+import { IssueTemplateContextProvider } from '../../components/IssueTemplateContext';
 
 // TODO: SSR?
 const Template: NextPage = () => {
@@ -54,9 +56,9 @@ const Template: NextPage = () => {
     if (template.isError) {
         return (
             <Layout>
-                <ErrorBox error={template.error}>
+                <TemplateGenerationError error={template.error}>
                     <p>An error occurred while loading the template:</p>{' '}
-                </ErrorBox>
+                </TemplateGenerationError>
             </Layout>
         );
     }
@@ -69,7 +71,7 @@ const Template: NextPage = () => {
                         <img
                             src={resolveImage(template.data.data.picture)}
                             className="max-w-[min(300px,90svw)]"
-                            alt="template picture"
+                            alt=""
                         />
                     )}
                 </Center>
@@ -106,7 +108,7 @@ const Template: NextPage = () => {
                     {template.data.data.picture && (
                         <img
                             src={resolveImage(template.data.data.picture)}
-                            alt="template picture"
+                            alt=""
                             className="max-w-[300px]"
                         />
                     )}
@@ -129,4 +131,19 @@ const Template: NextPage = () => {
     );
 };
 
-export default Template;
+type TemplatePageProps = {
+    issueTemplate: string;
+};
+const TemplateOuter: NextPage<TemplatePageProps> = ({ issueTemplate }) => (
+    <IssueTemplateContextProvider issueTemplate={issueTemplate}>
+        <Template />
+    </IssueTemplateContextProvider>
+);
+
+export const getServerSideProps: GetServerSideProps = async () => ({
+    props: {
+        issueTemplate: fs.readFileSync('issue_templates/generation_error.md', 'utf-8'),
+    },
+});
+
+export default TemplateOuter;

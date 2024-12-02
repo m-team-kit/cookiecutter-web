@@ -4,7 +4,7 @@ import Template from 'components/templates/Template';
 import { useQuery } from '@tanstack/react-query';
 import { useTemplateApi } from 'lib/useApi';
 import LoadingSpinner from '../components/LoadingSpinner';
-import ErrorBox from 'components/ErrorBox';
+import TemplateGenerationError from 'components/TemplateGenerationError';
 import { useMemo, useState } from 'react';
 import type Ordering from 'lib/Ordering';
 import OrderingSelector from 'components/OrderingSelector';
@@ -90,9 +90,9 @@ const Templates: NextPage = () => {
             )}
 
             {templates.isError && (
-                <ErrorBox error={templates.error}>
+                <TemplateGenerationError error={templates.error}>
                     <p>An error occurred while loading the templates:</p>
-                </ErrorBox>
+                </TemplateGenerationError>
             )}
         </Layout>
     );

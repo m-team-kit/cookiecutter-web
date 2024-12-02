@@ -10,8 +10,9 @@ type SelectInputProps = {
     field: CutterField;
     flagged?: boolean;
     className?: string;
+    disabled?: boolean;
 };
-const SelectInput: FC<SelectInputProps> = ({ field, flagged = false, className }) => {
+const SelectInput: FC<SelectInputProps> = ({ field, flagged = false, className, disabled }) => {
     const yesNoOptions = field.options != null && attemptDetermineYesNoOptions(field.options);
 
     if (yesNoOptions !== false) {
@@ -21,6 +22,7 @@ const SelectInput: FC<SelectInputProps> = ({ field, flagged = false, className }
                 className="mt-1"
                 truthy={yesNoOptions.truthy}
                 falsy={yesNoOptions.falsy}
+                disabled={disabled}
             />
         );
     }
@@ -35,6 +37,7 @@ const SelectInput: FC<SelectInputProps> = ({ field, flagged = false, className }
                 name={field.name}
                 id={field.name}
                 className={clsx('rounded', flagged && 'border-warning', className)}
+                disabled={disabled}
             >
                 {field.options?.map((option) => (
                     <option value={option.name} key={option.name}>

@@ -10,6 +10,8 @@ type CheckboxInput = {
 
     truthy?: string | boolean;
     falsy?: string | boolean;
+
+    disabled?: boolean;
 };
 const CheckboxInput: FC<CheckboxInput> = ({
     field,
@@ -17,6 +19,7 @@ const CheckboxInput: FC<CheckboxInput> = ({
     className,
     truthy = true,
     falsy = false,
+    disabled = false,
 }) => (
     <div>
         <input type="hidden" name={field.name} value={falsy.toString()} />
@@ -27,6 +30,7 @@ const CheckboxInput: FC<CheckboxInput> = ({
             id={field.name}
             defaultChecked={field.default === truthy}
             value={truthy.toString()}
+            disabled={disabled}
         />
         <label htmlFor={field.name}>
             <ClickableLinks text={field.prompt ?? field.name} />

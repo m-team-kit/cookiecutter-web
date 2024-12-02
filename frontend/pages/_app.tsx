@@ -1,16 +1,13 @@
 import 'normalize.css/normalize.css';
-//import 'styles/style.css';
-import 'styles/screen.scss';
 import 'styles/tailwind.css';
-import 'styles/custom.scss';
+import 'styles/style.scss';
 
 import type { AppProps } from 'next/app';
 import { type FC, type PropsWithChildren } from 'react';
 import { AuthProvider, type AuthProviderProps } from 'react-oidc-context';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { QueryClient } from '@tanstack/query-core';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const oidcConfig: AuthProviderProps = {
@@ -38,13 +35,11 @@ const queryClient = new QueryClient({
     },
 });
 
-const QueryClientWrapper: FC<PropsWithChildren> = ({ children }) => {
-    return (
-        <QueryClientProvider client={queryClient}>
-            {children} <ReactQueryDevtools />
-        </QueryClientProvider>
-    );
-};
+const QueryClientWrapper: FC<PropsWithChildren> = ({ children }) => (
+    <QueryClientProvider client={queryClient}>
+        {children} <ReactQueryDevtools />
+    </QueryClientProvider>
+);
 
 const NextApp = ({ Component, pageProps }: AppProps) => {
     const router = useRouter();

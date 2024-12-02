@@ -8,8 +8,9 @@ type TextInputProps = {
     field: CutterField;
     flagged?: boolean;
     className?: string;
+    disabled?: boolean;
 };
-const TextInput: FC<TextInputProps> = ({ field, flagged = false, className }) => (
+const TextInput: FC<TextInputProps> = ({ field, flagged = false, className, disabled = false }) => (
     <>
         <label htmlFor={field.name}>
             <ClickableLinks text={field.prompt ?? field.name} />
@@ -22,6 +23,7 @@ const TextInput: FC<TextInputProps> = ({ field, flagged = false, className }) =>
             id={field.name}
             // TODO: type assertion due to api typing not being good enough
             placeholder={field.default as string}
+            disabled={disabled}
         />
     </>
 );

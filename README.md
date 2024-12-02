@@ -15,11 +15,11 @@ Copy `.env-example` to `.env` and refer to the comments to fill in desired confi
 
 # Running the application
 
-Run `docker compose -f docker-compose.base.yaml -f docker-compose.prod.yaml up --build -d` to deploy the application in production mode.
+Run `docker compose -f compose.base.yaml -f compose.prod.yaml up --build -d` to deploy the application in production mode.
 
-Run `docker compose -f docker-compose.base.yaml -f docker-compose.prod.yaml -f docker-compose.frontend-only.yaml up --build -d` to deploy the application with the frontend only (e.g. to have different frontends with still the same backend hosted on another instance).
+Run `docker compose -f compose.base.yaml -f compose.prod.yaml -f compose.frontend-only.yaml up --build -d` to deploy the application with the frontend only (e.g. to have different frontends with still the same backend hosted on another instance).
 
-Run `docker compose -f docker-compose.base.yaml -f docker-compose.dev.yaml up --build` to deploy the application in development mode for testing.
+Run `docker compose -f compose.base.yaml -f compose.dev.yaml up --build` to deploy the application in development mode for testing.
 
 # Deployed service
 Deployed service can be found in [https://templates.services.fedcloud.eu/](https://templates.services.fedcloud.eu/)
