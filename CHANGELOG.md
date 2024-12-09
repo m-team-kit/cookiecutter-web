@@ -18,7 +18,7 @@
 
 ### Removed
 
-## [1.0.2] - 2024-09-26
+## [1.1.0] - 2024-09-26
 
 ### Changed
 - Actualize EC logo and the funding message
