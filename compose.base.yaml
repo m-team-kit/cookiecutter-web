@@ -41,7 +41,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-      TRUSTED_OP: "[\"${OAUTH_AUTHORITY}\"]"
+      TRUSTED_OP: ${TRUSTED_OP:?}
       ADMIN_SECRET: ${ADMIN_SECRET}
     labels:
       traefik.http.routers.backend.rule: Host(`${DOMAIN}`) && PathPrefix(`/api/latest`)
