@@ -21,8 +21,8 @@ const oidcConfig: AuthProviderProps = {
         process.env['NEXT_PUBLIC_OIDC_REDIRECT_HOST'] ?? 'https://localhost'
     }/oidc-redirect`,
     //scope: 'openid email profile eduperson_entitlement offline_access',
-    // reduce scope
-    scope: 'openid email eduperson_entitlement offline_access',
+    // reduce scope, eduperson_entitlement will be deprecated. 
+    scope: 'openid email offline_access',
     response_type: 'code',
 };
 
