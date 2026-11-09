@@ -21,6 +21,8 @@ Run `docker compose -f compose.base.yaml -f compose.prod.yaml -f compose.fronten
 
 Run `docker compose -f compose.base.yaml -f compose.dev.yaml up --build` to deploy the application in development mode for testing.
 
+Run `docker compose -f compose.base.yaml -f compose.prod.yaml -f compose.monitoring.yaml up -d node-exporter cadvisor` to add node-exporter and cAdvisor for the central Prometheus. They are served at `https://${DOMAIN}/node-exporter/metrics` and `/cadvisor/metrics`, behind an IP allow-list and the `STATUS_USER` / `STATUS_PASSWORD_HASH` basic auth.
+
 # Deployed service
 Deployed service can be found in [https://templates.services.fedcloud.eu/](https://templates.services.fedcloud.eu/)
 

@@ -1,0 +1,65 @@
+# Exporters scraped by the central Prometheus (mlflowmonitoring).
+# Served under paths on ${DOMAIN} so the existing certificate is reused.
+services:
+  node-exporter:
+    image: prom/node-exporter:v1.12.1
+    container_name: node-exporter
+    restart: unless-stopped
+    command:
+      - --path.rootfs=/host
+      - --collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($|/)
+    pid: host
+    volumes:
+      - /:/host:ro
+    # "expose" rather than "ports": Docker bypasses the host firewall
+    expose:
+      - "9100"
+    labels:
+      traefik.http.routers.nodeexporter.rule: Host(`${DOMAIN}`) && PathPrefix(`/node-exporter`)
+      traefik.http.routers.nodeexporter.tls: true
+      traefik.http.routers.nodeexporter.tls.certResolver: letsEncrypt
+      traefik.http.routers.nodeexporter.entrypoints: websecure
+      traefik.http.routers.nodeexporter.middlewares: status-ipwhite,status-auth,nodeexporter-strip
+      traefik.http.middlewares.nodeexporter-strip.stripprefix.prefixes: /node-exporter
+      # Shared by both exporters
+      traefik.http.middlewares.status-auth.basicauth.users: ${STATUS_USER:?}:${STATUS_PASSWORD_HASH:?}
+      traefik.http.middlewares.status-ipwhite.ipwhitelist.sourcerange: 193.196.0.0/16,129.13.0.0/16
+    deploy:
+      resources:
+        limits:
+          memory: ${NODE_EXPORTER_MEM_LIMIT:-128M}
+          cpus: "${NODE_EXPORTER_CPU_LIMIT:-0.1}"
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.55.1
+    container_name: cadvisor
+    restart: unless-stopped
+    privileged: false
+    cap_add:
+      - SYS_ADMIN
+    command:
+      - "--docker_only=true"
+      - "--housekeeping_interval=10s"
+      - "--store_container_labels=false"
+    expose:
+      - "8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - /dev/disk:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    labels:
+      traefik.http.routers.cadvisor.rule: Host(`${DOMAIN}`) && PathPrefix(`/cadvisor`)
+      traefik.http.routers.cadvisor.tls: true
+      traefik.http.routers.cadvisor.tls.certResolver: letsEncrypt
+      traefik.http.routers.cadvisor.entrypoints: websecure
+      traefik.http.routers.cadvisor.middlewares: status-ipwhite,status-auth,cadvisor-strip
+      traefik.http.middlewares.cadvisor-strip.stripprefix.prefixes: /cadvisor
+    deploy:
+      resources:
+        limits:
+          memory: ${CADVISOR_MEM_LIMIT:-256M}
+          cpus: "${CADVISOR_CPU_LIMIT:-0.5}"
